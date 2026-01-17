@@ -1,4 +1,4 @@
-import bitcoinApi, { bitcoinCoreApi } from '../api/bitcoin/bitcoin-api-factory';
+import namecoinApi, { namecoinCoreApi } from '../api/namecoin/namecoin-api-factory';
 import { BlockExtended, BlockExtension, BlockPrice, EffectiveFeeStats } from '../mempool.interfaces';
 import DB from '../database';
 import logger from '../logger';
@@ -8,13 +8,13 @@ import HashratesRepository from './HashratesRepository';
 import { RowDataPacket } from 'mysql2';
 import BlocksSummariesRepository from './BlocksSummariesRepository';
 import DifficultyAdjustmentsRepository from './DifficultyAdjustmentsRepository';
-import bitcoinClient from '../api/bitcoin/bitcoin-client';
+import namecoinClient from '../api/namecoin/namecoin-client';
 import config from '../config';
 import chainTips from '../api/chain-tips';
 import blocks from '../api/blocks';
 import BlocksAuditsRepository from './BlocksAuditsRepository';
 import transactionUtils from '../api/transaction-utils';
-import { parseDATUMTemplateCreator } from '../utils/bitcoin-script';
+import { parseDATUMTemplateCreator } from '../utils/namecoin-script';
 import poolsUpdater from '../tasks/pools-updater';
 
 interface DatabaseBlock {
@@ -656,7 +656,7 @@ class BlocksRepository {
   public async $validateChain(): Promise<boolean> {
     try {
       const start = new Date().getTime();
-      const tip = await bitcoinApi.$getBlockHashTip();
+      const tip = await namecoinApi.$getBlockHashTip();
       let firstBadBlockHeight: number | null = null;
       const [blocks]: any[] = await DB.query(`
         SELECT
@@ -684,7 +684,7 @@ class BlocksRepository {
       // ensure that indexed blocks are correctly classified as stale or canonical
       // iterate back to genesis, resetting canonical status where necessary
       let hash = tip;
-      const tipHeight = blocksByHash[hash].height || (await bitcoinApi.$getBlock(hash))?.height;
+      const tipHeight = blocksByHash[hash].height || (await namecoinApi.$getBlock(hash))?.height;
 
       // stop at the last canonical block we're supposed to have indexed already
       let lastIndexedBlockHeight = minHeight;
@@ -715,7 +715,7 @@ class BlocksRepository {
             break;
           } else {
             logger.info('Some blocks are not indexed, looking up prevhashes directly for chain validation');
-            hash = await bitcoinApi.$getBlockHash(height - 1);
+            hash = await namecoinApi.$getBlockHash(height - 1);
           }
         }
       }
@@ -900,7 +900,7 @@ class BlocksRepository {
    */
    public async $getCPFPUnindexedBlocks(): Promise<number[]> {
     try {
-      const blockchainInfo = await bitcoinClient.getBlockchainInfo();
+      const blockchainInfo = await namecoinClient.getBlockchainInfo();
       const currentBlockHeight = blockchainInfo.blocks;
       let indexingBlockAmount = Math.min(config.MEMPOOL.INDEXING_BLOCKS_AMOUNT, currentBlockHeight);
       if (indexingBlockAmount <= -1) {
@@ -1234,12 +1234,12 @@ class BlocksRepository {
         let summary;
         let summaryVersion = 0;
         if (config.MEMPOOL.BACKEND === 'esplora') {
-          const txs = (await bitcoinApi.$getTxsForBlock(dbBlk.id, dbBlk.stale)).map(tx => transactionUtils.extendTransaction(tx));
+          const txs = (await namecoinApi.$getTxsForBlock(dbBlk.id, dbBlk.stale)).map(tx => transactionUtils.extendTransaction(tx));
           summary = blocks.summarizeBlockTransactions(dbBlk.id, dbBlk.height, txs);
           summaryVersion = 1;
         } else {
           // Call Core RPC
-          const block = await bitcoinClient.getBlock(dbBlk.id, 2);
+          const block = await namecoinClient.getBlock(dbBlk.id, 2);
           summary = blocks.summarizeBlock(block);
         }
 

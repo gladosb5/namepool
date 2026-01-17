@@ -6,7 +6,7 @@
   "LIQUID_ENABLED": true,
   "LIQUID_TESTNET_ENABLED": true,
   "SIGNET_ENABLED": true,
-  "MEMPOOL_WEBSITE_URL": "https://mempool.space",
+  "MEMPOOL_WEBSITE_URL": "https://namepool.bit",
   "LIQUID_WEBSITE_URL": "https://liquid.network",
   "ITEMS_PER_PAGE": 25,
   "MEMPOOL_BLOCKS_AMOUNT": 2,

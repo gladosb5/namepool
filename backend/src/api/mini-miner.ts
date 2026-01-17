@@ -267,8 +267,8 @@ export function mempoolComparator(a: GraphTx, b: GraphTx): number {
 }
 
 /*
-* Build a block using an approximation of the transaction selection algorithm from Bitcoin Core
-* (see BlockAssembler in https://github.com/bitcoin/bitcoin/blob/master/src/node/miner.cpp)
+* Build a block using an approximation of the transaction selection algorithm from Namecoin Core
+* (see BlockAssembler in https://github.com/namecoin/namecoin/blob/master/src/node/miner.cpp)
 */
 export function makeBlockTemplate(candidates: MempoolTransactionExtended[], accelerations: Acceleration[], maxBlocks: number = 8, weightLimit: number = BLOCK_WEIGHT_UNITS, sigopLimit: number = BLOCK_SIGOPS): TemplateTransaction[] {
   const auditPool: Map<string, MinerTransaction> = new Map();

@@ -11,7 +11,7 @@ import { of, merge, Subscription, combineLatest } from 'rxjs';
 import { SeoService } from '@app/services/seo.service';
 import { environment } from '@environments/environment';
 import { AssetsService } from '@app/services/assets.service';
-import { moveDec } from '@app/bitcoin.utils';
+import { moveDec } from '@app/namecoin.utils';
 
 @Component({
   selector: 'app-asset',

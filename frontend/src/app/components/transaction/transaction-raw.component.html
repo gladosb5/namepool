@@ -44,11 +44,11 @@
     <div class="clearfix"></div>
 
     @if (!isCoinbase) {
-      <div class="alert alert-mempool" style="align-items: center;">
+      <div class="alert alert-namepool" style="align-items: center;">
         <span>
           <fa-icon [icon]="['fas', 'info-circle']" [fixedWidth]="true"></fa-icon>
           <ng-container *ngIf="!successBroadcast" i18n="transaction.local-tx|This transaction is stored locally in your browser.">
-            This transaction is stored locally in your browser. Broadcast it to add it to the mempool.
+            This transaction is stored locally in your browser. Broadcast it to add it to the namepool.
           </ng-container>
           <ng-container *ngIf="successBroadcast" i18n="transaction.redirecting|Redirecting to transaction page...">
             Redirecting to transaction page...
@@ -63,7 +63,7 @@
     }
 
     @if (!hasPrevouts) {
-      <div class="alert alert-mempool">
+      <div class="alert alert-namepool">
         @if (offlineMode) {
           <span><strong>Missing prevouts are not loaded. Some fields like fee rate cannot be calculated.</strong></span>
         } @else {
@@ -73,7 +73,7 @@
     }
 
     @if (errorCpfpInfo) {
-      <div class="alert alert-mempool">
+      <div class="alert alert-namepool">
         <span><strong>Error loading CPFP data</strong>. Reason: {{ errorCpfpInfo }}</span>
       </div>
     }

@@ -1,8 +1,8 @@
 import { TransactionExtended, MempoolTransactionExtended, TransactionMinerInfo } from '../mempool.interfaces';
-import { IEsploraApi } from './bitcoin/esplora-api.interface';
+import { IEsploraApi } from './namecoin/esplora-api.interface';
 import { Common } from './common';
-import bitcoinApi, { bitcoinCoreApi } from './bitcoin/bitcoin-api-factory';
-import * as bitcoinjs from 'bitcoinjs-lib';
+import namecoinApi, { namecoinCoreApi } from './namecoin/namecoin-api-factory';
+import * as namecoinjs from 'namecoinjs-lib';
 import logger from '../logger';
 import config from '../config';
 import pLimit from '../utils/p-limit';
@@ -51,9 +51,9 @@ class TransactionUtils {
   public async $getTransactionExtended(txId: string, addPrevouts = false, lazyPrevouts = false, forceCore = false, addMempoolData = false): Promise<TransactionExtended> {
     let transaction: IEsploraApi.Transaction;
     if (forceCore === true) {
-      transaction  = await bitcoinCoreApi.$getRawTransaction(txId, false, addPrevouts, lazyPrevouts);
+      transaction  = await namecoinCoreApi.$getRawTransaction(txId, false, addPrevouts, lazyPrevouts);
     } else {
-      transaction  = await bitcoinApi.$getRawTransaction(txId, false, addPrevouts, lazyPrevouts);
+      transaction  = await namecoinApi.$getRawTransaction(txId, false, addPrevouts, lazyPrevouts);
     }
 
     if (Common.isLiquid()) {
@@ -82,7 +82,7 @@ class TransactionUtils {
       return results.filter(reply => reply.status === 'fulfilled')
         .map(r => (r as PromiseFulfilledResult<MempoolTransactionExtended>).value);
     } else {
-      const transactions = await bitcoinApi.$getMempoolTransactions(txids);
+      const transactions = await namecoinApi.$getMempoolTransactions(txids);
       return transactions.map(transaction => {
         if (Common.isLiquid()) {
           if (!isFinite(Number(transaction.fee))) {
@@ -117,7 +117,7 @@ class TransactionUtils {
     const vsize = Math.ceil(transaction.weight / 4);
     const fractionalVsize = (transaction.weight / 4);
     let sigops = Common.isLiquid() ? 0 : (transaction.sigops != null ? transaction.sigops : this.countSigops(transaction));
-    // https://github.com/bitcoin/bitcoin/blob/e9262ea32a6e1d364fb7974844fadc36f931f8c6/src/policy/policy.cpp#L295-L298
+    // https://github.com/namecoin/namecoin/blob/e9262ea32a6e1d364fb7974844fadc36f931f8c6/src/policy/policy.cpp#L295-L298
     const adjustedVsize = Math.max(fractionalVsize, sigops *  5); // adjusted vsize = Max(weight, sigops * bytes_per_sigop) / witness_scale_factor
     const feePerVbytes = (transaction.fee || 0) / fractionalVsize;
     const adjustedFeePerVsize = (transaction.fee || 0) / adjustedVsize;
@@ -194,7 +194,7 @@ class TransactionUtils {
           case input.prevout?.scriptpubkey_type === 'p2sh' && input.witness?.length && input.scriptsig && input.scriptsig.startsWith('220020'):
           case input.prevout.scriptpubkey_type === 'v0_p2wsh':
             if (input.witness?.length) {
-              sigops += this.countScriptSigops(bitcoinjs.script.toASM(Buffer.from(input.witness[input.witness.length - 1], 'hex')), false, true);
+              sigops += this.countScriptSigops(namecoinjs.script.toASM(Buffer.from(input.witness[input.witness.length - 1], 'hex')), false, true);
             }
             break;
 
@@ -217,7 +217,7 @@ class TransactionUtils {
   }
 
     /**
-   * see https://github.com/bitcoin/bitcoin/blob/25c45bb0d0bd6618ec9296a1a43605657124e5de/src/policy/policy.cpp#L166-L193
+   * see https://github.com/namecoin/namecoin/blob/25c45bb0d0bd6618ec9296a1a43605657124e5de/src/policy/policy.cpp#L166-L193
    * returns true if the transactions is permitted under bip54 sigops rules
    *
    * "Unlike the existing block wide sigop limit which counts sigops present in the block
@@ -338,7 +338,7 @@ class TransactionUtils {
         } else if (op === 0xba) {
           b.push('OP_CHECKSIGADD');
         } else {
-          const opcode = bitcoinjs.script.toASM([ op ]);
+          const opcode = namecoinjs.script.toASM([ op ]);
           if (opcode && op < 0xfd) {
             if (/^OP_(\d+)$/.test(opcode)) {
               b.push(opcode.replace(/^OP_(\d+)$/, 'OP_PUSHNUM_$1'));
@@ -461,7 +461,7 @@ class TransactionUtils {
     return { prioritized, deprioritized };
   }
 
-  // Copied from https://github.com/mempool/mempool/blob/14e49126c3ca8416a8d7ad134a95c5e090324d69/backend/src/api/bitcoin/bitcoin-api.ts#L324
+  // Copied from https://github.com/mempool/mempool/blob/14e49126c3ca8416a8d7ad134a95c5e090324d69/backend/src/api/namecoin/namecoin-api.ts#L324
   public translateScriptPubKeyType(outputType: string): string {
     const map = {
       'pubkey': 'p2pk',

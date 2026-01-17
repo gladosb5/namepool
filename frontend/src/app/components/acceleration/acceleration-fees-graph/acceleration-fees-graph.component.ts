@@ -181,7 +181,7 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
           for (const tick of ticks) {
             if (tick.seriesName === 'Total bid boost') {
               if (tick.data[1] > 10_000_000) {
-                tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1] / 100_000_000, this.locale, '1.0-8')} BTC<br>`;
+                tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1] / 100_000_000, this.locale, '1.0-8')} NMC<br>`;
               } else {
                 tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.0-0')} sats<br>`;
               }
@@ -254,7 +254,7 @@ export class AccelerationFeesGraphComponent implements OnInit, OnChanges, OnDest
             color: 'rgb(110, 112, 121)',
             formatter: (val) => {
               if (val >= 100_000) {
-                return `${(val / 100_000_000).toFixed(3)} BTC`;
+                return `${(val / 100_000_000).toFixed(3)} NMC`;
               } else {
                 return `${val} sats`;
               }

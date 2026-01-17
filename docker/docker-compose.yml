@@ -14,6 +14,8 @@ services:
       - 80:8080
   api:
     environment:
+      # Optional: used for fetching Namecoin (NMC) fiat prices from CoinMarketCap.
+      COINMARKETCAP_API_KEY: "${COINMARKETCAP_API_KEY:-}"
       MEMPOOL_BACKEND: "none"
       CORE_RPC_HOST: "172.27.0.1"
       CORE_RPC_PORT: "8332"

@@ -510,7 +510,7 @@
             }
         }
     ],
-    "mempool-blocks": [
+    "namepool-blocks": [
         {
             "blockSize": 1779311,
             "blockVSize": 997968.5,

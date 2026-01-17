@@ -9,7 +9,7 @@ import { ElectrsApiService } from '@app/services/electrs-api.service';
 import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pipe';
 import { ApiService } from '@app/services/api.service';
 import { SearchResultsComponent } from '@components/search-form/search-results/search-results.component';
-import { Network, findOtherNetworks, getRegex, getTargetUrl, needBaseModuleChange } from '@app/shared/regex.utils';
+import { Network, getRegex, getTargetUrl, needBaseModuleChange } from '@app/shared/regex.utils';
 
 @Component({
   selector: 'app-search-form',
@@ -188,18 +188,20 @@ export class SearchFormComponent implements OnInit {
           const lightningResults = result[1];
 
           // Do not show date and timestamp results for liquid
-          const isNetworkBitcoin = this.network === '' || this.network === 'testnet' || this.network === 'testnet4' || this.network === 'signet';
+          const isNetworkNamecoin = this.network === '' || this.network === 'testnet' || this.network === 'testnet4' || this.network === 'signet';
 
           const matchesBlockHeight = this.regexBlockheight.test(searchText) && parseInt(searchText) <= this.stateService.latestBlockHeight;
-          const matchesDateTime = this.regexDate.test(searchText) && new Date(searchText).toString() !== 'Invalid Date' && new Date(searchText).getTime() <= Date.now() && isNetworkBitcoin;
-          const matchesUnixTimestamp = this.regexUnixTimestamp.test(searchText) && parseInt(searchText) <= Math.floor(Date.now() / 1000) && isNetworkBitcoin;
+          const matchesDateTime = this.regexDate.test(searchText) && new Date(searchText).toString() !== 'Invalid Date' && new Date(searchText).getTime() <= Date.now() && isNetworkNamecoin;
+          const matchesUnixTimestamp = this.regexUnixTimestamp.test(searchText) && parseInt(searchText) <= Math.floor(Date.now() / 1000) && isNetworkNamecoin;
           const matchesTxId = this.regexTransaction.test(searchText) && !this.regexBlockhash.test(searchText);
           const matchesBlockHash = this.regexBlockhash.test(searchText);
           const matchesAddress = !matchesTxId && this.regexAddress.test(searchText);
           const publicKey = matchesAddress && searchText.startsWith('0');
-          const otherNetworks = findOtherNetworks(searchText, this.network as any || 'mainnet', this.env);
+          // Namepool: only allow Namecoin address formats; do not suggest cross-network matches.
+          const otherNetworks: any[] = [];
           const liquidAsset = this.assets ? (this.assets[searchText] || []) : [];
           const pools = this.pools.filter(pool => pool["name"].toLowerCase().includes(searchText.toLowerCase())).slice(0, 10);
+          const filteredAddressPrefixSearchResults = (addressPrefixSearchResults || []).filter((addr) => this.regexAddress.test(addr));
           
           if (matchesDateTime && searchText.indexOf('/') !== -1) {
             searchText = searchText.replace(/\//g, '-');
@@ -219,7 +221,7 @@ export class SearchFormComponent implements OnInit {
             blockHash: matchesBlockHash,
             address: matchesAddress,
             publicKey: publicKey,
-            addresses: matchesAddress && addressPrefixSearchResults.length === 1 && searchText === addressPrefixSearchResults[0] ? [] : addressPrefixSearchResults, // If there is only one address and it matches the search text, don't show it in the dropdown
+            addresses: matchesAddress && filteredAddressPrefixSearchResults.length === 1 && searchText === filteredAddressPrefixSearchResults[0] ? [] : filteredAddressPrefixSearchResults, // If there is only one address and it matches the search text, don't show it in the dropdown
             otherNetworks: otherNetworks,
             nodes: lightningResults.nodes,
             channels: lightningResults.channels,

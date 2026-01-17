@@ -1,7 +1,8 @@
 var fs = require('fs');
 const { spawnSync } = require('child_process');
 
-const CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const PRIMARY_CONFIG_FILE_NAME = 'namepool-frontend-config.json';
+const LEGACY_CONFIG_FILE_NAME = 'mempool-frontend-config.json';
 const GENERATED_CONFIG_FILE_NAME = 'src/resources/config.js';
 const GENERATED_TEMPLATE_CONFIG_FILE_NAME = 'src/resources/config.template.js';
 const GENERATED_CUSTOMIZATION_FILE_NAME = 'src/resources/customize.js';
@@ -14,14 +15,15 @@ let customConfig;
 let customConfigContent;
 
 try {
-  const rawConfig = fs.readFileSync(CONFIG_FILE_NAME);
+  const configFileName = fs.existsSync(PRIMARY_CONFIG_FILE_NAME) ? PRIMARY_CONFIG_FILE_NAME : LEGACY_CONFIG_FILE_NAME;
+  const rawConfig = fs.readFileSync(configFileName);
   configContent = JSON.parse(rawConfig);
-  console.log(`${CONFIG_FILE_NAME} file found, using provided config`);
+  console.log(`${configFileName} file found, using provided config`);
 } catch (e) {
   if (e.code !== 'ENOENT') {
     throw new Error(e);
   } else {
-    console.log(`${CONFIG_FILE_NAME} file not found, using default config`);
+    console.log(`${PRIMARY_CONFIG_FILE_NAME} file not found, using default config`);
   }
 }
 
@@ -34,7 +36,7 @@ if (configContent && configContent.CUSTOMIZATION) {
   }
 }
 
-const baseModuleName = configContent.BASE_MODULE || 'mempool';
+const baseModuleName = configContent.BASE_MODULE || 'namepool';
 const customBuildName = (customConfigContent && customConfigContent.enterprise) ? ('.' + customConfigContent.enterprise) : '';
 const indexFilePath = 'src/index.' + baseModuleName + customBuildName + '.html';
 
@@ -49,7 +51,7 @@ try {
 try {
   const packageJson = fs.readFileSync('package.json');
   packetJsonVersion = JSON.parse(packageJson).version;
-  console.log(`mempool version ${packetJsonVersion}`);
+  console.log(`namepool version ${packetJsonVersion}`);
 } catch (e) {
   throw new Error(e);
 }
@@ -69,7 +71,7 @@ if (process.env.DOCKER_COMMIT_HASH) {
     if (!gitRevParse.error) {
       const output = gitRevParse.stdout.toString('utf-8').replace(/[\n\r\s]+$/, '');
       gitCommitHash = output ? output : '?';
-      console.log(`mempool revision ${gitCommitHash}`);
+      console.log(`namepool revision ${gitCommitHash}`);
     } else if (gitRevParse.error.code === 'ENOENT') {
       console.log('git not found, cannot parse git hash');
       gitCommitHash = '?';

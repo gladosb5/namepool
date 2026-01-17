@@ -1,4 +1,4 @@
-const bitcoinNetworks = ["", "testnet", "testnet4", "signet"];
+const namecoinNetworks = ["", "testnet", "testnet4", "signet"];
 const liquidNetworks = ["liquid", "liquidtestnet"];
 const lightningNetworks = ["", "testnet", "signet"];
 const miningTimeIntervals = "<code>24h</code>, <code>3d</code>, <code>1w</code>, <code>1m</code>, <code>3m</code>, <code>6m</code>, <code>1y</code>, <code>2y</code>, <code>3y</code>";
@@ -19,7 +19,7 @@ export const wsApiDocsData = [
     category: "general",
     fragment: "general",
     title: "General",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -30,7 +30,7 @@ export const wsApiDocsData = [
       default: "Subscribe to live data. Available: <code>blocks</code>, <code>mempool-block</code>, <code>live-2h-chart</code>, and <code>stats</code>."
     },
     payload: '{ "action": "want", "data": ["mempool-blocks", "stats"] }',
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -304,7 +304,7 @@ export const wsApiDocsData = [
     category: "addresses",
     fragment: "addresses",
     title: "Addresses",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -315,7 +315,7 @@ export const wsApiDocsData = [
       default: "Subscribe to a single address to receive live updates on new transactions having that address in input or output. <code>address-transactions</code> field contains new mempool transactions, and <code>block-transactions</code> contains new confirmed transactions."
     },
     payload: '{ "track-address": "bc1qeldw4mqns26wew8swgpkt3fs364w3ehs046w2f" }',
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -702,7 +702,7 @@ export const wsApiDocsData = [
     fragment: "track-addresses",
     title: "Track Addresses",
     description: {
-      default: "Subscribe to multiple addresses to receive live updates on new transactions having these addresses in input or output. Limits on the maximum number of tracked addresses apply. For higher tracking limits, consider upgrading to an <a href='https://mempool.space/enterprise'>enterprise sponsorship</a>."
+      default: "Subscribe to multiple addresses to receive live updates on new transactions having these addresses in input or output. Limits on the maximum number of tracked addresses apply. For higher tracking limits, consider upgrading to an <a href='http://namepool.bit/enterprise'>enterprise sponsorship</a>."
     },
     payload: `{
   "track-addresses": [
@@ -710,7 +710,7 @@ export const wsApiDocsData = [
     "bc1qjj09853tfpztjgrk4jeyzj4ml59fv9cmslv3c4gxxf57u0k3kxmqllx29y"
   ]
 }`,
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -1126,7 +1126,7 @@ export const wsApiDocsData = [
     category: "transactions",
     fragment: "transactions",
     title: "Transactions",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -1137,7 +1137,7 @@ export const wsApiDocsData = [
       default: "Subscribe to a transaction to receive live updates on its confirmation status and position in the mempool."
     },
     payload: '{ "track-tx": "8a4666c6d22ce74fa47e1c4fdb09af556a234cc6a606539a75caf66ba44a2d07" }',
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -1296,14 +1296,14 @@ export const wsApiDocsData = [
     fragment: "track-txs",
     title: "Track Transactions",
     description: {
-      default: "Subscribe to multiple transactions to receive live updates on their status and position in the mempool. Limits on the maximum number of tracked addresses apply. For higher tracking limits, consider upgrading to an <a href='https://mempool.space/enterprise'>enterprise sponsorship</a>."
+      default: "Subscribe to multiple transactions to receive live updates on their status and position in the mempool. Limits on the maximum number of tracked addresses apply. For higher tracking limits, consider upgrading to an <a href='http://namepool.bit/enterprise'>enterprise sponsorship</a>."
     },
     payload: `{
       "track-txs": [
         "8a4666c6d22ce74fa47e1c4fdb09af556a234cc6a606539a75caf66ba44a2d07",
         "941df06064c290b4627e92bdbf3bff7c0e97aab33e273c2a20404f9cfd21b607"
       ]
-    }`,    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    }`,    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -1481,7 +1481,7 @@ export const wsApiDocsData = [
     category: "mempool",
     fragment: "mempool",
     title: "Mempool",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -1489,10 +1489,10 @@ export const wsApiDocsData = [
     fragment: "track-mempool",
     title: "Track Mempool",
     description: {
-      default: "Subscribe to new mempool events, such as new transactions entering the mempool. Available fields: <code>added</code>, <code>removed</code>, <code>mined</code>, <code>replaced</code>. <br> Because this is potentially a lot of data, consider using the <code>track-mempool-txids</code> endpoint described below instead, or upgrade to an <a href='https://mempool.space/enterprise'>enterprise sponsorship</a>."
+      default: "Subscribe to new mempool events, such as new transactions entering the mempool. Available fields: <code>added</code>, <code>removed</code>, <code>mined</code>, <code>replaced</code>. <br> Because this is potentially a lot of data, consider using the <code>track-mempool-txids</code> endpoint described below instead, or upgrade to an <a href='http://namepool.bit/enterprise'>enterprise sponsorship</a>."
     },
     payload: '{ "track-mempool": true }',
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -1826,7 +1826,7 @@ export const wsApiDocsData = [
       default: "Low-bandwith substitute to the above command <code>track-mempool</code>: subscribe to new mempool events, such as new transactions entering the mempool, but only transaction IDs are returned to save bandwith. Available fields: <code>added</code>, <code>removed</code>, <code>mined</code>, <code>replaced</code>."
     },
     payload: '{ "track-mempool-txids": true }',
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -1932,7 +1932,7 @@ export const wsApiDocsData = [
       default: "Subscribe to live mempool projected block template, index 0 being the first mempool block. <br> A full set of stripped transactions in that block is returned when the subscription starts, and deltas (removed and added transactions) are then sent every time the mempool changes."
     },
     payload: '{ "track-mempool-block": 0 }',
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: false,
     codeExample: {
       default: {
@@ -2070,7 +2070,7 @@ export const wsApiDocsData = [
       default: "Subscribe to new RBF events."
     },
     payload: '{ "track-rbf": "all" }',
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: false,
     codeExample: {
       default: {
@@ -2263,7 +2263,7 @@ export const wsApiDocsData = [
       default: "Subscribe to new Full RBF events."
     },
     payload: '{ "track-rbf": "fullRbf" }',
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: false,
     codeExample: {
       default: {
@@ -2456,7 +2456,7 @@ export const restApiDocsData = [
     category: "general",
     fragment: "general",
     title: "General",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
   },
   {
     type: "endpoint",
@@ -2468,7 +2468,7 @@ export const restApiDocsData = [
       default: "Returns details about difficulty adjustment."
     },
     urlString: "/v1/difficulty-adjustment",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -2566,7 +2566,7 @@ export const restApiDocsData = [
     fragment: "get-price",
     title: "GET Price",
     description: {
-      default: "Returns bitcoin latest price denominated in main currencies."
+      default: "Returns namecoin latest price denominated in main currencies."
     },
     urlString: "/v1/prices",
     showConditions: [""],
@@ -2607,7 +2607,7 @@ export const restApiDocsData = [
     fragment: "get-historical-price",
     title: "GET Historical Price",
     description: {
-      default: "Returns bitcoin historical price denominated in main currencies. Available query parameters: <code>currency</code>, <code>timestamp</code>. If no parameter is provided, the full price history for all currencies is returned."
+      default: "Returns namecoin historical price denominated in main currencies. Available query parameters: <code>currency</code>, <code>timestamp</code>. If no parameter is provided, the full price history for all currencies is returned."
     },
     urlString: "/v1/historical-price?currency=EUR&timestamp=1500000000",
     showConditions: [""],
@@ -2654,7 +2654,7 @@ export const restApiDocsData = [
     category: "addresses",
     fragment: "addresses",
     title: "Addresses",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -2666,7 +2666,7 @@ export const restApiDocsData = [
       default: "Returns details about an address. Available fields: <code>address</code>, <code>chain_stats</code>, and <code>mempool_stats</code>. <code>chain_stats</code> and <code>mempool_stats</code> each contain an object with <code>tx_count</code>, <code>funded_txo_count</code>, <code>funded_txo_sum</code>, <code>spent_txo_count</code>, and <code>spent_txo_sum</code>."
     },
     urlString: "/address/:address",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -2803,7 +2803,7 @@ export const restApiDocsData = [
       default: "Get transaction history for the specified address/scripthash, sorted with newest first. Returns up to 50 mempool transactions plus the first 25 confirmed transactions. You can request more confirmed transactions using an <code>after_txid</code> query parameter."
     },
     urlString: "/address/:address/txs",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -2956,7 +2956,7 @@ export const restApiDocsData = [
       default: "Get confirmed transaction history for the specified address/scripthash, sorted with newest first. Returns 25 transactions per page. More can be requested by specifying the last txid seen by the previous query."
     },
     urlString: "/address/:address/txs/chain",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -3109,7 +3109,7 @@ export const restApiDocsData = [
       default: "Get unconfirmed transaction history for the specified address/scripthash. Returns up to 50 transactions (no paging)."
     },
     urlString: "/address/:address/txs/mempool",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -3235,7 +3235,7 @@ export const restApiDocsData = [
       liquid: "Get the list of unspent transaction outputs associated with the address/scripthash. Available fields: <code>txid</code>, <code>vout</code>, <code>value</code>, and <code>status</code> (with the status of the funding tx). There is also a <code>valuecommitment</code> field that may appear in place of <code>value</code>, plus the following additional fields: <code>asset</code>/<code>assetcommitment</code>, <code>nonce</code>/<code>noncecommitment</code>, <code>surjection_proof</code>, and <code>range_proof</code>.",
     },
     urlString: "/address/:address/utxo",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -3366,7 +3366,7 @@ export const restApiDocsData = [
       default: "Returns whether an address is valid or not. Available fields: <code>isvalid</code> (boolean), <code>address</code> (string), <code>scriptPubKey</code> (string), <code>isscript</code> (boolean), <code>iswitness</code> (boolean), <code>witness_version</code> (numeric, optional), and <code>witness_program</code> (string, optional).",
     },
     urlString: "/v1/validate-address/:address",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -3737,7 +3737,7 @@ export const restApiDocsData = [
     category: "blocks",
     fragment: "blocks",
     title: "Blocks",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     options: { electrsOnly: true },
@@ -3750,7 +3750,7 @@ export const restApiDocsData = [
       default: "Returns details about a block.",
     },
     urlString: "/block/:hash",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -3881,10 +3881,10 @@ export const restApiDocsData = [
     fragment: "get-block-v1",
     title: "GET Block (v1)",
     description: {
-      default: "Returns details about a block using Mempool's Node.js backend.",
+      default: "Returns details about a block using Namepool's Node.js backend.",
     },
     urlString: "/v1/block/:hash",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4169,7 +4169,7 @@ export const restApiDocsData = [
       default: "Returns the hex-encoded block header."
     },
     urlString: "/block/:hash/header",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4234,7 +4234,7 @@ export const restApiDocsData = [
       default: "Returns the hash of the block currently at <code>:height</code>."
     },
     urlString: "/block-height/:height",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4296,7 +4296,7 @@ export const restApiDocsData = [
       default: "Returns the height and the hash of the block closest to the given <code>:timestamp</code>."
     },
     urlString: "/v1/mining/blocks/timestamp/:timestamp",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -4350,7 +4350,7 @@ export const restApiDocsData = [
       default: "Returns the raw block representation in binary."
     },
     urlString: "/block/:hash/raw",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4415,7 +4415,7 @@ export const restApiDocsData = [
       default: "Returns the confirmation status of a block. Available fields: <code>in_best_chain</code> (boolean, false for orphaned blocks), <code>next_best</code> (the hash of the next block, only available for blocks in the best chain)."
     },
     urlString: "/block/:hash/status",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4500,7 +4500,7 @@ export const restApiDocsData = [
       default: "Returns the height of the last block."
     },
     urlString: "/blocks/tip/height",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4563,7 +4563,7 @@ export const restApiDocsData = [
       default: "Returns the hash of the last block."
     },
     urlString: "/blocks/tip/hash",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4626,7 +4626,7 @@ export const restApiDocsData = [
       default: "Returns the transaction at index <code>:index</code> within the specified block."
     },
     urlString: "/block/:hash/txid/:index",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4691,7 +4691,7 @@ export const restApiDocsData = [
       default: "Returns a list of all txids in the block."
     },
     urlString: "/block/:hash/txids",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4785,7 +4785,7 @@ export const restApiDocsData = [
       default: "Returns a list of transactions in the block (up to 25 transactions beginning at <code>start_index</code>). Transactions returned here do not have the <code>status</code> field, since all the transactions share the same block and confirmation status."
     },
     urlString: "/block/:hash/txs[/:start_index]",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -4941,7 +4941,7 @@ export const restApiDocsData = [
       default: "Returns details on the past 10 blocks. If <code>:startHeight</code> is specified, the 10 blocks before (and including) <code>:startHeight</code> are returned."
     },
     urlString: "/blocks[/:startHeight]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -5087,10 +5087,10 @@ export const restApiDocsData = [
     fragment: "get-blocks-v1",
     title: "GET Blocks (v1)",
     description: {
-      default: "Returns details on the past 15 blocks from Mempool's Node.js backend. Includes fee and mining details in an <code>extras</code> field. If <code>:startHeight</code> is specified, the past 15 blocks before (and including) <code>:startHeight</code> are returned."
+      default: "Returns details on the past 15 blocks from Namepool's Node.js backend. Includes fee and mining details in an <code>extras</code> field. If <code>:startHeight</code> is specified, the past 15 blocks before (and including) <code>:startHeight</code> are returned."
     },
     urlString: "/v1/blocks[/:startHeight]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -5311,10 +5311,10 @@ export const restApiDocsData = [
     fragment: "get-blocks-bulk",
     title: "GET Blocks (Bulk)",
     description: {
-      default: "<p>Returns details on the range of blocks between <code>:minHeight</code> and <code>:maxHeight</code>, inclusive, up to 10 blocks. If <code>:maxHeight</code> is not specified, it defaults to the current tip.</p><p>To return data for more than 10 blocks, consider becoming an <a href='https://mempool.space/enterprise'>enterprise sponsor</a>.</p>"
+      default: "<p>Returns details on the range of blocks between <code>:minHeight</code> and <code>:maxHeight</code>, inclusive, up to 10 blocks. If <code>:maxHeight</code> is not specified, it defaults to the current tip.</p><p>To return data for more than 10 blocks, consider becoming an <a href='http://namepool.bit/enterprise'>enterprise sponsor</a>.</p>"
     },
     urlString: "/v1/blocks-bulk/:minHeight[/:maxHeight]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -5623,7 +5623,7 @@ export const restApiDocsData = [
     fragment: "get-blocks-v1",
     title: "GET Blocks (v1)",
     description: {
-      default: "Returns details on the past 15 blocks from Mempool's Node.js backend. If <code>:startHeight</code> is specified, the past 15 blocks before (and including) <code>:startHeight</code> are returned."
+      default: "Returns details on the past 15 blocks from Namepool's Node.js backend. If <code>:startHeight</code> is specified, the past 15 blocks before (and including) <code>:startHeight</code> are returned."
     },
     urlString: "/v1/blocks[/:startHeight]",
     showConditions: liquidNetworks,
@@ -5720,7 +5720,7 @@ export const restApiDocsData = [
     category: "mining",
     fragment: "mining",
     title: "Mining",
-    showConditions: bitcoinNetworks
+    showConditions: namecoinNetworks
   },
  {
     type: "endpoint",
@@ -5732,7 +5732,7 @@ export const restApiDocsData = [
       default: "Returns a list of all known mining pools ordered by blocks found over the specified trailing <code>:timePeriod</code>.</p><p>Leave <code>:timePeriod</code> unspecified to get all available data, or specify one of the following values: " + miningTimeIntervals + "."
     },
     urlString: "/v1/mining/pools[/:timePeriod]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -5830,7 +5830,7 @@ export const restApiDocsData = [
       default: "<p>Returns details about the mining pool specified by <code>:slug</code>.</p>"
     },
     urlString: "/v1/mining/pool/:slug",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -5922,7 +5922,7 @@ export const restApiDocsData = [
       default: "<p>Returns average hashrates (and share of total hashrate) of mining pools active in the specified trailing <code>:timePeriod</code>, in descending order of hashrate.</p><p>Leave <code>:timePeriod</code> unspecified to get all available data, or specify any of the following time periods: " + miningTimeIntervals.substr(52) + ".</p>"
     },
     urlString: "/v1/mining/hashrate/pools/[:timePeriod]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6028,7 +6028,7 @@ export const restApiDocsData = [
       default: "Returns all known hashrate data for the mining pool specified by <code>:slug</code>. Hashrate values are weekly averages."
     },
     urlString: "/v1/mining/pool/:slug/hashrate",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6148,7 +6148,7 @@ export const restApiDocsData = [
       default: "Returns past 10 blocks mined by the specified mining pool (<code>:slug</code>) before the specified <code>:blockHeight</code>. If no <code>:blockHeight</code> is specified, the mining pool's 10 most recent blocks are returned."
     },
     urlString: "/v1/mining/pool/:slug/blocks/[:blockHeight]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6237,7 +6237,7 @@ export const restApiDocsData = [
         codeSampleTestnet: {
           esModule: [],
           commonJS: [],
-          curl: [`bitcoincom`,`2226000`],
+          curl: [`namecoincom`,`2226000`],
           response: `[
   {
     "id": "00000000000000ed428cdb70dfdeb0f3927912131cb96e7b1fe274b1bb1181b2",
@@ -6357,7 +6357,7 @@ export const restApiDocsData = [
       default: "<p>Returns network-wide hashrate and difficulty figures over the specified trailing <code>:timePeriod</code>:</p><ul><li>Current (real-time) hashrate</li><li>Current (real-time) difficulty</li><li>Historical daily average hashrates</li><li>Historical difficulty</li></ul><p>Valid values for <code>:timePeriod</code> are " + miningTimeIntervals.substr(52) + ". If no time interval is specified, all available data is returned.</p><p>Be sure that <code>INDEXING_BLOCKS_AMOUNT</code> is set properly in your backend config so that enough blocks are indexed to properly serve your request.</p>"
     },
     urlString: "/v1/mining/hashrate/[:timePeriod]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6476,7 +6476,7 @@ export const restApiDocsData = [
       default: "<p>Returns the record of difficulty adjustments over the specified trailing <code>:interval</code>:</p><ul><li>Block timestamp</li><li>Block height</li><li>Difficulty</li><li>Difficulty change</li></ul><p>If no time interval is specified, all available data is returned."
     },
     urlString: "/v1/mining/difficulty-adjustments/[:interval]",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6570,7 +6570,7 @@ export const restApiDocsData = [
       default: "Returns block reward and total transactions confirmed for the past <code>:blockCount</code> blocks."
     },
     urlString: "/v1/mining/reward-stats/:blockCount",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6630,7 +6630,7 @@ export const restApiDocsData = [
       default: "<p>Returns average total fees for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: " + miningTimeIntervals + ".</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and fee amounts are exact (not averages). For the <code>1w</code> time period, fees may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, fees are averages.</p>"
     },
     urlString: "/v1/mining/blocks/fees/:timePeriod",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6728,7 +6728,7 @@ export const restApiDocsData = [
       default: "<p>Returns average block rewards for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: " + miningTimeIntervals + ".</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and block rewards are exact (not averages). For the <code>1w</code> time period, block rewards may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, block rewards are averages.</p>"
     },
     urlString: "/v1/mining/blocks/rewards/:timePeriod",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6821,7 +6821,7 @@ export const restApiDocsData = [
       default: "Returns average feerate percentiles for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: " + miningTimeIntervals + ".</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and percentiles are exact (not averages). For the <code>1w</code> time period, percentiles may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, percentiles are averages."
     },
     urlString: "/v1/mining/blocks/fee-rates/:timePeriod",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -6947,7 +6947,7 @@ export const restApiDocsData = [
       default: "<p>Returns average size (bytes) and average weight (weight units) for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: " + miningTimeIntervals + ".</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and figures are exact (not averages). For the <code>1w</code> time period, figures may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, figures are averages.</p>"
     },
     urlString: "/v1/mining/blocks/sizes-weights/:timePeriod",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -7090,7 +7090,7 @@ export const restApiDocsData = [
       default: "<p>Returns average block health in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: " + miningTimeIntervals + ".</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and figures are exact (not averages). For the <code>1w</code> time period, figures may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, figures are averages.</p>"
     },
     urlString: ["/v1/mining/blocks/predictions/:timePeriod"],
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -7198,7 +7198,7 @@ export const restApiDocsData = [
       default: "Returns the block audit score for the specified <code>:blockHash</code>. Available fields: <code>hash</code>, <code>matchRate</code>, <code>expectedFees</code>, and <code>expectedWeight</code>."
     },
     urlString: ["/v1/mining/blocks/audit/score/:blockHash"],
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -7255,7 +7255,7 @@ export const restApiDocsData = [
       default: "Returns blocks audit score for the past 16 blocks. If <code>:startHeight</code> is specified, the past 15 blocks before (and including) <code>:startHeight</code> are returned. Available fields: <code>hash</code>, <code>matchRate</code>, <code>expectedFees</code>, and <code>expectedWeight</code>."
     },
     urlString: ["/v1/mining/blocks/audit/scores/:startHeight"],
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -7339,7 +7339,7 @@ export const restApiDocsData = [
       default: "Returns the block audit summary for the specified <code>:blockHash</code>. Available fields: <code>height</code>, <code>id</code>, <code>timestamp</code>, <code>template</code>, <code>missingTxs</code>, <code>addedTxs</code>, <code>freshTxs</code>, <code>sigopTxs</code>, <code>fullrbfTxs</code>, <code>acceleratedTxs</code>, <code>matchRate</code>, <code>expectedFees</code>, and <code>expectedWeight</code>."
     },
     urlString: ["/v1/block/:blockHash/audit-summary"],
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -7482,7 +7482,7 @@ export const restApiDocsData = [
     category: "fees",
     fragment: "fees",
     title: "Fees",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -7494,7 +7494,7 @@ export const restApiDocsData = [
       default: "Returns current mempool as projected blocks."
     },
     urlString: "/v1/fees/mempool-blocks",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -7647,7 +7647,7 @@ export const restApiDocsData = [
       default: "Returns our currently suggested fees for new transactions."
     },
     urlString: "/v1/fees/recommended",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -7740,7 +7740,7 @@ export const restApiDocsData = [
       default: "Returns our currently-suggested feerates with up to 3 decimal places, including sub-sat feerates down to 0.1 s/vb."
     },
     urlString: "/v1/fees/precise",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -7817,7 +7817,7 @@ export const restApiDocsData = [
     category: "mempool",
     fragment: "mempool",
     title: "Mempool",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -7829,7 +7829,7 @@ export const restApiDocsData = [
       default: "Returns current mempool backlog statistics."
     },
     urlString: "/mempool",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -7929,10 +7929,10 @@ export const restApiDocsData = [
     fragment: "get-mempool-transaction-ids",
     title: "GET Mempool Transaction IDs",
     description: {
-      default: "Get the full list of txids in the mempool as an array. The order of the txids is arbitrary and does not match bitcoind."
+      default: "Get the full list of txids in the mempool as an array. The order of the txids is arbitrary and does not match namecoind."
     },
     urlString: "/mempool/txids",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8018,7 +8018,7 @@ export const restApiDocsData = [
       default: "Get a list of the last 10 transactions to enter the mempool. Each transaction object contains simplified overview data, with the following fields: <code>txid</code>, <code>fee</code>, <code>vsize</code>, and <code>value</code>."
     },
     urlString: "/mempool/recent",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8124,7 +8124,7 @@ export const restApiDocsData = [
       default: "Returns the list of mempool transactions that are part of a RBF chain."
     },
     urlString: "/v1/replacements",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -8254,7 +8254,7 @@ export const restApiDocsData = [
       default: "Returns the list of mempool transactions that are part of a Full-RBF chain."
     },
     urlString: "/v1/fullrbf/replacements",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -8378,7 +8378,7 @@ export const restApiDocsData = [
     category: "transactions",
     fragment: "transactions",
     title: "Transactions",
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: namecoinNetworks.concat(liquidNetworks)
   },
   {
     type: "endpoint",
@@ -8390,7 +8390,7 @@ export const restApiDocsData = [
       default: "Returns the ancestors and the best descendant fees for a transaction."
     },
     urlString: "/v1/cpfp",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8455,7 +8455,7 @@ export const restApiDocsData = [
       default: "Returns details about a transaction. Available fields: <code>txid</code>, <code>version</code>, <code>locktime</code>, <code>size</code>, <code>weight</code>, <code>fee</code>, <code>vin</code>, <code>vout</code>, and <code>status</code>."
     },
     urlString: "/tx/:txid",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8595,7 +8595,7 @@ export const restApiDocsData = [
       default: "Returns a transaction serialized as hex."
     },
     urlString: "/tx/:txid/hex",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8657,10 +8657,10 @@ export const restApiDocsData = [
     fragment: "get-transaction-merkleblock-proof",
     title: "GET Transaction Merkleblock Proof",
     description: {
-      default: "Returns a merkle inclusion proof for the transaction using <a href='https://bitcoin.org/en/glossary/merkle-block'>bitcoind's merkleblock</a> format."
+      default: "Returns a merkle inclusion proof for the transaction using <a href='https://namecoin.org/en/glossary/merkle-block'>namecoind's merkleblock</a> format."
     },
     urlString: "/tx/:txid/merkleblock-proof",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8715,7 +8715,7 @@ export const restApiDocsData = [
       default: "Returns a merkle inclusion proof for the transaction using <a href='https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-transaction-get-merkle'>Electrum's blockchain.transaction.get_merkle format."
     },
     urlString: "/tx/:txid/merkle-proof",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8832,7 +8832,7 @@ export const restApiDocsData = [
       default: "Returns the spending status of a transaction output. Available fields: <code>spent</code> (boolean), <code>txid</code> (optional), <code>vin</code> (optional), and <code>status</code> (optional, the status of the spending tx)."
     },
     urlString: "/tx/:txid/outspend/:vout",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -8953,7 +8953,7 @@ export const restApiDocsData = [
       default: "Returns the spending status of all transaction outputs."
     },
     urlString: "/tx/:txid/outspends",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -9089,7 +9089,7 @@ export const restApiDocsData = [
       default: "Returns a transaction as binary data."
     },
     urlString: "/tx/:txid/raw",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -9154,7 +9154,7 @@ export const restApiDocsData = [
       default: "Returns the RBF tree timeline of a transaction."
     },
     urlString: "v1/tx/:txId/rbf",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -9295,7 +9295,7 @@ export const restApiDocsData = [
       default: "Returns the confirmation status of a transaction. Available fields: <code>confirmed</code> (boolean), <code>block_height</code> (optional), and <code>block_hash</code> (optional)."
     },
     urlString: "/tx/:txid/status",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -9382,7 +9382,7 @@ export const restApiDocsData = [
       default: "Returns the timestamps when a list of unconfirmed transactions was initially observed in the mempool. If a transaction is not found in the mempool or has been mined, the timestamp will be <code>0</code>."
     },
     urlString: "/v1/transaction-times",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
@@ -9424,7 +9424,7 @@ export const restApiDocsData = [
       default: "Broadcast a raw transaction to the network. The transaction should be provided as hex in the request body. The <code>txid</code> will be returned on success."
     },
     urlString: "/api/tx",
-    showConditions: bitcoinNetworks.concat(liquidNetworks),
+    showConditions: namecoinNetworks.concat(liquidNetworks),
     showJsExamples: showJsExamplesDefault,
     codeExample: {
       default: {
@@ -12015,7 +12015,7 @@ export const restApiDocsData = [
   ],
   "hasAccess": false,
   "availablePaymentMethods": {
-    "bitcoin": {
+    "namecoin": {
       "enabled": true,
       "min": 1000,
       "max": 10000000
@@ -12042,13 +12042,13 @@ export const restApiDocsData = [
     description: {
       default: "<p>Request a LN invoice to accelerate a transaction.</p>"
     },
-    urlString: "/v1/services/payments/bitcoin",
+    urlString: "/v1/services/payments/namecoin",
     showConditions: [""],
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
       default: {
         codeTemplate: {
-          curl: `%{1}" "[[hostname]][[baseNetworkUrl]]/api/v1/services/payments/bitcoin`, //custom interpolation technique handled in replaceCurlPlaceholder()
+          curl: `%{1}" "[[hostname]][[baseNetworkUrl]]/api/v1/services/payments/namecoin`, //custom interpolation technique handled in replaceCurlPlaceholder()
           commonJS: ``,
           esModule: ``
         },
@@ -12218,15 +12218,15 @@ export const restApiDocsData = [
           headers: "X-Mempool-Auth: stacksats",
           response: `[
   {
-    "type": "Bitcoin",
+    "type": "Namecoin",
     "invoiceId": "CCunucVyNw7jUiUz64mmHz",
     "amount": 10311031,
     "status": "pending",
     "date": 1706372653000,
-    "link": "/payment/bitcoin/CCunucVyNw7jUiUz64mmHz"
+    "link": "/payment/namecoin/CCunucVyNw7jUiUz64mmHz"
   },
   {
-    "type": "Bitcoin",
+    "type": "Namecoin",
     "invoiceId": "SG1U27R9PdWi3gH3jB9tm9",
     "amount": 21000000,
     "status": "paid",
@@ -12459,61 +12459,61 @@ export const faqData = [
     category: "basics",
     fragment: "basics",
     title: "Basics",
-    showConditions: bitcoinNetworks
+    showConditions: namecoinNetworks
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-a-mempool",
     title: "What is a mempool?",
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-a-mempool-explorer",
     title: "What is a mempool explorer?",
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-a-blockchain",
     title: "What is a blockchain?",
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-a-block-explorer",
     title: "What is a block explorer?",
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-mining",
     title: "What is mining?",
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-are-mining-pools",
     title: "What are mining pools?",
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-are-vb-wu",
     title: "What are virtual bytes (vB) and weight units (WU)?",
   },
   {
     type: "endpoint",
     category: "basics",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-svb",
     title: "What is sat/vB?",
   },
@@ -12522,26 +12522,26 @@ export const faqData = [
     category: "help",
     fragment: "help-stuck-transaction",
     title: "Help! My transaction is stuck",
-    showConditions: bitcoinNetworks
+    showConditions: namecoinNetworks
   },
   {
     type: "endpoint",
     category: "help",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "why-is-transaction-stuck-in-mempool",
     title: "Why isn't my transaction confirming?",
   },
   {
     type: "endpoint",
     category: "help",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "how-to-get-transaction-confirmed-quickly",
     title: "How can I get my transaction confirmed more quickly?",
   },
   {
     type: "endpoint",
     category: "help",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "how-prevent-stuck-transaction",
     title: "How can I prevent a transaction from getting stuck in the future?",
   },
@@ -12550,40 +12550,40 @@ export const faqData = [
     category: "using",
     fragment: "using-this-website",
     title: "Using this website",
-    showConditions: bitcoinNetworks
+    showConditions: namecoinNetworks
   },
   {
     type: "endpoint",
     category: "how-to",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "looking-up-transactions",
     title: "How can I look up a transaction?",
   },
   {
     type: "endpoint",
     category: "how-to",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "looking-up-addresses",
     title: "How can I look up an address?",
   },
   {
     type: "endpoint",
     category: "how-to",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "looking-up-blocks",
     title: "How can I look up a block?",
   },
   {
     type: "endpoint",
     category: "how-to",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "looking-up-fee-estimates",
     title: "How can I look up fee estimates?",
   },
   {
     type: "endpoint",
     category: "how-to",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "looking-up-historical-trends",
     title: "How can I explore historical trends?",
   },
@@ -12592,55 +12592,55 @@ export const faqData = [
     category: "advanced",
     fragment: "advanced",
     title: "Advanced",
-    showConditions: bitcoinNetworks
+    showConditions: namecoinNetworks
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-full-mempool",
     title: "What does it mean for the mempool to be \"full\"?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "how-big-is-mempool-used-by-mempool-space",
-    title: "How big is the mempool used by mempool.space?",
+    title: "How big is the mempool used by namepool.bit?",
     options: { officialOnly: true },
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-memory-usage",
     title: "What is memory usage?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "why-empty-blocks",
     title: "Why are there empty blocks?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "why-block-timestamps-dont-always-increase",
     title: "Why don't block timestamps always increase?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "why-dont-fee-ranges-match",
     title: "Why doesn't the fee range shown for a block match the feerates of transactions within the block?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     options: { auditOnly: true },
     fragment: "how-do-block-audits-work",
     title: "How do block audits work?",
@@ -12648,7 +12648,7 @@ export const faqData = [
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     options: { auditOnly: true },
     fragment: "what-is-block-health",
     title: "What is block health?",
@@ -12656,28 +12656,28 @@ export const faqData = [
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "how-do-mempool-goggles-work",
-    title: "How do Mempool Goggles™ work?",
+    title: "How do Namepool Goggles™ work?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-are-sigops",
     title: "What are sigops?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "what-is-adjusted-vsize",
     title: "What is adjusted vsize?",
   },
   {
     type: "endpoint",
     category: "advanced",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "why-do-the-projected-block-fee-ranges-overlap",
     title: "Why do the projected block fee ranges overlap?",
   },
@@ -12686,41 +12686,41 @@ export const faqData = [
     category: "self-hosting",
     fragment: "self-hosting",
     title: "Self-Hosting",
-    showConditions: bitcoinNetworks
+    showConditions: namecoinNetworks
   },
   {
     type: "endpoint",
     category: "self-hosting",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "who-runs-this-website",
     title: "Who runs this website?",
   },
   {
     type: "endpoint",
     category: "self-hosting",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "host-my-own-instance-raspberry-pi",
     title: "How can I host my own instance on a Raspberry Pi?",
   },
   {
     type: "endpoint",
     category: "self-hosting",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "host-my-own-instance-server",
-    title: "How can I host a Mempool instance on my own server?",
+    title: "How can I host a Namepool instance on my own server?",
   },
   {
     type: "endpoint",
     category: "self-hosting",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "install-mempool-with-docker",
-    title: "Can I install Mempool using Docker?",
+    title: "Can I install Namepool using Docker?",
   },
   {
     type: "endpoint",
     category: "self-hosting",
-    showConditions: bitcoinNetworks,
+    showConditions: namecoinNetworks,
     fragment: "address-lookup-issues",
-    title: "Why do I get an error for certain address lookups on my Mempool instance?",
+    title: "Why do I get an error for certain address lookups on my Namepool instance?",
   }
 ];

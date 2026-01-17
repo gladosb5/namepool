@@ -29,7 +29,7 @@ export class CalculatorComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       fiat: [0],
-      bitcoin: [0],
+      namecoin: [0],
       satoshis: [0],
     });
 
@@ -58,13 +58,13 @@ export class CalculatorComponent implements OnInit {
       if (isNaN(value)) {
         return;
       }
-      this.form.get('bitcoin').setValue(rate, { emitEvent: false });
+      this.form.get('namecoin').setValue(rate, { emitEvent: false });
       this.form.get('satoshis').setValue(satsRate, { emitEvent: false } );
     });
 
     combineLatest([
       this.price$,
-      this.form.get('bitcoin').valueChanges
+      this.form.get('namecoin').valueChanges
     ]).subscribe(([price, value]) => {
       const rate = parseFloat((value * price).toFixed(8));
       if (isNaN(value)) {
@@ -79,16 +79,16 @@ export class CalculatorComponent implements OnInit {
       this.form.get('satoshis').valueChanges
     ]).subscribe(([price, value]) => {
       const rate = parseFloat((value / 100_000_000 * price).toFixed(8));
-      const bitcoinRate = (value / 100_000_000).toFixed(8);
+      const namecoinRate = (value / 100_000_000).toFixed(8);
       if (isNaN(value)) {
         return;
       }
       this.form.get('fiat').setValue(rate, { emitEvent: false } );
-      this.form.get('bitcoin').setValue(bitcoinRate, { emitEvent: false });
+      this.form.get('namecoin').setValue(namecoinRate, { emitEvent: false });
     });
 
-    // Default form with 1 BTC
-    this.form.get('bitcoin').setValue(1, { emitEvent: true });
+    // Default form with 1 NMC
+    this.form.get('namecoin').setValue(1, { emitEvent: true });
   }
 
   transformInput(name: string): void {
@@ -101,7 +101,7 @@ export class CalculatorComponent implements OnInit {
       value = '0';
     }
     let sanitizedValue = this.removeExtraDots(value);
-    if (name === 'bitcoin' && this.countDecimals(sanitizedValue) > 8) {
+    if (name === 'namecoin' && this.countDecimals(sanitizedValue) > 8) {
       sanitizedValue = this.toFixedWithoutRounding(sanitizedValue, 8);
     }
     if (sanitizedValue === '') {

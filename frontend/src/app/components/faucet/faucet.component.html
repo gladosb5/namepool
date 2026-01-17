@@ -18,7 +18,7 @@
       <div class="spinner-border text-light"></div>
     } @else if (!user) {
       <!-- User not logged in -->
-      <div class="alert alert-mempool d-block text-center w-100">
+      <div class="alert alert-namepool d-block text-center w-100">
         <div class="d-inline align-middle pr-2">
           <span>To use the faucet, please</span>
         </div>
@@ -35,7 +35,7 @@
     }
     @else if (error === 'not_available') {
       <!-- User logged in but not a paid user or did not link its Github account -->
-      <div class="alert alert-mempool d-block text-center w-100">
+      <div class="alert alert-namepool d-block text-center w-100">
         <div class="d-inline align-middle">
           <span class="mb-2 mr-2">To use the faucet, please</span>
         </div>
@@ -43,7 +43,7 @@
       </div>
     }
     @else if (error === 'account_limited') {
-      <div class="alert alert-mempool d-block text-center w-100">
+      <div class="alert alert-namepool d-block text-center w-100">
         <div class="d-inline align-middle">
           <span class="mb-2 mr-2">Your account does not allow you to access the faucet</span>
         </div>

@@ -3,7 +3,7 @@
   "enterprise": "onbtc",
   "branding": {
     "name": "onbtc",
-    "title": "Bitcoin Office",
+    "title": "Namecoin Office",
     "site_id": 19,
     "header_img": "/resources/onbtclogo.svg",
     "footer_img": "/resources/onbtclogo.svg",
@@ -35,7 +35,7 @@
         "props": {
           "wallet": "ONBTC",
           "period": "1m",
-          "label": "bitcoin.gob.sv",
+          "label": "namecoin.gob.sv",
           "image": "/resources/elsalvador-flag.svg"
         }
       },

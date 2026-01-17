@@ -48,7 +48,7 @@ const routes = {
     fallbackImg: '/resources/previews/accelerator.jpg',
   },
   accelerator: {
-    title: "Mempool Accelerator",
+    title: "Namepool Accelerator",
     fallbackImg: '/resources/previews/accelerator.jpg',
   },
   block: {
@@ -166,7 +166,7 @@ const routes = {
     }
   },
   enterprise: {
-    title: "Mempool Enterprise",
+    title: "Namepool Enterprise",
     fallbackImg: '/resources/previews/enterprise.jpg',
   },
   lightning: {
@@ -241,23 +241,23 @@ const routes = {
     fallbackImg: '/resources/previews/trademark-policy.jpg',
   },
   research: {
-    title: "Mempool Research",
+    title: "Namepool Research",
     fallbackImg: '/resources/previews/research.jpg',
   },
 };
 
 export const networks = {
-  bitcoin: {
-    title: 'The Mempool Open Source Project®',
-    description: 'Explore the full Bitcoin ecosystem with The Mempool Open Source Project®. See the real-time status of your transactions, get network info, and more.',
+  namecoin: {
+    title: 'The Namepool Open Source Project®',
+    description: 'Explore the full Namecoin ecosystem with The Namepool Open Source Project®. See the real-time status of your transactions, get network info, and more.',
     fallbackImg: '/resources/previews/mempool-space-preview.jpg',
     routes: {
       ...routes // all routes supported
     }
   },
   liquid: {
-    title: 'The Mempool Open Source Project®',
-    description: 'Explore the full Bitcoin ecosystem with The Mempool Open Source Project®. See Liquid transactions & assets, get network info, and more.',
+    title: 'The Namepool Open Source Project®',
+    description: 'Explore the full Liquid ecosystem with The Namepool Open Source Project®. See Liquid transactions & assets, get network info, and more.',
     fallbackImg: '/resources/liquid/liquid-network-preview.png',
     routes: { // only block, address & tx routes supported
       block: routes.block,
@@ -268,137 +268,6 @@ export const networks = {
   bisq: {
     fallbackImg: '/resources/bisq/bisq-markets-preview.png',
     routes: {} // no routes supported
-  },
-  onbtc: {
-    networkName: 'ONBTC',
-    title: 'National Bitcoin Office of El Salvador',
-    description: 'The National Bitcoin Office (ONBTC) of El Salvador under President @nayibbukele',
-    fallbackImg: '/resources/onbtc/onbtc-preview.jpg',
-    routes: { // only dynamic routes supported
-      block: routes.block,
-      address: routes.address,
-      tx: routes.tx,
-      mining: {
-        title: "Mining",
-        routes: {
-          pool: routes.mining.routes.pool,
-        }
-      },
-      lightning: {
-        title: "Lightning",
-        routes: routes.lightning.routes,
-      }
-    }
-  },
-  bitb: {
-    networkName: 'BITB',
-    title: 'BITB | Bitwise Bitcoin ETF',
-    description: 'BITB provides low-cost access to bitcoin through a professionally managed fund',
-    fallbackImg: '/resources/bitb/bitb-preview.jpg',
-    routes: { // only dynamic routes supported
-      block: routes.block,
-      address: routes.address,
-      wallet: routes.wallet,
-      tx: routes.tx,
-      mining: {
-        title: "Mining",
-        routes: {
-          pool: routes.mining.routes.pool,
-        }
-      },
-      lightning: {
-        title: "Lightning",
-        routes: routes.lightning.routes,
-      }
-    }
-  },
-  meta: {
-    networkName: 'Metaplanet',
-    title: 'Metaplanet Inc.',
-    description: 'Secure the Future with Bitcoin',
-    fallbackImg: '/resources/meta/meta-preview.png',
-    routes: { // only dynamic routes supported
-      block: routes.block,
-      address: routes.address,
-      wallet: routes.wallet,
-      tx: routes.tx,
-      mining: {
-        title: "Mining",
-        routes: {
-          pool: routes.mining.routes.pool,
-        }
-      },
-      lightning: {
-        title: "Lightning",
-        routes: routes.lightning.routes,
-      }
-    }
-  },
-  river: {
-    networkName: 'River',
-    title: 'River | Invest in Bitcoin with confidence',
-    description: 'Easily buy Bitcoin in minutes. Zero fees on recurring buys. Invest in Bitcoin with confidence with world-class security.',
-    fallbackImg: '/resources/river/river-preview.jpg',
-    routes: { // only dynamic routes supported
-      block: routes.block,
-      address: routes.address,
-      wallet: routes.wallet,
-      tx: routes.tx,
-      mining: {
-        title: "Mining",
-        routes: {
-          pool: routes.mining.routes.pool,
-        }
-      },
-      lightning: {
-        title: "Lightning",
-        routes: routes.lightning.routes,
-      }
-    }
-  },
-  strategy: {
-    networkName: 'Strategy',
-    title: 'Strategy | The world\'s first and largest Bitcoin Treasury Company',
-    description: 'The world\'s first and largest Bitcoin Treasury Company',
-    fallbackImg: '/resources/strategy/strategy-preview.jpg',
-    routes: { // only dynamic routes supported
-      block: routes.block,
-      address: routes.address,
-      wallet: routes.wallet,
-      tx: routes.tx,
-      mining: {
-        title: "Mining",
-        routes: {
-          pool: routes.mining.routes.pool,
-        }
-      },
-      lightning: {
-        title: "Lightning",
-        routes: routes.lightning.routes,
-      }
-    }
-    },
-  xxi: {
-    networkName: 'XXI',
-    title: 'Twenty One | The Institutional Standard for Bitcoin',
-    description: 'The Institutional Standard for Bitcoin',
-    fallbackImg: '/resources/xxi/xxi-preview.png',
-    routes: { // only dynamic routes supported
-      block: routes.block,
-      address: routes.address,
-      wallet: routes.wallet,
-      tx: routes.tx,
-      mining: {
-        title: "Mining",
-        routes: {
-          pool: routes.mining.routes.pool,
-        }
-      },
-      lightning: {
-        title: "Lightning",
-        routes: routes.lightning.routes,
-      }
-    }
   }
 };
 
@@ -420,7 +289,7 @@ export function matchRoute(network: string, path: string, matchFor: string = 're
     match.networkMode = parts.shift() || 'mainnet';
   }
 
-  let route = networks[network] || networks.bitcoin;
+  let route = networks[network] || networks.namecoin;
   match.fallbackImg = route.fallbackImg;
   match.title = route.title;
   match.description = route.description;

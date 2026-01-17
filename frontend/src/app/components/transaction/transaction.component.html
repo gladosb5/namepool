@@ -1,7 +1,7 @@
 <div class="container-xl">
 
   <div class="title-block">
-    <div *ngIf="rbfTransaction && !tx?.status?.confirmed" class="alert alert-mempool" role="alert">
+    <div *ngIf="rbfTransaction && !tx?.status?.confirmed" class="alert alert-namepool" role="alert">
       <span i18n="transaction.rbf.replacement|RBF replacement">This transaction has been replaced by:</span>
       <app-truncate [text]="rbfTransaction.txid" [lastChars]="12" [link]="['/tx/' | relativeUrl, rbfTransaction.txid]"></app-truncate>
     </div>
@@ -38,10 +38,10 @@
       </div>
       <span>
         <ng-container i18n="transaction.duplicate.notice|Duplicate transaction notice">
-          This transaction ID appears twice in the blockchain as the coinbase of blocks <a [routerLink]="['/block/' | relativeUrl, duplicateTxBlocks[0]]">{{ duplicateTxBlocks[0] }}</a> and <a [routerLink]="['/block/' | relativeUrl, duplicateTxBlocks[1]]">{{ duplicateTxBlocks[1] }}</a>, due to a bug later mitigated by <a href="https://github.com/bitcoin/bips/blob/master/bip-0030.mediawiki" target="_blank" rel="noopener">BIP-30</a>.
+          This transaction ID appears twice in the blockchain as the coinbase of blocks <a [routerLink]="['/block/' | relativeUrl, duplicateTxBlocks[0]]">{{ duplicateTxBlocks[0] }}</a> and <a [routerLink]="['/block/' | relativeUrl, duplicateTxBlocks[1]]">{{ duplicateTxBlocks[1] }}</a>, due to a bug later mitigated by <a href="https://github.com/namecoin/bips/blob/master/bip-0030.mediawiki" target="_blank" rel="noopener">BIP-30</a>.
         </ng-container>
         <span class="mr-3"></span>
-        <a href="https://blog.bitmex.com/bitcoins-duplicate-transactions/" target="_blank" rel="noopener" i18n="transaction.duplicate.read-more|Duplicate transaction read more" style="white-space: nowrap;">Read more</a>
+        <a href="https://blog.bitmex.com/namecoins-duplicate-transactions/" target="_blank" rel="noopener" i18n="transaction.duplicate.read-more|Duplicate transaction read more" style="white-space: nowrap;">Read more</a>
       </span>
     </div>
   }
@@ -87,7 +87,7 @@
       <span id='accelerate' #accelerate class="anchor"></span>
       <br>
       <div class="title float-left mb-1">
-        <h2><a [href]="[ isMempoolSpaceBuild ? '/accelerator' : 'https://mempool.space/accelerator']" [target]="isMempoolSpaceBuild ? '' : 'blank'"><app-svg-images name="accelerator" [height]="isMobile ? '35px' : '45px'"></app-svg-images></a></h2>
+        <h2><a [href]="[ isNamepoolSpaceBuild ? '/accelerator' : 'http://namepool.bit/accelerator']" [target]="isNamepoolSpaceBuild ? '' : 'blank'"><app-svg-images name="accelerator" [height]="isMobile ? '35px' : '45px'"></app-svg-images></a></h2>
       </div>
       <button type="button" class="btn btn-outline-info accelerator-toggle btn-sm float-right" [class.hide-on-mobile]="hasAccelerationDetails" (click)="closeAccelerator()" i18n="accelerator.hide">Hide accelerator</button>
       <button *ngIf="hasAccelerationDetails" class="btn btn-sm btn-outline-info details-button float-right ml-2" (click)="showAccelerationDetails = !showAccelerationDetails" i18n="transaction.details|Transaction Details">Details</button>
@@ -362,7 +362,7 @@
 
     <div class="text-center" *ngIf="waitingForTransaction; else errorTemplate">
       <h3 i18n="transaction.error.transaction-not-found">Transaction not found.</h3>
-      <h5 i18n="transaction.error.waiting-for-it-to-appear">Waiting for it to appear in the mempool...</h5>
+      <h5 i18n="transaction.error.waiting-for-it-to-appear">Waiting for it to appear in the namepool...</h5>
       <div class="spinner-border text-light mt-2"></div>
     </div>
 

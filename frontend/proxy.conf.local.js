@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-const FRONTEND_CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const PRIMARY_CONFIG_FILE_NAME = 'namepool-frontend-config.json';
+const LEGACY_CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const FRONTEND_CONFIG_FILE_NAME = fs.existsSync(PRIMARY_CONFIG_FILE_NAME) ? PRIMARY_CONFIG_FILE_NAME : LEGACY_CONFIG_FILE_NAME;
 
 let configContent;
 
@@ -15,6 +17,7 @@ try {
       throw new Error(e);
   } else {
       console.log(`${FRONTEND_CONFIG_FILE_NAME} file not found, using default config`);
+      configContent = {};
   }
 }
 

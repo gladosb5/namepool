@@ -1,9 +1,9 @@
 import feeApi from '../../api/fee-api';
-import { IBitcoinApi } from '../../api/bitcoin/bitcoin-api.interface';
+import { INamecoinApi } from '../../api/namecoin/namecoin-api.interface';
 const feeMempoolBlocks = require('./test-data/fee-mempool-blocks.json');
 
 
-const subSatMempoolInfo: IBitcoinApi.MempoolInfo = {
+const subSatMempoolInfo: INamecoinApi.MempoolInfo = {
   mempoolminfee: 0.000001, // 0.1 sat/vbyte
   loaded: true,
   size: 100,
@@ -14,7 +14,7 @@ const subSatMempoolInfo: IBitcoinApi.MempoolInfo = {
   minrelaytxfee: 0.000001, // 0.1 sat/vbyte
 };
 
-const mempoolInfo: IBitcoinApi.MempoolInfo = {
+const mempoolInfo: INamecoinApi.MempoolInfo = {
   mempoolminfee: 0.00001,
   loaded: true,
   size: 100,

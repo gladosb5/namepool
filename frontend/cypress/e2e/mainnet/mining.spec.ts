@@ -27,7 +27,7 @@ describe('Mainnet - Mining Features', () => {
       it('loads the mining pool page from the dashboard', () => {
         cy.visit('/mining');
         cy.waitForSkeletonGone();
-        cy.get('[data-cy="bitcoin-block-0-pool"]').click().then(() => {
+        cy.get('[data-cy="namecoin-block-0-pool"]').click().then(() => {
           cy.waitForSkeletonGone();
           cy.wait('@pool');
           cy.url().should('match', /\/mining\/pool\/(\w+)/);
@@ -37,7 +37,7 @@ describe('Mainnet - Mining Features', () => {
       it('loads the mining pool page from the blocks page', () => {
         cy.visit('/mining');
         cy.waitForSkeletonGone();
-        cy.get('[data-cy="bitcoin-block-0-height"]').click().then(() => {
+        cy.get('[data-cy="namecoin-block-0-height"]').click().then(() => {
           cy.waitForSkeletonGone();
           cy.get('[data-cy="block-details-miner-badge"]').click().then(() => {
             cy.waitForSkeletonGone();
@@ -58,19 +58,19 @@ describe('Mainnet - Mining Features', () => {
       it('shows the mempool blocks', () => {
         cy.get('[data-cy="mempool-block-0-fees"]').invoke('text').should('match', /~(.*) sat\/vB/);
         cy.get('[data-cy="mempool-block-0-fee-span"]').invoke('text').should('match', /(.*) - (.*) sat\/vB/);
-        cy.get('[data-cy="mempool-block-0-total-fees"]').invoke('text').should('match', /(.*) BTC/);
+        cy.get('[data-cy="mempool-block-0-total-fees"]').invoke('text').should('match', /(.*) NMC/);
         cy.get('[data-cy="mempool-block-0-transaction-count"]').invoke('text').should('match', /(.*) transactions/);
         cy.get('[data-cy="mempool-block-0-time"]').invoke('text').should('match', /In ~(.*) minutes/);
       });
 
       it('shows the mined blocks', () => {
-        cy.get('[data-cy="bitcoin-block-0-height"]').invoke('text').should('match', /(\d)/);
-        cy.get('[data-cy="bitcoin-block-0-fees"]').invoke('text').should('match', /~(.*) sat\/vB/);
-        cy.get('[data-cy="bitcoin-block-0-fee-span"]').invoke('text').should('match', /(.*) - (.*) sat\/vB/);
-        cy.get('[data-cy="bitcoin-block-0-total-fees"]').invoke('text').should('match', /(.*) BTC/);
-        cy.get('[data-cy="bitcoin-block-0-transactions"]').invoke('text').should('match', /(.*) transactions/);
-        cy.get('[data-cy="bitcoin-block-0-time"]').invoke('text').should('match', /((.*) ago|Just now)/);
-        cy.get('[data-cy="bitcoin-block-0-pool"]').invoke('text').should('match', /(\w)/);
+        cy.get('[data-cy="namecoin-block-0-height"]').invoke('text').should('match', /(\d)/);
+        cy.get('[data-cy="namecoin-block-0-fees"]').invoke('text').should('match', /~(.*) sat\/vB/);
+        cy.get('[data-cy="namecoin-block-0-fee-span"]').invoke('text').should('match', /(.*) - (.*) sat\/vB/);
+        cy.get('[data-cy="namecoin-block-0-total-fees"]').invoke('text').should('match', /(.*) NMC/);
+        cy.get('[data-cy="namecoin-block-0-transactions"]').invoke('text').should('match', /(.*) transactions/);
+        cy.get('[data-cy="namecoin-block-0-time"]').invoke('text').should('match', /((.*) ago|Just now)/);
+        cy.get('[data-cy="namecoin-block-0-pool"]').invoke('text').should('match', /(\w)/);
       });
 
       it('shows the reward stats for the last 144 blocks', () => {

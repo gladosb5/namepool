@@ -14,12 +14,14 @@ export default defineConfig({
   e2e: {
     setupNodeEvents(on: any, config: any) {
       const fs = require('fs');
-      const CONFIG_FILE = 'mempool-frontend-config.json';
-      if (fs.existsSync(CONFIG_FILE)) {
-        let contents = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
-        config.env.BASE_MODULE = contents.BASE_MODULE ? contents.BASE_MODULE : 'mempool';
+      const PRIMARY_CONFIG_FILE = 'namepool-frontend-config.json';
+      const LEGACY_CONFIG_FILE = 'mempool-frontend-config.json';
+      const configFile = fs.existsSync(PRIMARY_CONFIG_FILE) ? PRIMARY_CONFIG_FILE : LEGACY_CONFIG_FILE;
+      if (fs.existsSync(configFile)) {
+        const contents = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+        config.env.BASE_MODULE = contents.BASE_MODULE ? contents.BASE_MODULE : 'namepool';
       } else {
-        config.env.BASE_MODULE = 'mempool';
+        config.env.BASE_MODULE = 'namepool';
       }
       return config;
     },

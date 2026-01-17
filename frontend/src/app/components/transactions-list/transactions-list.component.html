@@ -17,7 +17,7 @@
 
     <div *ngIf="errorUnblinded" class="error-unblinded">{{ errorUnblinded }}</div>
     @if (similarityMatches.get(tx.txid)?.size) {
-      <div class="alert alert-mempool" role="alert">
+      <div class="alert alert-namepool" role="alert">
         <span i18n="transaction.poison.warning">Warning! This transaction involves deceptively similar addresses. It may be an address poisoning attack.</span>
       </div>
     }
@@ -39,7 +39,7 @@
                   </ng-template>
                   <ng-template #hasPrevout>
                     <ng-template [ngIf]="vin.is_pegin" [ngIfElse]="defaultPrevout">
-                      <a target="_blank" *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegInLink" [attr.href]="'https://mempool.space/tx/' + vin.txid + ':' + vin.vout" class="red">
+                      <a target="_blank" *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegInLink" [attr.href]="'http://namepool.bit/tx/' + vin.txid + ':' + vin.vout" class="red">
                         <fa-icon [icon]="['fas', 'arrow-alt-circle-right']" [fixedWidth]="true"></fa-icon>
                       </a>
                       <ng-template #localPegInLink>
@@ -344,7 +344,7 @@
                     <ng-template [ngIf]="vout.pegout" [ngIfElse]="defaultscriptpubkey_type">
                       <ng-container i18n="transactions-list.peg-out-to">Peg-out to <ng-container *ngTemplateOutlet="pegOutLink"></ng-container></ng-container>
                       <ng-template #pegOutLink>
-                        <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegoutLink" target="_blank" style="color:var(--orange)" [attr.href]="'https://mempool.space/address/' + vout.pegout.scriptpubkey_address" title="{{ vout.pegout.scriptpubkey_address }}">
+                        <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegoutLink" target="_blank" style="color:var(--orange)" [attr.href]="'http://namepool.bit/address/' + vout.pegout.scriptpubkey_address" title="{{ vout.pegout.scriptpubkey_address }}">
                           <app-truncate [text]="vout.pegout.scriptpubkey_address"></app-truncate>
                         </a>
                         <ng-template #localPegoutLink>
@@ -522,7 +522,7 @@
       <div class="float-right" [class.has-accelerate]="!tx.status?.confirmed && acceleratedTxids">
         @if (!tx.status?.confirmed && acceleratedTxids) {
           <button type="button" class="btn btn-sm accelerate mt-2 mr-2" [class.blink]="acceleratedTxids.has(tx.txid)" [routerLink]="['/tx/' | relativeUrl, tx.txid]" [fragment]="'accelerate'">
-            <img src="/resources/mempool-accelerator-sparkles-light.svg" height="15" class="mr-2" />
+            <img src="/resources/namepool-accelerator-sparkles-light.svg" height="15" class="mr-2" />
             @if (acceleratedTxids.has(tx.txid)) {
               <span i18n="transaction.audit.accelerated">Accelerated</span>
             } @else {

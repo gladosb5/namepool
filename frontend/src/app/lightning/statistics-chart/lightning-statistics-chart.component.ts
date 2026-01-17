@@ -69,7 +69,7 @@ export class LightningStatisticsChartComponent implements OnInit, OnChanges {
       this.miningWindowPreference = '3y';
     } else {
       this.seoService.setTitle($localize`:@@ea8db27e6db64f8b940711948c001a1100e5fe9f:Lightning Network Capacity`);
-      this.seoService.setDescription($localize`:@@meta.description.lightning.stats-chart:See the capacity of the Lightning network visualized over time in terms of the number of open channels and total bitcoin capacity.`);
+      this.seoService.setDescription($localize`:@@meta.description.lightning.stats-chart:See the capacity of the Lightning network visualized over time in terms of the number of open channels and total namecoin capacity.`);
       this.miningWindowPreference = this.miningService.getDefaultTimespan('all');
     }
     this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });
@@ -177,7 +177,7 @@ export class LightningStatisticsChartComponent implements OnInit, OnChanges {
             if (tick.seriesIndex === 0) { // Channels
               sizeString = `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.0-0')}`;
             } else if (tick.seriesIndex === 1) { // Capacity
-              weightString = `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1] / 100000000, this.locale, '1.0-0')} BTC`;
+              weightString = `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1] / 100000000, this.locale, '1.0-0')} NMC`;
             }
           }
 

@@ -62,7 +62,7 @@
             "similarity": 0.9079894021278392
         }
     },
-    "mempool-blocks": [
+    "namepool-blocks": [
         {
             "blockSize": 1979907,
             "blockVSize": 997974.75,

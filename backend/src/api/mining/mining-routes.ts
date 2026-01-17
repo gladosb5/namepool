@@ -5,7 +5,7 @@ import BlocksAuditsRepository from '../../repositories/BlocksAuditsRepository';
 import BlocksRepository from '../../repositories/BlocksRepository';
 import DifficultyAdjustmentsRepository from '../../repositories/DifficultyAdjustmentsRepository';
 import HashratesRepository from '../../repositories/HashratesRepository';
-import bitcoinClient from '../bitcoin/bitcoin-client';
+import namecoinClient from '../namecoin/namecoin-client';
 import mining from "./mining";
 import PricesRepository from '../../repositories/PricesRepository';
 import AccelerationRepository from '../../repositories/AccelerationRepository';
@@ -183,10 +183,10 @@ class MiningRoutes {
   private async $getHistoricalHashrate(req: Request, res: Response) {
     let currentHashrate = 0, currentDifficulty = 0;
     try {
-      currentHashrate = await bitcoinClient.getNetworkHashPs(1008);
-      currentDifficulty = await bitcoinClient.getDifficulty();
+      currentHashrate = await namecoinClient.getNetworkHashPs(1008);
+      currentDifficulty = await namecoinClient.getDifficulty();
     } catch (e) {
-      logger.debug('Bitcoin Core is not available, using zeroed value for current hashrate and difficulty');
+      logger.debug('Namecoin Core is not available, using zeroed value for current hashrate and difficulty');
     }
 
     try {

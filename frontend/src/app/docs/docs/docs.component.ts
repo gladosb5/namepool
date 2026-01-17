@@ -32,7 +32,7 @@ export class DocsComponent implements OnInit {
   ngOnInit(): void {
     this.websocket.want(['blocks']);
     this.env = this.stateService.env;
-    this.showFaqTab = ( this.env.BASE_MODULE === 'mempool' ) ? true : false;
+    this.showFaqTab = ( this.env.BASE_MODULE === 'namepool' ) ? true : false;
     this.showElectrsTab = this.stateService.env.OFFICIAL_MEMPOOL_SPACE;
 
     document.querySelector<HTMLElement>( "html" ).style.scrollBehavior = "smooth";
@@ -45,7 +45,7 @@ export class DocsComponent implements OnInit {
     if (url[0].path === "faq" ) {
       this.activeTab = 0;
       this.seoService.setTitle($localize`:@@meta.title.docs.faq:FAQ`);
-      this.seoService.setDescription($localize`:@@meta.description.docs.faq:Get answers to common questions like: What is a mempool? Why isn't my transaction confirming? How can I run my own instance of The Mempool Open Source Project? And more.`);
+      this.seoService.setDescription($localize`:@@meta.description.docs.faq:Get answers to common questions like: What is a mempool? Why isn't my transaction confirming? How can I run my own instance of The Namepool Open Source Project? And more.`);
       this.ogService.setManualOgImage('faq.jpg');
     } else if( url[1].path === "rest" ) {
       this.activeTab = 1;
@@ -53,7 +53,7 @@ export class DocsComponent implements OnInit {
       if (this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
         this.seoService.setDescription($localize`:@@meta.description.docs.rest-liquid:Documentation for the liquid.network REST API service: get info on addresses, transactions, assets, blocks, and more.`);
       } else {
-        this.seoService.setDescription($localize`:@@meta.description.docs.rest-bitcoin:Documentation for the mempool.space REST API service: get info on addresses, transactions, blocks, fees, mining, the Lightning network, and more.`);
+        this.seoService.setDescription($localize`:@@meta.description.docs.rest-namecoin:Documentation for the namepool.bit REST API service: get info on addresses, transactions, blocks, fees, mining, the Lightning network, and more.`);
       }
     } else if( url[1].path === "websocket" ) {
       this.activeTab = 2;
@@ -61,7 +61,7 @@ export class DocsComponent implements OnInit {
       if( this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ) {
         this.seoService.setDescription($localize`:@@meta.description.docs.websocket-liquid:Documentation for the liquid.network WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.`);
       } else {
-        this.seoService.setDescription($localize`:@@meta.description.docs.websocket-bitcoin:Documentation for the mempool.space WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.`);
+        this.seoService.setDescription($localize`:@@meta.description.docs.websocket-namecoin:Documentation for the namepool.bit WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.`);
       }
     } else {
       this.activeTab = 3;

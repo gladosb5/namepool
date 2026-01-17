@@ -129,6 +129,11 @@ footer .row.version p {
   color: rgba(255, 255, 255, 0.4);
 }
 
+footer .row.version p.fork-disclaimer {
+  margin-top: 6px;
+  font-size: 11px;
+}
+
 footer .row.version p a {
   color: #09a3ba;
 }

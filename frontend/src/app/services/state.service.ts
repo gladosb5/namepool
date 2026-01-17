@@ -96,7 +96,7 @@ const defaultEnv: Env = {
   'SIGNET_ENABLED': false,
   'LIQUID_ENABLED': false,
   'LIQUID_TESTNET_ENABLED': false,
-  'BASE_MODULE': 'mempool',
+  'BASE_MODULE': 'namepool',
   'ROOT_NETWORK': '',
   'ITEMS_PER_PAGE': 10,
   'KEEP_BLOCKS_AMOUNT': 8,
@@ -108,8 +108,6 @@ const defaultEnv: Env = {
   'MEMPOOL_BLOCKS_AMOUNT': 8,
   'GIT_COMMIT_HASH': '',
   'PACKAGE_JSON_VERSION': '',
-  'MEMPOOL_WEBSITE_URL': 'https://mempool.space',
-  'LIQUID_WEBSITE_URL': 'https://liquid.network',
   'MINING_DASHBOARD': true,
   'LIGHTNING': false,
   'AUDIT': false,
@@ -127,7 +125,9 @@ const defaultEnv: Env = {
   'PUBLIC_ACCELERATIONS': false,
   'ADDITIONAL_CURRENCIES': false,
   'STRATUM_ENABLED': false,
-  'SERVICES_API': 'https://mempool.space/api/v1/services',
+  'MEMPOOL_WEBSITE_URL': 'http://namepool.bit',
+  'LIQUID_WEBSITE_URL': 'https://liquid.network',
+  'SERVICES_API': 'http://namepool.bit/api/v1/services',
   'PROD_DOMAINS': [],
 };
 
@@ -137,11 +137,12 @@ const defaultEnv: Env = {
 export class StateService {
   referrer: string = '';
   isBrowser: boolean = isPlatformBrowser(this.platformId);
-  isMempoolSpaceBuild = window['isMempoolSpaceBuild'] ?? false;
+  isNamepoolSpaceBuild = window['isNamepoolSpaceBuild'] ?? window['isMempoolSpaceBuild'] ?? false;
+  isMempoolSpaceBuild = this.isNamepoolSpaceBuild;
   isProdDomain: boolean;
   backend: 'esplora' | 'electrum' | 'none' = 'esplora';
   network = '';
-  lightningNetworks = ['', 'mainnet', 'bitcoin', 'testnet', 'signet'];
+  lightningNetworks = ['', 'mainnet', 'namecoin', 'testnet', 'signet'];
   lightning = false;
   blockVSize: number;
   env: Env;

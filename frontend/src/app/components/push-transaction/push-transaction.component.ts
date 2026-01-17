@@ -56,7 +56,7 @@ export class PushTransactionComponent implements OnInit {
     this.stateService.networkChanged$.subscribe((network) => this.network = network);
 
     this.seoService.setTitle($localize`:@@f13cbfe8cfc955918e9f64466d2cafddb4760d9a:Broadcast Transaction`);
-    this.seoService.setDescription($localize`:@@meta.description.push-tx:Broadcast a transaction to the ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'}${seoDescriptionNetwork(this.stateService.network)} network using the transaction's hash.`);
+    this.seoService.setDescription($localize`:@@meta.description.push-tx:Broadcast a transaction to the ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Namecoin'}${seoDescriptionNetwork(this.stateService.network)} network using the transaction's hash.`);
     this.ogService.setManualOgImage('tx-push.jpg');
 
     this.route.fragment.subscribe(async (fragment) => {

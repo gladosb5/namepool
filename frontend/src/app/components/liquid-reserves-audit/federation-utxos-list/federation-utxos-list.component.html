@@ -38,8 +38,8 @@
               </a>
             </td>
             <td class="address text-left">
-              <a href="{{ env.MEMPOOL_WEBSITE_URL + '/address/' + utxo.bitcoinaddress }}" target="_blank" style="color:var(--orange)">
-                <app-truncate [text]="utxo.bitcoinaddress" [lastChars]="6"></app-truncate>
+              <a href="{{ env.MEMPOOL_WEBSITE_URL + '/address/' + utxo.namecoinaddress }}" target="_blank" style="color:var(--orange)">
+                <app-truncate [text]="utxo.namecoinaddress" [lastChars]="6"></app-truncate>
               </a>
             </td>
             <td class="amount text-right">

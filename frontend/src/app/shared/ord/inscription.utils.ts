@@ -162,7 +162,7 @@ export function readBytes(raw: Uint8Array, pointer: number, n: number): [Uint8Ar
 }
 
 /**
- * Reads data based on the Bitcoin script push opcode starting from a specified pointer in the raw data.
+ * Reads data based on the Namecoin script push opcode starting from a specified pointer in the raw data.
  * Handles different opcodes and direct push (where the opcode itself signifies the number of bytes to push).
  *
  * @param raw - The raw transaction data as a Uint8Array.
@@ -182,7 +182,7 @@ export function readPushdata(raw: Uint8Array, pointer: number): [Uint8Array, num
 
   // Handle the special case of OP_1NEGATE (-1)
   if (opcode === OP_1NEGATE) {
-    // OP_1NEGATE pushes the value -1 onto the stack, represented as 0x81 in Bitcoin Script
+    // OP_1NEGATE pushes the value -1 onto the stack, represented as 0x81 in Namecoin Script
     return [new Uint8Array([0x81]), newPointer];
   }
 

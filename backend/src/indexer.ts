@@ -3,7 +3,7 @@ import blocks from './api/blocks';
 import mempool from './api/mempool';
 import mining from './api/mining/mining';
 import logger from './logger';
-import bitcoinClient from './api/bitcoin/bitcoin-client';
+import namecoinClient from './api/namecoin/namecoin-client';
 import priceUpdater from './tasks/price-updater';
 import PricesRepository from './repositories/PricesRepository';
 import config from './config';
@@ -39,7 +39,7 @@ class Indexer {
   public async checkAvailableCoreIndexes(): Promise<void> {
     const updatedCoreIndexes: CoreIndex[] = [];
 
-    const indexes: any = await bitcoinClient.getIndexInfo();
+    const indexes: any = await namecoinClient.getIndexInfo();
     for (const indexName in indexes) {
       const newState = {
         name: indexName,
@@ -187,10 +187,10 @@ class Indexer {
         }
       }
 
-      // Do not attempt to index anything unless Bitcoin Core is fully synced
-      const blockchainInfo = await bitcoinClient.getBlockchainInfo();
+      // Do not attempt to index anything unless Namecoin Core is fully synced
+      const blockchainInfo = await namecoinClient.getBlockchainInfo();
       if (blockchainInfo.blocks !== blockchainInfo.headers) {
-        logger.debug(`Bitcoin Core not fully synced, retrying index run in 10 seconds.`);
+        logger.debug(`Namecoin Core not fully synced, retrying index run in 10 seconds.`);
         nextRunDelay = retryDelay;
         return;
       }

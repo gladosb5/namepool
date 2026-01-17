@@ -495,21 +495,21 @@
             "scriptsig": "0350960d122f62737175617265642fe5006405fe934bb9fabe6d6d2db144ad7b2eed39c89a2cde9f88f06d9082613911584463126673a700303e881000000000000000000002dc0000000000000000"
         }
     },
-    "mempoolInfo": {
+    "namepoolInfo": {
         "loaded": true,
         "size": 4173,
         "bytes": 3427792,
         "usage": 16974288,
         "total_fee": 0.05445324,
-        "maxmempool": 300000000,
-        "mempoolminfee": 0.00001,
+        "maxnamepool": 300000000,
+        "namepoolminfee": 0.00001,
         "minrelaytxfee": 0.00001,
         "incrementalrelayfee": 0.00001,
         "unbroadcastcount": 0,
         "fullrbf": true
     },
     "vBytesPerSecond": 1415,
-    "mempool-blocks": [
+    "namepool-blocks": [
         {
             "blockSize": 1779311,
             "blockVSize": 997968.5,
@@ -1212,7 +1212,7 @@
         "JPY": 12753000
     },
     "backendInfo": {
-        "hostname": "node205.tk7.mempool.space",
+        "hostname": "node205.tk7.namepool.bit",
         "version": "3.1.0-dev",
         "gitCommit": "3c08b5c72",
         "lightning": false,

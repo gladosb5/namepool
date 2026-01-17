@@ -1,7 +1,7 @@
 import config from '../../config';
 import logger from '../../logger';
-import { IEsploraApi } from '../bitcoin/esplora-api.interface';
-import bitcoinApi from '../bitcoin/bitcoin-api-factory';
+import { IEsploraApi } from '../namecoin/esplora-api.interface';
+import namecoinApi from '../namecoin/namecoin-api-factory';
 import axios from 'axios';
 import { TransactionExtended } from '../../mempool.interfaces';
 import { promises as fsPromises } from 'fs';
@@ -246,8 +246,8 @@ class WalletApi {
     const refreshTransactions = !wallet.addresses[address.address] || (address.active && (Date.now() - wallet.addresses[address.address].lastSync) > 60 * 60 * 1000);
     if (refreshTransactions) {
       try {
-        const summary = await bitcoinApi.$getAddressTransactionSummary(address.address);
-        const addressInfo = await bitcoinApi.$getAddress(address.address);
+        const summary = await namecoinApi.$getAddressTransactionSummary(address.address);
+        const addressInfo = await namecoinApi.$getAddress(address.address);
         const walletAddress: WalletAddress = {
           address: address.address,
           active: address.active,

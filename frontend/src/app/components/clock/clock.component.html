@@ -13,7 +13,7 @@
     <app-clock-face [size]="clockSize">
       <div class="block-wrapper">
         <ng-container *ngIf="blocks && blocks.length">
-          <ng-container *ngIf="mode === 'mined'; else mempoolMode;">
+          <ng-container *ngIf="mode === 'mined'; else namepoolMode;">
             <div class="block-cube">
               <div class="side top"></div>
               <div class="side bottom"></div>
@@ -23,7 +23,7 @@
               <div class="side back" [style]="blockStyle"></div>
             </div>
           </ng-container>
-          <ng-template #mempoolMode>
+          <ng-template #namepoolMode>
             <div class="block-sizer" [style]="blockSizerStyle">
               <app-mempool-block-overview [index]="blockIndex"></app-mempool-block-overview>
             </div>

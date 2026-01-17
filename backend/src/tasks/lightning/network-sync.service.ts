@@ -1,7 +1,7 @@
 import DB from '../../database';
 import logger from '../../logger';
 import channelsApi from '../../api/explorer/channels.api';
-import bitcoinApi from '../../api/bitcoin/bitcoin-api-factory';
+import namecoinApi from '../../api/namecoin/namecoin-api-factory';
 import config from '../../config';
 import { ILightningApi } from '../../api/lightning/lightning-api.interface';
 import { $lookupNodeLocation } from './sync-tasks/node-locations';
@@ -271,7 +271,7 @@ class NetworkSyncService {
     let currentBlockHeight = blocks.getCurrentBlockHeight();
     try {
       if (config.MEMPOOL.ENABLED === false) { // https://github.com/mempool/mempool/issues/3582
-        currentBlockHeight = await bitcoinApi.$getBlockHeightTip();
+        currentBlockHeight = await namecoinApi.$getBlockHeightTip();
       }
       if (this.closedChannelsScanBlock === currentBlockHeight) {
         logger.debug(`We've already scan closed channels for this block, skipping.`);
@@ -293,7 +293,7 @@ class NetworkSyncService {
       // process batches of 5000 channels
       for (let i = 0; i < Math.ceil(allChannels.length / sliceLength); i++) {
         const channels = allChannels.slice(i * sliceLength, (i + 1) * sliceLength);
-        const outspends = await bitcoinApi.$getOutSpendsByOutpoint(channels.map(channel => {
+        const outspends = await namecoinApi.$getOutSpendsByOutpoint(channels.map(channel => {
           return { txid: channel.transaction_id, vout: channel.transaction_vout };
         }));
 

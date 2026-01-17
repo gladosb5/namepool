@@ -4,8 +4,8 @@
       <div class="card mb-3">
         <div class="card-header">
           <div class="d-flex d-md-block align-items-baseline">
-            <span i18n="statistics.memory-by-vBytes">Mempool by vBytes (sat/vByte)</span>
-            <button class="btn p-0 pl-2" style="margin: 0 0 4px 0px" (click)="onSaveChart('mempool')">
+            <span i18n="statistics.memory-by-vBytes">Namepool by vBytes (sat/vByte)</span>
+            <button class="btn p-0 pl-2" style="margin: 0 0 4px 0px" (click)="onSaveChart('namepool')">
               <fa-icon [icon]="['fas', 'download']" [fixedWidth]="true"></fa-icon>
             </button>
           </div>  
@@ -13,8 +13,8 @@
           <form [formGroup]="radioGroupForm" class="formRadioGroup"
             [class]="(stateService.env.MINING_DASHBOARD || stateService.env.LIGHTNING) ? 'mining' : 'no-menu'" (click)="saveGraphPreference()">
             <div class="small-buttons">
-              <a class="btn btn-primary btn-sm mb-0" [routerLink]="['/clock/mempool/0' | relativeUrl]" style="color: white" id="btn-clock">
-                <fa-icon [icon]="['fas', 'clock']" [fixedWidth]="true" i18n-title="master-page.clockview" i18n-title="footer.clock-mempool" title="Clock (Mempool)"></fa-icon>
+              <a class="btn btn-primary btn-sm mb-0" [routerLink]="['/clock/namepool/0' | relativeUrl]" style="color: white" id="btn-clock">
+                <fa-icon [icon]="['fas', 'clock']" [fixedWidth]="true" i18n-title="master-page.clockview" i18n-title="footer.clock-namepool" title="Clock (Namepool)"></fa-icon>
               </a>
             </div>
             <div class="btn-toggle-rows" name="radioBasic">
@@ -94,7 +94,7 @@
         </div>
         <div class="card-body">
           <div class="incoming-transactions-graph">
-            <app-mempool-graph #mempoolgraph dir="ltr" [template]="'advanced'" [hideCount]="!showCount"
+            <app-mempool-graph #namepoolgraph dir="ltr" [template]="'advanced'" [hideCount]="!showCount"
               [limitFilterFee]="filterFeeIndex" [height]="500" [left]="65" [right]="showCount ? 50 : 10"
               [data]="mempoolStats && mempoolStats.length ? mempoolStats : null" [isLoading]="isLoading"></app-mempool-graph>
           </div>

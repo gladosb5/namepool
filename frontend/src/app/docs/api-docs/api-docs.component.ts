@@ -29,6 +29,7 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
   wsDocs: any;
   screenWidth: number;
   officialMempoolInstance: boolean;
+  officialNamepoolInstance: boolean;
   runningElectrs: boolean;
   auditEnabled: boolean;
   mobileViewport: boolean = false;
@@ -36,6 +37,7 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
   timeLtrSubscription: Subscription;
   timeLtr: boolean = this.stateService.timeLtr.value;
   isMempoolSpaceBuild = this.stateService.isMempoolSpaceBuild;
+  isNamepoolSpaceBuild = this.stateService.isNamepoolSpaceBuild;
 
   @ViewChildren(FaqTemplateDirective) faqTemplates: QueryList<FaqTemplateDirective>;
   dict = {};
@@ -72,6 +74,7 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.env = this.stateService.env;
     this.officialMempoolInstance = this.env.OFFICIAL_MEMPOOL_SPACE;
+    this.officialNamepoolInstance = this.officialMempoolInstance;
     this.stateService.backend$.pipe(takeUntil(this.destroy$)).subscribe((backend) => {
       this.runningElectrs = !!(backend == 'esplora');
     });
@@ -237,4 +240,3 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
   }
 
 }
-

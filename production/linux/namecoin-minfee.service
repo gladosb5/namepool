@@ -1,0 +1,22 @@
+[Unit]
+Description=Namecoind-minfee
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/namecoind -daemon -printtoconsole -pid=/minfee/namecoind-minfee.pid
+ExecStop=/usr/local/bin/namecoin-cli stop
+
+Type=forking
+PIDFile=/minfee/namecoind.pid
+Restart=on-failure
+
+User=minfee
+Group=minfee
+
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target

@@ -31,7 +31,7 @@ import { BlockExtended, CpfpInfo, RbfTree, MempoolPosition, DifficultyAdjustment
 import { LiquidUnblinding } from '@components/transaction/liquid-ublinding';
 import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pipe';
 import { PriceService } from '@app/services/price.service';
-import { isFeatureActive } from '@app/bitcoin.utils';
+import { isFeatureActive } from '@app/namecoin.utils';
 import { ServicesApiServices } from '@app/services/services-api.service';
 import { EnterpriseService } from '@app/services/enterprise.service';
 import { ZONE_SERVICE } from '@app/injection-tokens';
@@ -57,7 +57,7 @@ export interface TxAuditStatus {
   firstSeen?: number;
 }
 
-// Known duplicate transaction IDs from early Bitcoin history (pre-BIP-30)
+// Known duplicate transaction IDs from early Namecoin history (pre-BIP-30)
 const DUPLICATE_TX_BLOCKS: Record<string, [number, number]> = {
   'e3bf3d07d4b0375638d5f1db5255fe07ba2c4cb067cd81b84ee974b6585fb468': [91722, 91880],
   'd5d27987d2a3dfc724e359870c6644b40e497bdc0589a033220fe15429d88599': [91812, 91842],
@@ -165,6 +165,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   hasAccelerationDetails = false;
   auditEnabled: boolean = this.stateService.env.AUDIT && this.stateService.env.BASE_MODULE === 'mempool' && this.stateService.env.MINING_DASHBOARD === true;
   isMempoolSpaceBuild = this.stateService.isMempoolSpaceBuild;
+  isNamepoolSpaceBuild = this.stateService.isNamepoolSpaceBuild;
 
   graphContainer: ElementRef;
   @ViewChild('graphContainer')
@@ -605,9 +606,9 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           this.seoService.setTitle(
             $localize`:@@bisq.transaction.browser-title:Transaction: ${this.txId}:INTERPOLATION:`
           );
-          const network = this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ? 'Liquid' : 'Bitcoin';
+          const network = this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet' ? 'Liquid' : 'Namecoin';
           const seoDescription = seoDescriptionNetwork(this.stateService.network);
-          this.seoService.setDescription($localize`:@@meta.description.bitcoin.transaction:Get real-time status, addresses, fees, script info, and more for ${network}${seoDescription} transaction with txid ${this.txId}.`);
+          this.seoService.setDescription($localize`:@@meta.description.namecoin.transaction:Get real-time status, addresses, fees, script info, and more for ${network}${seoDescription} transaction with txid ${this.txId}.`);
           this.resetTransaction();
           return merge(
             of(true),

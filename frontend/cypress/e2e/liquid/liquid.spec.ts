@@ -77,7 +77,7 @@ describe('Liquid', () => {
         cy.get('.table-tx-vin a').invoke('removeAttr', 'target').click().then(() => {
           cy.waitForSkeletonGone();
           if (baseModule === 'liquid') {
-            cy.url().should('eq', 'https://mempool.space/tx/f148c0d854db4174ea420655235f910543f0ec3680566dcfdf84fb0a1697b592#vout=0');
+            cy.url().should('eq', 'https://namepool.bit/tx/f148c0d854db4174ea420655235f910543f0ec3680566dcfdf84fb0a1697b592#vout=0');
           } else {
             //TODO: Use an environment variable to get the hostname
             cy.url().should('eq', 'http://localhost:4200/tx/f148c0d854db4174ea420655235f910543f0ec3680566dcfdf84fb0a1697b592');
@@ -92,7 +92,7 @@ describe('Liquid', () => {
         cy.get('.table-tx-vout a').first().invoke('removeAttr', 'target').click().then(() => {
           cy.waitForSkeletonGone();
           if (baseModule === 'liquid') {
-            cy.url().should('eq', 'https://mempool.space/address/1BxoGcMg14oaH3CwHD2hF4gU9VcfgX5yoR');
+            cy.url().should('eq', 'https://namepool.bit/address/1BxoGcMg14oaH3CwHD2hF4gU9VcfgX5yoR');
           } else {
             //TODO: Use an environment variable to get the hostname
             cy.url().should('eq', 'http://localhost:4200/address/1BxoGcMg14oaH3CwHD2hF4gU9VcfgX5yoR');
@@ -113,7 +113,7 @@ describe('Liquid', () => {
       it('allows searching assets', () => {
         cy.visit(`${basePath}/assets`);
         cy.waitForSkeletonGone();
-        cy.get('.container-xl input').click().type('Liquid Bitcoin').then(() => {
+        cy.get('.container-xl input').click().type('Liquid Namecoin').then(() => {
           cy.get('ngb-typeahead-window', { timeout: 30000 }).should('have.length', 1);
         });
       });

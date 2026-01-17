@@ -73,7 +73,7 @@ class Logger {
   }
 
   private getNetwork(): string {
-    return config.MEMPOOL.NETWORK || 'bitcoin';
+    return config.MEMPOOL.NETWORK || 'namecoin';
   }
 
   private msg(priority, msg, quiet) {

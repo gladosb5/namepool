@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class EnterpriseService {
-  exclusiveHostName = '.mempool.space';
+  exclusiveHostName = '.namepool.bit';
   subdomain: string | null = null;
   statsUrl: string;
   siteId: number;
@@ -61,23 +61,23 @@ export class EnterpriseService {
       },
       (error) => {
         if (error.status === 404) {
-          window.location.href = 'https://mempool.space' + window.location.pathname;
+          window.location.href = 'http://namepool.bit' + window.location.pathname;
         }
       });
     }
   }
 
   insertMatomo(siteId?: number): void {
-    let statsUrl = '//stats.mempool.space/';
+    let statsUrl = '//stats.namepool.bit/';
 
     if (!siteId) {
       switch (this.document.location.hostname) {
-        case 'mempool.space':
-          statsUrl = '//stats.mempool.space/';
+        case 'namepool.bit':
+          statsUrl = '//stats.namepool.bit/';
           siteId = 5;
           break;
         case 'mempool.ninja':
-          statsUrl = '//stats.mempool.space/';
+          statsUrl = '//stats.namepool.bit/';
           siteId = 4;
           break;
         case 'liquid.network':

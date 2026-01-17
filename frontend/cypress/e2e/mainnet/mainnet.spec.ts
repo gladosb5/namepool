@@ -64,7 +64,7 @@ describe('Mainnet', () => {
     it('loads the status screen', () => {
       cy.visit('/status');
       cy.get('#mempool-block-0').should('be.visible');
-      cy.get('[id^="bitcoin-block-"]').should('have.length', 22);
+      cy.get('[id^="namecoin-block-"]').should('have.length', 22);
       cy.get('.footer').should('be.visible');
       cy.get('.row > :nth-child(1)').invoke('text').then((text) => {
         expect(text).to.match(/Incoming Transactions.* vB\/s/);
@@ -73,7 +73,7 @@ describe('Mainnet', () => {
         expect(text).to.match(/Unconfirmed:(.*)/);
       });
       cy.get('.row > :nth-child(3)').invoke('text').then((text) => {
-        expect(text).to.match(/Mempool size:(.*) (kB|MB) \((\d+) (block|blocks)\)/);
+        expect(text).to.match(/Namepool size:(.*) (kB|MB) \((\d+) (block|blocks)\)/);
       });
     });
 
@@ -91,9 +91,9 @@ describe('Mainnet', () => {
           command: 'init'
         }
       });
-      cy.get(':nth-child(1) > #bitcoin-block-0').should('not.exist');
-      cy.get(':nth-child(2) > #bitcoin-block-0').should('not.exist');
-      cy.get(':nth-child(3) > #bitcoin-block-0').should('not.exist');
+      cy.get(':nth-child(1) > #namecoin-block-0').should('not.exist');
+      cy.get(':nth-child(2) > #namecoin-block-0').should('not.exist');
+      cy.get(':nth-child(3) > #namecoin-block-0').should('not.exist');
     });
 
     it('loads the dashboard', () => {
@@ -120,7 +120,7 @@ describe('Mainnet', () => {
     });
 
     describe('search', () => {
-      it('allows searching for partial Bitcoin addresses', () => {
+      it('allows searching for partial Namecoin addresses', () => {
         cy.visit('/');
         cy.get('.search-box-container > .form-control').type('1wiz').then(() => {
           cy.wait('@search-1wiz');
@@ -140,7 +140,7 @@ describe('Mainnet', () => {
         cy.get('app-search-results button.dropdown-item.active').click().then(() => {
           cy.url().should('include', '/address/1wizSAYSbuyXbt9d8JV8ytm5acqq2TorC');
           cy.waitForSkeletonGone();
-          cy.get('.text-center').should('not.have.text', 'Invalid Bitcoin address');
+          cy.get('.text-center').should('not.have.text', 'Invalid Namecoin address');
         });
       });
 
@@ -152,7 +152,7 @@ describe('Mainnet', () => {
             cy.get('app-search-results button.dropdown-item.active').click().then(() => {
               cy.url().should('include', '/address/bc1pqyqs26fs4gnyw4aqttyjqa5ta7075zzfjftyz98qa8vdr49dh7fqm2zkv3');
               cy.waitForSkeletonGone();
-              cy.get('.text-center').should('not.have.text', 'Invalid Bitcoin address');
+              cy.get('.text-center').should('not.have.text', 'Invalid Namecoin address');
             });
           });
         });
@@ -166,7 +166,7 @@ describe('Mainnet', () => {
             cy.get('app-search-results button.dropdown-item.active').click().then(() => {
               cy.url().should('include', '/address/bc1q000303cgr9zazthut63kdktwtatfe206um8nyh');
               cy.waitForSkeletonGone();
-              cy.get('.text-center').should('not.have.text', 'Invalid Bitcoin address');
+              cy.get('.text-center').should('not.have.text', 'Invalid Namecoin address');
             });
           });
         });
@@ -288,7 +288,7 @@ describe('Mainnet', () => {
           cy.viewport('macbook-16');
           cy.visit('/');
           cy.waitForSkeletonGone();
-          cy.get('[data-cy="bitcoin-block-offset-0-index-0"]').click().then(() => {
+          cy.get('[data-cy="namecoin-block-offset-0-index-0"]').click().then(() => {
             cy.get('[ngbtooltip="Next Block"] > .ng-fa-icon > .svg-inline--fa').should('not.exist');
             cy.get('[ngbtooltip="Previous Block"] > .ng-fa-icon > .svg-inline--fa').should('be.visible');
             cy.waitForPageIdle();
@@ -302,7 +302,7 @@ describe('Mainnet', () => {
           cy.viewport('macbook-16');
           cy.visit('/');
           cy.waitForSkeletonGone();
-          cy.get('[data-cy="bitcoin-block-offset-0-index-0"]').click().then(() => {
+          cy.get('[data-cy="namecoin-block-offset-0-index-0"]').click().then(() => {
             cy.waitForPageIdle();
             cy.get('[ngbtooltip="Next Block"] > .ng-fa-icon > .svg-inline--fa').should('not.exist');
             cy.get('[ngbtooltip="Previous Block"] > .ng-fa-icon > .svg-inline--fa').should('be.visible');
@@ -315,7 +315,7 @@ describe('Mainnet', () => {
           cy.viewport('macbook-16');
           cy.visit('/');
           cy.waitForSkeletonGone();
-          cy.get('bitcoin-block-offset-0-index-7').click().then(() => {
+          cy.get('namecoin-block-offset-0-index-7').click().then(() => {
             cy.waitForPageIdle();
 
             // block 6
@@ -376,7 +376,7 @@ describe('Mainnet', () => {
           cy.viewport('macbook-16');
           cy.visit('/');
           cy.waitForSkeletonGone();
-          cy.get('[data-cy="bitcoin-block-offset-0-index-0"]').click().then(() => {
+          cy.get('[data-cy="namecoin-block-offset-0-index-0"]').click().then(() => {
             cy.waitForPageIdle();
             cy.get('[ngbtooltip="Next Block"] > .ng-fa-icon > .svg-inline--fa').should('not.exist');
             cy.get('[ngbtooltip="Previous Block"] > .ng-fa-icon > .svg-inline--fa').should('be.visible');
@@ -417,9 +417,9 @@ describe('Mainnet', () => {
     it.skip('loads the dashboard with the skeleton blocks', () => {
       cy.mockMempoolSocket();
       cy.visit('/');
-      cy.get(':nth-child(1) > #bitcoin-block-0').should('be.visible');
-      cy.get(':nth-child(2) > #bitcoin-block-0').should('be.visible');
-      cy.get(':nth-child(3) > #bitcoin-block-0').should('be.visible');
+      cy.get(':nth-child(1) > #namecoin-block-0').should('be.visible');
+      cy.get(':nth-child(2) > #namecoin-block-0').should('be.visible');
+      cy.get(':nth-child(3) > #namecoin-block-0').should('be.visible');
       cy.get('#mempool-block-0').should('be.visible');
       cy.get('#mempool-block-1').should('be.visible');
       cy.get('#mempool-block-2').should('be.visible');
@@ -430,9 +430,9 @@ describe('Mainnet', () => {
         }
       });
 
-      cy.get(':nth-child(1) > #bitcoin-block-0').should('not.exist');
-      cy.get(':nth-child(2) > #bitcoin-block-0').should('not.exist');
-      cy.get(':nth-child(3) > #bitcoin-block-0').should('not.exist');
+      cy.get(':nth-child(1) > #namecoin-block-0').should('not.exist');
+      cy.get(':nth-child(2) > #namecoin-block-0').should('not.exist');
+      cy.get(':nth-child(3) > #namecoin-block-0').should('not.exist');
     });
 
     it('loads the pools screen', () => {

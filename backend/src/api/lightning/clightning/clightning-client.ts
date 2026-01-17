@@ -138,12 +138,12 @@ export default class CLightningClient extends EventEmitter implements AbstractLi
         rpcPath = path.join(rpcPath, 'lightning-rpc');
       }
 
-      // main data directory provided, default to using the bitcoin mainnet subdirectory
+      // main data directory provided, default to using the namecoin mainnet subdirectory
       // to be removed in v0.2.0
-      else if (fExists(rpcPath, 'bitcoin', 'lightning-rpc')) {
-        logger.warn(`${rpcPath}/lightning-rpc is missing, using the bitcoin mainnet subdirectory at ${rpcPath}/bitcoin instead.`, logger.tags.ln)
+      else if (fExists(rpcPath, 'namecoin', 'lightning-rpc')) {
+        logger.warn(`${rpcPath}/lightning-rpc is missing, using the namecoin mainnet subdirectory at ${rpcPath}/namecoin instead.`, logger.tags.ln)
         logger.warn(`specifying the main lightning data directory is deprecated, please specify the network directory explicitly.\n`, logger.tags.ln)
-        rpcPath = path.join(rpcPath, 'bitcoin', 'lightning-rpc')
+        rpcPath = path.join(rpcPath, 'namecoin', 'lightning-rpc')
       }
     }
 

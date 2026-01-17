@@ -2,7 +2,7 @@ import { BlockPrice, PoolInfo, PoolStats, RewardStats } from '../../mempool.inte
 import BlocksRepository from '../../repositories/BlocksRepository';
 import PoolsRepository from '../../repositories/PoolsRepository';
 import HashratesRepository from '../../repositories/HashratesRepository';
-import bitcoinClient from '../bitcoin/bitcoin-client';
+import namecoinClient from '../namecoin/namecoin-client';
 import logger from '../../logger';
 import { Common } from '../common';
 import loadingIndicators from '../loading-indicators';
@@ -11,8 +11,8 @@ import DifficultyAdjustmentsRepository from '../../repositories/DifficultyAdjust
 import config from '../../config';
 import BlocksAuditsRepository from '../../repositories/BlocksAuditsRepository';
 import PricesRepository from '../../repositories/PricesRepository';
-import bitcoinApi from '../bitcoin/bitcoin-api-factory';
-import { IEsploraApi } from '../bitcoin/esplora-api.interface';
+import namecoinApi from '../namecoin/namecoin-api-factory';
+import { IEsploraApi } from '../namecoin/esplora-api.interface';
 import database from '../../database';
 
 interface DifficultyBlock {
@@ -146,12 +146,12 @@ class Mining {
     const totalBlock1w: number = await BlocksRepository.$blockCount(null, '1w');
 
     try {
-      poolsStatistics['lastEstimatedHashrate'] = await bitcoinClient.getNetworkHashPs(totalBlock24h);
-      poolsStatistics['lastEstimatedHashrate3d'] = await bitcoinClient.getNetworkHashPs(totalBlock3d);
-      poolsStatistics['lastEstimatedHashrate1w'] = await bitcoinClient.getNetworkHashPs(totalBlock1w);
+      poolsStatistics['lastEstimatedHashrate'] = await namecoinClient.getNetworkHashPs(totalBlock24h);
+      poolsStatistics['lastEstimatedHashrate3d'] = await namecoinClient.getNetworkHashPs(totalBlock3d);
+      poolsStatistics['lastEstimatedHashrate1w'] = await namecoinClient.getNetworkHashPs(totalBlock1w);
     } catch (e) {
       poolsStatistics['lastEstimatedHashrate'] = 0;
-      logger.debug('Bitcoin Core is not available, using zeroed value for current hashrate', logger.tags.mining);
+      logger.debug('Namecoin Core is not available, using zeroed value for current hashrate', logger.tags.mining);
     }
 
     return poolsStatistics;
@@ -180,9 +180,9 @@ class Mining {
 
     let currentEstimatedHashrate = 0;
     try {
-      currentEstimatedHashrate = await bitcoinClient.getNetworkHashPs(totalBlock24h);
+      currentEstimatedHashrate = await namecoinClient.getNetworkHashPs(totalBlock24h);
     } catch (e) {
-      logger.debug('Bitcoin Core is not available, using zeroed value for current hashrate', logger.tags.mining);
+      logger.debug('Namecoin Core is not available, using zeroed value for current hashrate', logger.tags.mining);
     }
 
     return {
@@ -266,7 +266,7 @@ class Mining {
         if (blockStats.blockCount <= 0) {
           logger.debug(`No block found between ${fromTimestamp / 1000} and ${toTimestamp / 1000}, skipping hashrate indexing for this period`, logger.tags.mining);
         } else {
-          const lastBlockHashrate = await bitcoinClient.getNetworkHashPs(blockStats.blockCount,
+          const lastBlockHashrate = await namecoinClient.getNetworkHashPs(blockStats.blockCount,
             blockStats.lastBlockHeight);
 
           let pools = await PoolsRepository.$getPoolsInfoBetween(fromTimestamp / 1000, toTimestamp / 1000);
@@ -375,7 +375,7 @@ class Mining {
 
         const blockStats: any = await BlocksRepository.$blockCountBetweenTimestamp(
           null, fromTimestamp / 1000, toTimestamp / 1000);
-        const lastBlockHashrate = blockStats.blockCount === 0 ? 0 : await bitcoinClient.getNetworkHashPs(blockStats.blockCount,
+        const lastBlockHashrate = blockStats.blockCount === 0 ? 0 : await namecoinClient.getNetworkHashPs(blockStats.blockCount,
           blockStats.lastBlockHeight);
 
         hashrates.push({
@@ -413,7 +413,7 @@ class Mining {
       if (config.MEMPOOL.INDEXING_BLOCKS_AMOUNT === -1 && !indexedTimestamp.includes(genesisTimestamp / 1000)) {
         hashrates.push({
           hashrateTimestamp: genesisTimestamp / 1000,
-          avgHashrate: await bitcoinClient.getNetworkHashPs(1, 1),
+          avgHashrate: await namecoinClient.getNetworkHashPs(1, 1),
           poolId: 0,
           share: 1,
           type: 'daily',
@@ -603,7 +603,7 @@ class Mining {
     let timer = new Date().getTime() / 1000;
     let totalIndexed = 0;
 
-    const blockchainInfo = await bitcoinClient.getBlockchainInfo();
+    const blockchainInfo = await namecoinClient.getBlockchainInfo();
     let currentBlockHeight = blockchainInfo.blocks;
 
     while (currentBlockHeight > 0) {
@@ -611,7 +611,7 @@ class Mining {
         currentBlockHeight, currentBlockHeight - 10000);
         
       for (const block of indexedBlocks) {
-        const txoutset = await bitcoinClient.getTxoutSetinfo('none', block.height);
+        const txoutset = await namecoinClient.getTxoutSetinfo('none', block.height);
         await BlocksRepository.$updateCoinStatsIndexData(block.hash, txoutset.txouts,
           Math.round(txoutset.block_info.prevout_spent * 100000000));        
         ++totalIndexed;
@@ -703,7 +703,7 @@ class Mining {
 
   private async getGenesisData(): Promise<{timestamp: number, bits: number, difficulty: number}> {
     if (this.genesisData == null) {
-      const genesisBlock: IEsploraApi.Block = await bitcoinApi.$getBlock(await bitcoinApi.$getBlockHash(0));
+      const genesisBlock: IEsploraApi.Block = await namecoinApi.$getBlock(await namecoinApi.$getBlockHash(0));
       this.genesisData = {
         timestamp: genesisBlock.timestamp,
         bits: genesisBlock.bits,

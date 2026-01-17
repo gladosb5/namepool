@@ -12,7 +12,7 @@ const vectorTxidMap: Map<string, number>  = new Map(testVector.map(x => [x[1], x
 const vectorBuffer: Buffer = fs.readFileSync(path.join(__dirname, './', './test-data/test-buffer.bin'));
 
 describe('Rust GBT', () => {
-  test('should produce the same template as getBlockTemplate from Bitcoin Core', async () => {
+  test('should produce the same template as getBlockTemplate from Namecoin Core', async () => {
     const rustGbt = new GbtGenerator(4_000_000, 8);
     const { mempool, maxUid } = mempoolFromArrayBuffer(vectorBuffer.buffer);
     const result = await rustGbt.make(mempool, [], maxUid);

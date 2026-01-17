@@ -36,12 +36,12 @@ const routes: Routes = [
     children: [
       {
         path: 'mining/pool/:slug',
-        data: { networks: ['bitcoin'] },
+        data: { networks: ['namecoin'] },
         component: PoolComponent,
       },
       {
         path: 'mining',
-        data: { networks: ['bitcoin'] },
+        data: { networks: ['namecoin'] },
         component: StartComponent,
         children: [
           {
@@ -52,7 +52,7 @@ const routes: Routes = [
       },
       {
         path: 'acceleration',
-        data: { networks: ['bitcoin'], networkSpecific: true, onlySubnet: [''] },
+        data: { networks: ['namecoin'], networkSpecific: true, onlySubnet: [''] },
         component: StartComponent,
         children: [
           {
@@ -63,7 +63,7 @@ const routes: Routes = [
       },
       {
         path: 'acceleration/list/:page',
-        data: { networks: ['bitcoin'], networkSpecific: true, onlySubnet: [''] },
+        data: { networks: ['namecoin'], networkSpecific: true, onlySubnet: [''] },
         component: AccelerationsListComponent,
       },
       {
@@ -72,7 +72,7 @@ const routes: Routes = [
       },
       {
         path: 'mempool-block/:id',
-        data: { networks: ['bitcoin', 'liquid'] },
+        data: { networks: ['namecoin', 'liquid'] },
         component: StartComponent,
         children: [
           {
@@ -101,62 +101,62 @@ const routes: Routes = [
       },
       {
         path: 'graphs',
-        data: { networks: ['bitcoin', 'liquid'] },
+        data: { networks: ['namecoin', 'liquid'] },
         component: GraphsComponent,
         children: [
           {
             path: 'mempool',
-            data: { networks: ['bitcoin', 'liquid'] },
+            data: { networks: ['namecoin', 'liquid'] },
             component: StatisticsComponent,
           },
           {
             path: 'mining/hashrate-difficulty',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: HashrateChartComponent,
           },
           {
             path: 'mining/pools-dominance',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: HashrateChartPoolsComponent,
           },
           {
             path: 'mining/pools',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: PoolRankingComponent,
           },
           {
             path: 'mining/block-fees',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: BlockFeesGraphComponent,
           },
           {
             path: 'mining/block-fees-subsidy',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: BlockFeesSubsidyGraphComponent,
           },
           {
             path: 'mining/block-rewards',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: BlockRewardsGraphComponent,
           },
           {
             path: 'mining/block-fee-rates',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: BlockFeeRatesGraphComponent,
           },
           {
             path: 'mining/block-sizes-weights',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: BlockSizesWeightsGraphComponent,
           },
           {
             path: 'acceleration/fees',
-            data: { networks: ['bitcoin'], networkSpecific: true, onlySubnet: [''] },
+            data: { networks: ['namecoin'], networkSpecific: true, onlySubnet: [''] },
             component: AccelerationFeesGraphComponent,
           },
           {
             path: 'lightning',
-            data: { preload: true, networks: ['bitcoin'] },
+            data: { preload: true, networks: ['namecoin'] },
             loadChildren: () => import ('@app/graphs/lightning-graphs.module').then(m => m.LightningGraphsModule),
           },
           {
@@ -166,12 +166,12 @@ const routes: Routes = [
           },
           {
             path: 'mining/block-health',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: BlockHealthGraphComponent,
           },
           {
             path: 'price',
-            data: { networks: ['bitcoin'] },
+            data: { networks: ['namecoin'] },
             component: PriceChartComponent,
           },
         ]
@@ -196,7 +196,7 @@ if (window['__env']?.OFFICIAL_MEMPOOL_SPACE) {
       path: '',
       component: TreasuriesComponent,
       data: {
-        networks: ['bitcoin'],
+        networks: ['namecoin'],
         networkSpecific: true,
       },
     }]

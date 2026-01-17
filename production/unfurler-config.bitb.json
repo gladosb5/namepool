@@ -1,6 +1,6 @@
 {
   "SERVER": {
-    "HOST": "https://bitb.tk7.mempool.space",
+    "HOST": "https://bitb.tk7.namepool.bit",
     "HTTP_PORT": 8006
   },
   "MEMPOOL": {

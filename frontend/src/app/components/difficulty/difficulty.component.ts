@@ -33,7 +33,7 @@ interface DiffShape {
   expected: boolean;
 }
 
-const EPOCH_BLOCK_LENGTH = 2016; // Bitcoin mainnet
+const EPOCH_BLOCK_LENGTH = 2016; // Namecoin mainnet
 
 @Component({
   selector: 'app-difficulty',

@@ -8,7 +8,7 @@ import { EnterpriseService } from '@app/services/enterprise.service';
   standalone: false,
 })
 export class AboutSponsorsComponent {
-  @Input() host = 'https://mempool.space';
+  @Input() host = 'http://namepool.bit';
   @Input() context = 'about';
 
   constructor(private enterpriseService: EnterpriseService) {

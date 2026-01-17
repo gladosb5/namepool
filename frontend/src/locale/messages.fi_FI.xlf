@@ -197,11 +197,11 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
         <context-group purpose="location">
@@ -351,8 +351,8 @@
         <note from="description" priority="1">transaction.error.transaction-not-found</note>
       </trans-unit>
       <trans-unit datatype="html" id="66b65556acb90d8764fe166a260af0309671698c">
-        <source>Waiting for it to appear in the mempool...</source>
-        <target>Odotetaan sen ilmestymistä mempooliin...</target>
+        <source>Waiting for it to appear in the namepool...</source>
+        <target>Odotetaan sen ilmestymistä namepooliin...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction.component.html</context>
           <context context-type="linenumber">274</context>
@@ -644,7 +644,7 @@
           <context context-type="linenumber">13</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
@@ -679,7 +679,7 @@
           <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
         <note from="description" priority="1">block.median-fee</note>
@@ -691,7 +691,7 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
@@ -744,7 +744,7 @@
           <context context-type="linenumber">85</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
         <context-group purpose="location">
@@ -765,7 +765,7 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">14</context>
         </context-group>
         <context-group purpose="location">
@@ -941,7 +941,7 @@
           <context context-type="linenumber">29</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
         <context-group purpose="location">
@@ -980,21 +980,21 @@
         <source>In</source>
         <target>Sisään</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
         <note from="description" priority="1">Block Frequency</note>
-        <note from="meaning" priority="1">mempool-blocks.eta-of-next-block</note>
+        <note from="meaning" priority="1">namepool-blocks.eta-of-next-block</note>
       </trans-unit>
       <trans-unit datatype="html" id="cff3ed26f8073fa2fe757d97880662060c39a1fa">
         <source>minute</source>
         <target>minuutti</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <note from="description" priority="1">shared.minute</note>
@@ -1003,7 +1003,7 @@
         <source>minutes</source>
         <target>minuutit</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
         <note from="description" priority="1">shared.minutes</note>
@@ -1012,7 +1012,7 @@
         <source>blocks</source>
         <target>lohkot</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
         <note from="description" priority="1">shared.blocks</note>
@@ -1130,8 +1130,8 @@
         <note from="description" priority="1">about.about-the-project</note>
       </trans-unit>
       <trans-unit datatype="html" id="489827bef9fd30645fd2a217aea141ac43bd01ef">
-        <source>The mempool open-source project aims to implement a high quality explorer and visualization website for the entire Bitcoin ecosystem, without distractions like altcoins, advertising, or third-party trackers.</source>
-        <target>Mempool avoimen lähdekoodin projektin tavoitteena on toteuttaa korkealaatuinen tutkimus- ja visualisointisivusto koko Bitcoin-ekosysteemille ilman häiriötekijöitä, kuten altcoineja, mainontaa tai kolmannen osapuolen seurantalaitteita.</target>
+        <source>The namepool open-source project aims to implement a high quality explorer and visualization website for the entire Namecoin ecosystem, without distractions like altcoins, advertising, or third-party trackers.</source>
+        <target>Namepool avoimen lähdekoodin projektin tavoitteena on toteuttaa korkealaatuinen tutkimus- ja visualisointisivusto koko Namecoin-ekosysteemille ilman häiriötekijöitä, kuten altcoineja, mainontaa tai kolmannen osapuolen seurantalaitteita.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">16</context>
@@ -1300,8 +1300,8 @@
         <note from="description" priority="1">statistics.loading-graphs</note>
       </trans-unit>
       <trans-unit datatype="html" id="75c20c8a9cd9723d45bee0230dd582d7c2e4ecbc">
-        <source>Mempool by vBytes (sat/vByte)</source>
-        <target>Mempool by vBytes (sat/vByte)</target>
+        <source>Namepool by vBytes (sat/vByte)</source>
+        <target>Namepool by vBytes (sat/vByte)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.html</context>
           <context context-type="linenumber">16</context>
@@ -1345,13 +1345,13 @@
         <note from="description" priority="1">footer.tx-vbytes-per-second</note>
       </trans-unit>
       <trans-unit datatype="html" id="7b8ceef54c3151c632777d309944c67d676a585f">
-        <source>Mempool size:</source>
-        <target>Mempoolin koko:</target>
+        <source>Namepool size:</source>
+        <target>Namepoolin koko:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <note from="description" priority="1">footer.mempool-size</note>
+        <note from="description" priority="1">footer.namepool-size</note>
       </trans-unit>
       <trans-unit datatype="html" id="a5950b2ce4c3ea32de91034de8269781eb333d73">
         <source>Backend is synchronizing</source>
@@ -1375,24 +1375,24 @@
         </context-group>
         <note from="description" priority="1">shared.vbytes-per-second</note>
       </trans-unit>
-      <trans-unit datatype="html" id="mempool-block.next.block">
+      <trans-unit datatype="html" id="namepool-block.next.block">
         <source>Next block</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.ts</context>
           <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
-      <trans-unit datatype="html" id="mempool-block.stack.of.blocks">
-        <source>Stack of <x equiv-text="blocksInBlock" id="INTERPOLATION"/> mempool blocks</source>
+      <trans-unit datatype="html" id="namepool-block.stack.of.blocks">
+        <source>Stack of <x equiv-text="blocksInBlock" id="INTERPOLATION"/> namepool blocks</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.ts</context>
           <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit datatype="html" id="mempool-block.block.no">
-        <source>Mempool block <x equiv-text="this.mempoolBlockIndex + 1" id="INTERPOLATION"/></source>
+      <trans-unit datatype="html" id="namepool-block.block.no">
+        <source>Namepool block <x equiv-text="this.namepoolBlockIndex + 1" id="INTERPOLATION"/></source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.ts</context>
           <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
@@ -1400,19 +1400,19 @@
         <source>Fee span</source>
         <target>Siirtokuluväli</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <note from="description" priority="1">mempool-block.fee-span</note>
+        <note from="description" priority="1">namepool-block.fee-span</note>
       </trans-unit>
       <trans-unit datatype="html" id="926dd4c7e830240b502eb44b6c485815f563e595">
         <source>Total fees</source>
         <target>Siirtokulut yhteensä</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
-        <note from="description" priority="1">mempool-block.total-fees</note>
+        <note from="description" priority="1">namepool-block.total-fees</note>
       </trans-unit>
       <trans-unit datatype="html" id="asset.component.asset-browser-title">
         <source>Asset: <x equiv-text="this.assetString" id="INTERPOLATION"/></source>
@@ -1685,14 +1685,14 @@
         <note from="description" priority="1">dashboard.expand</note>
       </trans-unit>
       <trans-unit datatype="html" id="6f7832e2e8db3c4b16c41681ba334a2ab9726cc3">
-        <source>Mempool size</source>
-        <target>Mempoolin koko</target>
+        <source>Namepool size</source>
+        <target>Namepoolin koko</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">162</context>
         </context-group>
-        <note from="description" priority="1">Mempool size</note>
-        <note from="meaning" priority="1">dashboard.mempool-size</note>
+        <note from="description" priority="1">Namepool size</note>
+        <note from="meaning" priority="1">dashboard.namepool-size</note>
       </trans-unit>
       <trans-unit datatype="html" id="60cd6fa18f925b42065d8cfb1a791efdc228b4c3">
         <source>Unconfirmed</source>
@@ -1705,7 +1705,7 @@
         <note from="meaning" priority="1">dashboard.unconfirmed</note>
       </trans-unit>
       <trans-unit datatype="html" id="ee0d8fddc1dd89c919c21db1b8b2d848d05cdfdc">
-        <source><x equiv-text="{{ mempoolBlocksData.blocks }}" id="INTERPOLATION"/> block</source>
+        <source><x equiv-text="{{ namepoolBlocksData.blocks }}" id="INTERPOLATION"/> block</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">164</context>
@@ -1713,7 +1713,7 @@
         <note from="description" priority="1">shared.block</note>
       </trans-unit>
       <trans-unit datatype="html" id="33d349897f450ba879a5a0f48842b6a3d884cac1">
-        <source><x equiv-text="{{ mempoolBlocksData.blocks }}" id="INTERPOLATION"/> blocks</source>
+        <source><x equiv-text="{{ namepoolBlocksData.blocks }}" id="INTERPOLATION"/> blocks</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">164</context>
@@ -1843,8 +1843,8 @@
         <note from="meaning" priority="1">api-docs.shared.description</note>
       </trans-unit>
       <trans-unit datatype="html" id="fe56475a8f4cf4bfc3acaafa215a7dd60d9ed7da">
-        <source>Default push: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/><x equiv-text="{{ '{' }}" id="INTERPOLATION"/> action: 'want', data: ['blocks', ...] <x equiv-text="{{ '}' }}" id="INTERPOLATION_1"/><x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> to express what you want pushed. Available: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>blocks<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>mempool-block<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>live-2h-chart<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>stats<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>.<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"/><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"/>Push transactions related to address: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/><x equiv-text="{{ '{' }}" id="INTERPOLATION"/> 'track-address': '3PbJ...bF9B' <x equiv-text="{{ '}' }}" id="INTERPOLATION_1"/><x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> to receive all new transactions containing that address as input or output. Returns an array of transactions. <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>address-transactions<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> for new mempool transactions, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>block-transactions<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> for new block confirmed transactions.</source>
-        <target>Oletuspainike: toiminto: 'want', data: ['blocks', ...] ilmaisemaan mitä haluat painettavan. Saatavana: lohkot,  mempool-lohko, live-2h-kaavio ja tilastot. Paina osoitteeseen liittyviä siirtotapahtumia: 'track-address': '3PbJ ... bF9B' saadaksesi kaikki uudet siirtotapahtumat, jotka sisältävät kyseisen osoitteen syötteenä tai ulostulona. Palauttaa joukon siirtotapahtumia. osoite-siirtotapahtumat uusille mempool-siirtotapahtumille ja lohko-siirtotapahtumat uusille lohkovahvistetuille siirtotapahtumille.</target>
+        <source>Default push: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/><x equiv-text="{{ '{' }}" id="INTERPOLATION"/> action: 'want', data: ['blocks', ...] <x equiv-text="{{ '}' }}" id="INTERPOLATION_1"/><x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> to express what you want pushed. Available: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>blocks<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>namepool-block<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>live-2h-chart<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>stats<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/>.<x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"/><x ctype="lb" equiv-text="&lt;br&gt;" id="LINE_BREAK"/>Push transactions related to address: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/><x equiv-text="{{ '{' }}" id="INTERPOLATION"/> 'track-address': '3PbJ...bF9B' <x equiv-text="{{ '}' }}" id="INTERPOLATION_1"/><x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> to receive all new transactions containing that address as input or output. Returns an array of transactions. <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>address-transactions<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> for new namepool transactions, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>block-transactions<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> for new block confirmed transactions.</source>
+        <target>Oletuspainike: toiminto: 'want', data: ['blocks', ...] ilmaisemaan mitä haluat painettavan. Saatavana: lohkot,  namepool-lohko, live-2h-kaavio ja tilastot. Paina osoitteeseen liittyviä siirtotapahtumia: 'track-address': '3PbJ ... bF9B' saadaksesi kaikki uudet siirtotapahtumat, jotka sisältävät kyseisen osoitteen syötteenä tai ulostulona. Palauttaa joukon siirtotapahtumia. osoite-siirtotapahtumat uusille namepool-siirtotapahtumille ja lohko-siirtotapahtumat uusille lohkovahvistetuille siirtotapahtumille.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">19</context>
@@ -1872,54 +1872,54 @@
         <note from="meaning" priority="1">api-docs.fees.recommended</note>
       </trans-unit>
       <trans-unit datatype="html" id="b95b496df2b0f016831d0984f3798a2e22b74103">
-        <source>Returns current mempool as projected blocks.</source>
-        <target>Palauttaa nykyisen mempoolin ennustettuina lohkoina.</target>
+        <source>Returns current namepool as projected blocks.</source>
+        <target>Palauttaa nykyisen namepoolin ennustettuina lohkoina.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">41</context>
         </context-group>
-        <note from="description" priority="1">API Docs for /api/v1/fees/mempool-blocks</note>
-        <note from="meaning" priority="1">api-docs.fees.mempool-blocks</note>
+        <note from="description" priority="1">API Docs for /api/v1/fees/namepool-blocks</note>
+        <note from="meaning" priority="1">api-docs.fees.namepool-blocks</note>
       </trans-unit>
       <trans-unit datatype="html" id="19a8d63607ead7ba08364fe9f64aa3c503dff6c4">
-        <source>Mempool</source>
-        <target>Mempool</target>
+        <source>Namepool</source>
+        <target>Namepool</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">49</context>
         </context-group>
-        <note from="description" priority="1">API Docs tab for Mempool</note>
-        <note from="meaning" priority="1">api-docs.tab.mempool</note>
+        <note from="description" priority="1">API Docs tab for Namepool</note>
+        <note from="meaning" priority="1">api-docs.tab.namepool</note>
       </trans-unit>
       <trans-unit datatype="html" id="7d43b13f97ee52aae72d728a52af2e31f6edbf38">
-        <source>Returns current mempool backlog statistics.</source>
-        <target>Palauttaa nykyisen mempool-backlogin tilastot.</target>
+        <source>Returns current namepool backlog statistics.</source>
+        <target>Palauttaa nykyisen namepool-backlogin tilastot.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">59</context>
         </context-group>
-        <note from="description" priority="1">API Docs for /api/mempool</note>
-        <note from="meaning" priority="1">api-docs.mempool.mempool</note>
+        <note from="description" priority="1">API Docs for /api/namepool</note>
+        <note from="meaning" priority="1">api-docs.namepool.namepool</note>
       </trans-unit>
       <trans-unit datatype="html" id="23c346e87b137b1807bac13c27d19dc18f745f8f">
-        <source>Get the full list of txids in the mempool as an array. The order of the txids is arbitrary and does not match bitcoind.</source>
-        <target>Hanki täysi luettelo siirtotunnisteista mempoolissa taulukkona. Siirtotunnisteiden järjestys on mielivaltainen eikä vastaa bitcoind:tä.</target>
+        <source>Get the full list of txids in the namepool as an array. The order of the txids is arbitrary and does not match namecoind.</source>
+        <target>Hanki täysi luettelo siirtotunnisteista namepoolissa taulukkona. Siirtotunnisteiden järjestys on mielivaltainen eikä vastaa namecoind:tä.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">63</context>
         </context-group>
-        <note from="description" priority="1">API Docs for /api/mempool/txids</note>
-        <note from="meaning" priority="1">api-docs.mempool.txids</note>
+        <note from="description" priority="1">API Docs for /api/namepool/txids</note>
+        <note from="meaning" priority="1">api-docs.namepool.txids</note>
       </trans-unit>
       <trans-unit datatype="html" id="af1a465e50097fabbe55bf5dbcf5d0702bdbc98b">
-        <source>Get a list of the last 10 transactions to enter the mempool. Each transaction object contains simplified overview data, with the following fields: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>txid<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>fee<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>vsize<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>value<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>.</source>
-        <target>Hanki luettelo 10 viimeisestä siirtotapahtumasta, jotta pääset mempooliin. Jokainen siirtotapahtumaobjekti sisältää yksinkertaistettua yleistietoa seuraavilla kentillä: siirtotunniste, siirtokulu, vkoko ja arvo.</target>
+        <source>Get a list of the last 10 transactions to enter the namepool. Each transaction object contains simplified overview data, with the following fields: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>txid<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>fee<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>vsize<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>value<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>.</source>
+        <target>Hanki luettelo 10 viimeisestä siirtotapahtumasta, jotta pääset namepooliin. Jokainen siirtotapahtumaobjekti sisältää yksinkertaistettua yleistietoa seuraavilla kentillä: siirtotunniste, siirtokulu, vkoko ja arvo.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">67</context>
         </context-group>
-        <note from="description" priority="1">API Docs for /api/mempool/recent</note>
-        <note from="meaning" priority="1">api-docs.mempool.recent</note>
+        <note from="description" priority="1">API Docs for /api/namepool/recent</note>
+        <note from="meaning" priority="1">api-docs.namepool.recent</note>
       </trans-unit>
       <trans-unit datatype="html" id="a2c00fbdcce9d6291c3b04c67979f9694be23f28">
         <source>Returns the confirmation status of a block. Available fields: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>in_best_chain<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> (boolean, false for orphaned blocks), <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>next_best<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> (the hash of the next block, only available for blocks in the best chain).</source>
@@ -2076,8 +2076,8 @@
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="d51106cc898981e9862d35a4db40796f0cf464f8">
-        <source>Returns a merkle inclusion proof for the transaction using <x ctype="x-a" equiv-text="&lt;a href=&quot;https://bitcoin.org/en/glossary/merkle-block&quot;&gt;" id="START_LINK"/>bitcoind's merkleblock<x ctype="x-a" equiv-text="&lt;/a&gt; " id="CLOSE_LINK"/> format.</source>
-        <target>Palauttaa merkle-todisteen siirtotapahtumalle käyttäen bitcoind:n merkleblock-muotoa.</target>
+        <source>Returns a merkle inclusion proof for the transaction using <x ctype="x-a" equiv-text="&lt;a href=&quot;https://namecoin.org/en/glossary/merkle-block&quot;&gt;" id="START_LINK"/>namecoind's merkleblock<x ctype="x-a" equiv-text="&lt;/a&gt; " id="CLOSE_LINK"/> format.</source>
+        <target>Palauttaa merkle-todisteen siirtotapahtumalle käyttäen namecoind:n merkleblock-muotoa.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">155</context>
@@ -2094,15 +2094,15 @@
         <note from="meaning" priority="1">api-docs.tab.addresses</note>
       </trans-unit>
       <trans-unit datatype="html" id="e12cd52eaa77b446ba97436c145b59741151adf3">
-        <source>Returns details about an address. Available fields: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>address<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>chain_stats<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>mempool_stats<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>. <x equiv-text="{{ '{' }}" id="INTERPOLATION"/>chain,mempool<x equiv-text="{{ '}' }}" id="INTERPOLATION_1"/>_stats each contain an object with <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>tx_count<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>funded_txo_count<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>funded_txo_sum<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>spent_txo_count<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>spent_txo_sum<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>.</source>
-        <target>Palauttaa osoitteen tiedot. Saatavilla olevat kentät: osoite, ketjun tilat ja mempoolin tilat. ketju, mempoolin tilat sisältäen kukin objektin, jossa on siirtotapahtumien määrä, rahoitettujen siirtotapahtumaobjektien määrä, rahoitettujen siirtotapahtumien summa, käytettyjen siirtotapahtumien määrä ja käytettyjen siirtotapahtumaobjektien summa.</target>
+        <source>Returns details about an address. Available fields: <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>address<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>chain_stats<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>namepool_stats<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>. <x equiv-text="{{ '{' }}" id="INTERPOLATION"/>chain,namepool<x equiv-text="{{ '}' }}" id="INTERPOLATION_1"/>_stats each contain an object with <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>tx_count<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>funded_txo_count<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>funded_txo_sum<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>spent_txo_count<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>, and <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>spent_txo_sum<x ctype="x-code" equiv-text="&lt;/code&gt;" id="CLOSE_TAG_CODE"/>.</source>
+        <target>Palauttaa osoitteen tiedot. Saatavilla olevat kentät: osoite, ketjun tilat ja namepoolin tilat. ketju, namepoolin tilat sisältäen kukin objektin, jossa on siirtotapahtumien määrä, rahoitettujen siirtotapahtumaobjektien määrä, rahoitettujen siirtotapahtumien summa, käytettyjen siirtotapahtumien määrä ja käytettyjen siirtotapahtumaobjektien summa.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">189</context>
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="bdc501d28e02e07f692859977fdaee8c52eea401">
-        <source>Get transaction history for the specified address/scripthash, sorted with newest first. Returns up to 50 mempool transactions plus the first 25 confirmed transactions. You can request more confirmed transactions using <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>:last_seen_txid<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> (see below). </source>
+        <source>Get transaction history for the specified address/scripthash, sorted with newest first. Returns up to 50 namepool transactions plus the first 25 confirmed transactions. You can request more confirmed transactions using <x ctype="x-code" equiv-text="&lt;code&gt;" id="START_TAG_CODE"/>:last_seen_txid<x ctype="x-code" equiv-text="&lt;/code&gt; " id="CLOSE_TAG_CODE"/> (see below). </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">193,194</context>
@@ -2153,7 +2153,7 @@
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="44a238eb28145f904f3a5bbfd4050987668f78d0">
-        <source>Get the current total supply of the specified asset. For the native asset (L-BTC), this is calculated as [chain,mempool]_stats.peg_in_amount - [chain,mempool]_stats.peg_out_amount - [chain,mempool]_stats.burned_amount. For issued assets, this is calculated as [chain,mempool]_stats.issued_amount - [chain,mempool]_stats.burned_amount. Not available for assets with blinded issuances. If /decimal is specified, returns the supply as a decimal according to the asset's divisibility. Otherwise, returned in base units.</source>
+        <source>Get the current total supply of the specified asset. For the native asset (L-BTC), this is calculated as [chain,namepool]_stats.peg_in_amount - [chain,namepool]_stats.peg_out_amount - [chain,namepool]_stats.burned_amount. For issued assets, this is calculated as [chain,namepool]_stats.issued_amount - [chain,namepool]_stats.burned_amount. Not available for assets with blinded issuances. If /decimal is specified, returns the supply as a decimal according to the asset's divisibility. Otherwise, returned in base units.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">231</context>
@@ -2190,28 +2190,28 @@
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="e7e7c97535181ba299bc0ad02904f851088a0dd5">
-        <source>Returns all Bisq transactions that exist in a Bitcoin block.</source>
+        <source>Returns all Bisq transactions that exist in a Namecoin block.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">260</context>
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="6fdafaace68cb298c6281e89eedc704f3d8f3f6a">
-        <source>Returns :length Bitcoin blocks that contain Bisq transactions, starting from :index.</source>
+        <source>Returns :length Namecoin blocks that contain Bisq transactions, starting from :index.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">264</context>
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="ac234ff46c8f499399a20fb5d74005094de7cdcd">
-        <source>Returns the most recently processed Bitcoin block height processed by Bisq.</source>
+        <source>Returns the most recently processed Namecoin block height processed by Bisq.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">268</context>
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="9604b870a64e6635062828425fcb801371e716ad">
-        <source>Returns all Bisq transactions belonging to a Bitcoin address, with 'B' prefixed in front of the address.</source>
+        <source>Returns all Bisq transactions belonging to a Namecoin address, with 'B' prefixed in front of the address.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">272</context>

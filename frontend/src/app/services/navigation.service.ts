@@ -11,7 +11,7 @@ import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pip
 export class NavigationService {
   subnetPaths = new BehaviorSubject<Record<string,string>>({});
   networkModules = {
-    bitcoin: {
+    namecoin: {
       subnets: [
         { name: 'mainnet', path: '' },
         { name: 'testnet', path: this.stateService.env.ROOT_NETWORK === 'testnet' ? '/' : '/testnet' },
@@ -60,7 +60,7 @@ export class NavigationService {
     return true;
   }
 
-  // For each network (bitcoin/liquid), find and save the longest url path compatible with the current route
+  // For each network (namecoin/liquid), find and save the longest url path compatible with the current route
   updateSubnetPaths(root: ActivatedRouteSnapshot): void {
     let path = '';
     const networkPaths = {};

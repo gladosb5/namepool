@@ -70,6 +70,16 @@ export class BlockFiltersComponent implements OnInit, OnChanges, OnDestroy {
     this.stateService.activeGoggles$.next({ mode: this.filterMode, filters: [...this.activeFilters], gradient: this.gradientMode });
   }
 
+  showAllTransactions(): void {
+    for (const key of Object.keys(this.filterFlags)) {
+      this.filterFlags[key] = false;
+    }
+    this.activeFilters = [];
+    this.onFilterChanged.emit({ mode: this.filterMode, filters: this.activeFilters, gradient: this.gradientMode });
+    this.stateService.activeGoggles$.next({ mode: this.filterMode, filters: [], gradient: this.gradientMode });
+    this.cd.markForCheck();
+  }
+
   toggleFilter(key): void {
     const filter = this.filters[key];
     this.filterFlags[key] = !this.filterFlags[key];

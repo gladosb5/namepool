@@ -1,5 +1,5 @@
 import { MempoolBlock } from '../mempool.interfaces';
-import { IBitcoinApi } from './bitcoin/bitcoin-api.interface';
+import { INamecoinApi } from './namecoin/namecoin-api.interface';
 import config from '../config';
 import mempool from './mempool';
 import projectedBlocks from './mempool-blocks';
@@ -47,7 +47,7 @@ class FeeApi {
     };
   }
 
-  public calculateRecommendedFee(pBlocks: MempoolBlock[], mPool: IBitcoinApi.MempoolInfo, minIncrement: number = this.minimumIncrement): RecommendedFees {
+  public calculateRecommendedFee(pBlocks: MempoolBlock[], mPool: INamecoinApi.MempoolInfo, minIncrement: number = this.minimumIncrement): RecommendedFees {
     const purgeRate = this.roundUpToNearest(mPool.mempoolminfee * 100000, minIncrement);
     const minimumFee = Math.max(purgeRate, minIncrement);
 
@@ -68,7 +68,7 @@ class FeeApi {
     // explicitly enforce a minimum of ceil(mempoolminfee) on all recommendations.
     // simply rounding up recommended rates is insufficient, as the purging rate
     // can exceed the median rate of projected blocks in some extreme scenarios
-    // (see https://bitcoin.stackexchange.com/a/120024)
+    // (see https://namecoin.stackexchange.com/a/120024)
     let fastestFee = Math.max(minimumFee, firstMedianFee);
     let halfHourFee = Math.max(minimumFee, secondMedianFee);
     let hourFee = Math.max(minimumFee, thirdMedianFee);

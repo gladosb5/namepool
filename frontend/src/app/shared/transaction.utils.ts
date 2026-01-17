@@ -7,7 +7,7 @@ import { hash, Hash } from '@app/shared/sha256';
 import { AddressType, AddressTypeInfo } from '@app/shared/address-utils';
 import * as secp256k1 from '@noble/secp256k1';
 
-// Bitcoin Core default policy settings
+// Namecoin Core default policy settings
 const MAX_STANDARD_TX_WEIGHT = 400_000;
 const MAX_BLOCK_SIGOPS_COST = 80_000;
 const MAX_STANDARD_TX_SIGOPS_COST = (MAX_BLOCK_SIGOPS_COST / 5);
@@ -86,7 +86,7 @@ export function setSchnorrSighashFlags(flags: bigint, witness: string[]): bigint
 export function isDERSig(w: string): boolean {
   // heuristic to detect probable DER signatures
   return (w.length >= 18
-    && w.startsWith('30') // minimum DER signature length is 8 bytes + sighash flag (see https://mempool.space/testnet/tx/c6c232a36395fa338da458b86ff1327395a9afc28c5d2daa4273e410089fd433)
+    && w.startsWith('30') // minimum DER signature length is 8 bytes + sighash flag (see http://namepool.bit/testnet/tx/c6c232a36395fa338da458b86ff1327395a9afc28c5d2daa4273e410089fd433)
     && ['01', '02', '03', '81', '82', '83'].includes(w.slice(-2)) // signature must end with a valid sighash flag
     && (w.length === (2 * parseInt(w.slice(2, 4), 16)) + 6) // second byte encodes the combined length of the R and S components
   );
@@ -94,9 +94,9 @@ export function isDERSig(w: string): boolean {
 
 // enforce canonical DER-encoded signature format
 // <0x30> <total len> <0x02> <len R> <R> <0x02> <len S> <S> <hashtype>
-// see https://github.com/bitcoin/bitcoin/blob/9a05b45da60d214cb1e5a50c3d2293b1defc9bb0/src/script/interpreter.cpp#L97-L106
+// see https://github.com/namecoin/namecoin/blob/9a05b45da60d214cb1e5a50c3d2293b1defc9bb0/src/script/interpreter.cpp#L97-L106
 export function isCanonicalDERSig(w: string): boolean {
-  // minimum DER signature length is 8 bytes + sighash flag (see https://mempool.space/testnet/tx/c6c232a36395fa338da458b86ff1327395a9afc28c5d2daa4273e410089fd433)
+  // minimum DER signature length is 8 bytes + sighash flag (see http://namepool.bit/testnet/tx/c6c232a36395fa338da458b86ff1327395a9afc28c5d2daa4273e410089fd433)
   if (w.length < 18) {
     return false;
   }
@@ -504,7 +504,7 @@ export function isNonStandard(tx: Transaction, height?: number, network?: string
     }
     // bad-txns-nonstandard-inputs
     if (vin.prevout?.scriptpubkey_type === 'p2sh') {
-      // TODO: evaluate script (https://github.com/bitcoin/bitcoin/blob/1ac627c485a43e50a9a49baddce186ee3ad4daad/src/policy/policy.cpp#L177)
+      // TODO: evaluate script (https://github.com/namecoin/namecoin/blob/1ac627c485a43e50a9a49baddce186ee3ad4daad/src/policy/policy.cpp#L177)
       // countScriptSigops returns the witness-scaled sigops, so divide by 4 before comparison with MAX_P2SH_SIGOPS
       const sigops = (countScriptSigops(vin.inner_redeemscript_asm || '') / 4);
       if (sigops > MAX_P2SH_SIGOPS) {
@@ -552,7 +552,7 @@ export function isNonStandard(tx: Transaction, height?: number, network?: string
       return true;
     } else if (vout.scriptpubkey_type === 'unknown') {
       // undefined segwit version/length combinations are actually standard in outputs
-      // https://github.com/bitcoin/bitcoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/interpreter.cpp#L1950-L1951
+      // https://github.com/namecoin/namecoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/interpreter.cpp#L1950-L1951
       if (vout.scriptpubkey.startsWith('00') || !isWitnessProgram(vout.scriptpubkey)) {
         return true;
       }
@@ -618,7 +618,7 @@ function isNonStandardVersion(tx: Transaction, height?: number, network?: string
     && V3_STANDARDNESS_ACTIVATION_HEIGHT[network]
     && height <= V3_STANDARDNESS_ACTIVATION_HEIGHT[network]
   ) {
-    // V3 transactions were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/bitcoin/bitcoin/issues/29891)
+    // V3 transactions were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/namecoin/namecoin/issues/29891)
     TX_MAX_STANDARD_VERSION = 2;
   }
 
@@ -642,7 +642,7 @@ function isNonStandardAnchor(vin: Vin, height?: number, network?: string): boole
     && height <= ANCHOR_STANDARDNESS_ACTIVATION_HEIGHT[network]
     && vin.prevout?.scriptpubkey === '51024e73'
   ) {
-    // anchor outputs were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/bitcoin/bitcoin/issues/29891)
+    // anchor outputs were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/namecoin/namecoin/issues/29891)
     return true;
   }
   return false;
@@ -713,7 +713,7 @@ function isNonStandardLegacySigops(tx: Transaction, height?: number, network?: s
 
 // A witness program is any valid scriptpubkey that consists of a 1-byte push opcode
 // followed by a data push between 2 and 40 bytes.
-// https://github.com/bitcoin/bitcoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/script.cpp#L224-L240
+// https://github.com/namecoin/namecoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/script.cpp#L224-L240
 function isWitnessProgram(scriptpubkey: string): false | { version: number, program: string } {
   if (scriptpubkey.length < 8 || scriptpubkey.length > 84) {
     return false;
@@ -846,7 +846,7 @@ export function getTransactionFlags(tx: Transaction, cpfpInfo?: CpfpInfo, replac
         flags |= TransactionFlags.p2tr;
         // every valid taproot input has at least one witness item, however transactions
         // created before taproot activation don't need to have any witness data
-        // (see https://mempool.space/tx/b10c007c60e14f9d087e0291d4d0c7869697c6681d979c6639dbd960792b4d41)
+        // (see http://namepool.bit/tx/b10c007c60e14f9d087e0291d4d0c7869697c6681d979c6639dbd960792b4d41)
         if (vin.witness?.length) {
           const taprootInfo = parseTaproot(vin.witness);
           if (taprootInfo.scriptPath) {
@@ -1049,7 +1049,7 @@ export function identifyPrioritizedTransactions(transactions: TransactionStrippe
 }
 
 // Adapted from mempool backend https://github.com/mempool/mempool/blob/14e49126c3ca8416a8d7ad134a95c5e090324d69/backend/src/api/transaction-utils.ts#L254
-// Converts hex bitcoin script to ASM
+// Converts hex namecoin script to ASM
 function convertScriptSigAsm(hex: string): string {
 
   const buf = new Uint8Array(hex.length / 2);
@@ -1169,7 +1169,7 @@ export function addInnerScriptsToVin(vin: Vin): void {
   }
 }
 
-// Adapted from bitcoinjs-lib at https://github.com/bitcoinjs/bitcoinjs-lib/blob/32e08aa57f6a023e995d8c4f0c9fbdc5f11d1fa0/ts_src/transaction.ts#L78
+// Adapted from namecoinjs-lib at https://github.com/namecoinjs/namecoinjs-lib/blob/32e08aa57f6a023e995d8c4f0c9fbdc5f11d1fa0/ts_src/transaction.ts#L78
 /**
  * @param buffer The raw transaction data
  * @param network
@@ -1697,7 +1697,7 @@ export function countSigops(transaction: Transaction): number {
 }
 
 /**
- * see https://github.com/bitcoin/bitcoin/blob/25c45bb0d0bd6618ec9296a1a43605657124e5de/src/policy/policy.cpp#L166-L193
+ * see https://github.com/namecoin/namecoin/blob/25c45bb0d0bd6618ec9296a1a43605657124e5de/src/policy/policy.cpp#L166-L193
  * returns true if the transactions is permitted under bip54 sigops rules
  *
  * "Unlike the existing block wide sigop limit which counts sigops present in the block
@@ -1779,8 +1779,8 @@ function p2pkh(pubKeyHash: string, network: string): string {
   const hash2 = new Hash().update(hash1).digest();
   const checksum = hash2.slice(0, 4);
   const finalPayload = Uint8Array.from([...versionedPayload, ...checksum]);
-  const bitcoinAddress = base58Encode(finalPayload);
-  return bitcoinAddress;
+  const namecoinAddress = base58Encode(finalPayload);
+  return namecoinAddress;
 }
 
 function p2sh(scriptHash: string, network: string): string {
@@ -1791,8 +1791,8 @@ function p2sh(scriptHash: string, network: string): string {
   const hash2 = new Hash().update(hash1).digest();
   const checksum = hash2.slice(0, 4);
   const finalPayload = Uint8Array.from([...versionedPayload, ...checksum]);
-  const bitcoinAddress = base58Encode(finalPayload);
-  return bitcoinAddress;
+  const namecoinAddress = base58Encode(finalPayload);
+  return namecoinAddress;
 }
 
 function p2wpkh(pubKeyHash: string, network: string): string {
@@ -1867,7 +1867,7 @@ function base58Encode(data: Uint8Array): string {
 }
 
 // bech32 encoding / decoding
-// Adapted from https://github.com/bitcoinjs/bech32/blob/5ceb0e3d4625561a459c85643ca6947739b2d83c/src/index.ts
+// Adapted from https://github.com/namecoinjs/bech32/blob/5ceb0e3d4625561a459c85643ca6947739b2d83c/src/index.ts
 const BECH32_ALPHABET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
 type Bech32Encoding = 'bech32' | 'bech32m';
 
@@ -2162,7 +2162,7 @@ export function compactSize(n: number): Uint8Array {
   }
 }
 
-// Inversed the opcodes object from https://github.com/mempool/mempool/blob/14e49126c3ca8416a8d7ad134a95c5e090324d69/backend/src/utils/bitcoin-script.ts#L1
+// Inversed the opcodes object from https://github.com/mempool/mempool/blob/14e49126c3ca8416a8d7ad134a95c5e090324d69/backend/src/utils/namecoin-script.ts#L1
 const opcodes = {
   0: 'OP_0',
   76: 'OP_PUSHDATA1',

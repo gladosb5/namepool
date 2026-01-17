@@ -1,30 +1,30 @@
 #!/usr/bin/env zsh
 check_mempoolspace_frontend_git_hash() {
-	echo -n $(curl -s --connect-to "::node${1}.${2}.mempool.space:443" https://mempool.space/en-US/resources/config.js|grep GIT_COMMIT_HASH_MEMPOOL_SPACE|cut -d "'" -f2|cut -c1-8)
+	echo -n $(curl -s --connect-to "::node${1}.${2}.namepool.bit:443" https://namepool.bit/en-US/resources/config.js|grep GIT_COMMIT_HASH_MEMPOOL_SPACE|cut -d "'" -f2|cut -c1-8)
 }
 check_mempoolfoss_frontend_git_hash() {
-	echo -n $(curl -s "https://node${1}.${2}.mempool.space/resources/config.js"|grep GIT_COMMIT_HASH|cut -d "'" -f2|cut -c1-8)
+	echo -n $(curl -s "https://node${1}.${2}.namepool.bit/resources/config.js"|grep GIT_COMMIT_HASH|cut -d "'" -f2|cut -c1-8)
 }
 check_mempoolfoss_backend_git_hash() {
-	echo -n $(curl -s "https://node${1}.${2}.mempool.space/api/v1/backend-info"|jq -r .gitCommit 2>/dev/null|cut -c1-8)
+	echo -n $(curl -s "https://node${1}.${2}.namepool.bit/api/v1/backend-info"|jq -r .gitCommit 2>/dev/null|cut -c1-8)
 }
 check_mempoolspace_frontend_md5_hash() {
-	echo -n $(curl -s --connect-to "::node${1}.${2}.mempool.space:443" https://mempool.space|md5|cut -c1-8)
+	echo -n $(curl -s --connect-to "::node${1}.${2}.namepool.bit:443" https://namepool.bit|md5|cut -c1-8)
 }
 check_mempoolfoss_frontend_md5_hash() {
-	echo -n $(curl -s https://node${1}.${2}.mempool.space|md5|cut -c1-8)
+	echo -n $(curl -s https://node${1}.${2}.namepool.bit|md5|cut -c1-8)
 }
 check_mempool_electrs_git_hash() {
-	echo -n $(curl -s -i https://node${1}.${2}.mempool.space/api/mempool|grep -i x-powered-by|cut -d ' ' -f3|cut -d '-' -f3|tr -d '\r'|tr -d '\n')
+	echo -n $(curl -s -i https://node${1}.${2}.namepool.bit/api/mempool|grep -i x-powered-by|cut -d ' ' -f3|cut -d '-' -f3|tr -d '\r'|tr -d '\n')
 }
 check_mempool_electrs_negative_balance() {
-	echo -n $(curl -s https://node${1}.${2}.mempool.space/api/address/35Ty15fzBPGQvKnXZMLYvr41Fq2FTdU54a|jq .chain_stats.spent_txo_sum|tr -d '\r'|tr -d '\n')
+	echo -n $(curl -s https://node${1}.${2}.namepool.bit/api/address/35Ty15fzBPGQvKnXZMLYvr41Fq2FTdU54a|jq .chain_stats.spent_txo_sum|tr -d '\r'|tr -d '\n')
 }
 check_liquid_electrs_git_hash() {
-	echo -n $(curl -s -i --connect-to "::node${1}.${2}.mempool.space:443" https://liquid.network/api/mempool|grep -i x-powered-by|cut -d ' ' -f3|cut -d '-' -f3|tr -d '\r'|tr -d '\n')
+	echo -n $(curl -s -i --connect-to "::node${1}.${2}.namepool.bit:443" https://liquid.network/api/mempool|grep -i x-powered-by|cut -d ' ' -f3|cut -d '-' -f3|tr -d '\r'|tr -d '\n')
 }
 check_contributors_md5_hash() {
-	echo -n $(curl -s --connect-to "::node${1}.${2}.mempool.space:443" https://mempool.space/api/v1/contributors|md5|cut -c1-8)
+	echo -n $(curl -s --connect-to "::node${1}.${2}.namepool.bit:443" https://namepool.bit/api/v1/contributors|md5|cut -c1-8)
 }
 for site in hnl sv1 fra tk7 va1 sg1;do
 	echo "${site}"

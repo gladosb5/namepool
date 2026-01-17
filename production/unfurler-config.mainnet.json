@@ -1,12 +1,12 @@
 {
   "SERVER": {
-    "HOST": "https://mempool.tk7.mempool.space",
+    "HOST": "https://mempool.tk7.namepool.bit",
     "HTTP_PORT": 8001
   },
   "MEMPOOL": {
     "HTTP_HOST": "http://127.0.0.1",
     "HTTP_PORT": 81,
-    "NETWORK": "bitcoin"
+    "NETWORK": "namecoin"
   },
   "PUPPETEER": {
     "CLUSTER_SIZE": 8,

@@ -16,7 +16,7 @@
       </tr>
       <tr *ngIf="time">
         <ng-container [ngSwitch]="timeMode">
-          <ng-container *ngSwitchCase="'mempool'">
+          <ng-container *ngSwitchCase="'namepool'">
             <td class="label" i18n="transaction.first-seen|Transaction first seen">First seen</td>
             <td class="value"><i><app-time kind="since" [time]="time" [fastRender]="true"></app-time></i></td>
           </ng-container>

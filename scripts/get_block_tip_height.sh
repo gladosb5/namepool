@@ -1,4 +1,4 @@
-BASE_HEIGHT=$(curl -sk https://node202.tk7.mempool.space/api/v1/blocks/tip/height)
+BASE_HEIGHT=$(curl -sk https://node202.tk7.namepool.bit/api/v1/blocks/tip/height)
 IN_SYNC=true
 echo "Base height (node202.tk7): $BASE_HEIGHT"
 
@@ -6,11 +6,11 @@ for LOCATION in fmt va1 fra tk7
 do
   for NODE in 201 202 203 204 205 206
   do
-    NODE_HEIGHT=$(curl -sk https://node$NODE.$LOCATION.mempool.space/api/v1/blocks/tip/height)
-    echo $(echo node$NODE.$LOCATION.mempool.space) - $NODE_HEIGHT
+    NODE_HEIGHT=$(curl -sk https://node$NODE.$LOCATION.namepool.bit/api/v1/blocks/tip/height)
+    echo $(echo node$NODE.$LOCATION.namepool.bit) - $NODE_HEIGHT
     if [ "$NODE_HEIGHT" -ne "$BASE_HEIGHT" ]; then
       COUNT=$((BASE_HEIGHT-NODE_HEIGHT))
-      echo $(echo node$NODE.$LOCATION.mempool.space) is not in sync. delta: $COUNT
+      echo $(echo node$NODE.$LOCATION.namepool.bit) is not in sync. delta: $COUNT
       IN_SYNC=false
     fi
   done

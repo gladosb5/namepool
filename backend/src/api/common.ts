@@ -1,4 +1,4 @@
-import * as bitcoinjs from 'bitcoinjs-lib';
+import * as namecoinjs from 'namecoinjs-lib';
 import { Request } from 'express';
 import { EffectiveFeeStats, MempoolBlockWithTransactions, TransactionExtended, MempoolTransactionExtended, TransactionStripped, WorkingEffectiveFeeStats, TransactionClassified, TransactionFlags } from '../mempool.interfaces';
 import config from '../config';
@@ -7,10 +7,10 @@ import { isIP } from 'net';
 import transactionUtils from './transaction-utils';
 import { isPoint } from '../utils/secp256k1';
 import logger from '../logger';
-import { getVarIntLength, opcodes, parseMultisigScript } from '../utils/bitcoin-script';
-import { IEsploraApi } from './bitcoin/esplora-api.interface';
+import { getVarIntLength, opcodes, parseMultisigScript } from '../utils/namecoin-script';
+import { IEsploraApi } from './namecoin/esplora-api.interface';
 
-// Bitcoin Core default policy settings
+// Namecoin Core default policy settings
 const MAX_STANDARD_TX_WEIGHT = 400_000;
 const MAX_BLOCK_SIGOPS_COST = 80_000;
 const MAX_STANDARD_TX_SIGOPS_COST = (MAX_BLOCK_SIGOPS_COST / 5);
@@ -189,7 +189,7 @@ export class Common {
   static isDERSig(w: string): boolean {
     // heuristic to detect probable DER signatures
     return (w.length >= 18
-      && w.startsWith('30') // minimum DER signature length is 8 bytes + sighash flag (see https://mempool.space/testnet/tx/c6c232a36395fa338da458b86ff1327395a9afc28c5d2daa4273e410089fd433)
+      && w.startsWith('30') // minimum DER signature length is 8 bytes + sighash flag (see https://namepool.bit/testnet/tx/c6c232a36395fa338da458b86ff1327395a9afc28c5d2daa4273e410089fd433)
       && ['01', '02', '03', '81', '82', '83'].includes(w.slice(-2)) // signature must end with a valid sighash flag
       && (w.length === (2 * parseInt(w.slice(2, 4), 16)) + 6) // second byte encodes the combined length of the R and S components
     );
@@ -250,7 +250,7 @@ export class Common {
       }
       // bad-txns-nonstandard-inputs
       if (vin.prevout?.scriptpubkey_type === 'p2sh') {
-        // TODO: evaluate script (https://github.com/bitcoin/bitcoin/blob/1ac627c485a43e50a9a49baddce186ee3ad4daad/src/policy/policy.cpp#L177)
+        // TODO: evaluate script (https://github.com/namecoin/namecoin/blob/1ac627c485a43e50a9a49baddce186ee3ad4daad/src/policy/policy.cpp#L177)
         // countScriptSigops returns the witness-scaled sigops, so divide by 4 before comparison with MAX_P2SH_SIGOPS
         const sigops = (transactionUtils.countScriptSigops(vin.inner_redeemscript_asm) / 4);
         if (sigops > MAX_P2SH_SIGOPS) {
@@ -299,7 +299,7 @@ export class Common {
         return true;
       } else if (vout.scriptpubkey_type === 'unknown') {
         // undefined segwit version/length combinations are actually standard in outputs
-        // https://github.com/bitcoin/bitcoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/interpreter.cpp#L1950-L1951
+        // https://github.com/namecoin/namecoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/interpreter.cpp#L1950-L1951
         if (vout.scriptpubkey.startsWith('00') || !this.isWitnessProgram(vout.scriptpubkey)) {
           return true;
         }
@@ -351,7 +351,7 @@ export class Common {
 
   // A witness program is any valid scriptpubkey that consists of a 1-byte push opcode
   // followed by a data push between 2 and 40 bytes.
-  // https://github.com/bitcoin/bitcoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/script.cpp#L224-L240
+  // https://github.com/namecoin/namecoin/blob/2c79abc7ad4850e9e3ba32a04c530155cda7f980/src/script/script.cpp#L224-L240
   static isWitnessProgram(scriptpubkey: string): false | { version: number, program: string } {
     if (scriptpubkey.length < 8 || scriptpubkey.length > 84) {
       return false;
@@ -385,7 +385,7 @@ export class Common {
       && this.V3_STANDARDNESS_ACTIVATION_HEIGHT[config.MEMPOOL.NETWORK]
       && height <= this.V3_STANDARDNESS_ACTIVATION_HEIGHT[config.MEMPOOL.NETWORK]
     ) {
-      // V3 transactions were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/bitcoin/bitcoin/issues/29891)
+      // V3 transactions were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/namecoin/namecoin/issues/29891)
       TX_MAX_STANDARD_VERSION = 2;
     }
 
@@ -408,7 +408,7 @@ export class Common {
       && height <= this.ANCHOR_STANDARDNESS_ACTIVATION_HEIGHT[config.MEMPOOL.NETWORK]
       && vin.prevout?.scriptpubkey === '51024e73'
     ) {
-      // anchor outputs were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/bitcoin/bitcoin/issues/29891)
+      // anchor outputs were non-standard to spend before v28.x (scheduled for 2024/09/30 https://github.com/namecoin/namecoin/issues/29891)
       return true;
     }
     return false;
@@ -1135,9 +1135,9 @@ export class Common {
     // We assume txhex to be valid hex (output of getTransactionFromRequest above)
 
     // Check 1: Valid transaction parse
-    let tx: bitcoinjs.Transaction;
+    let tx: namecoinjs.Transaction;
     try {
-      tx = bitcoinjs.Transaction.fromHex(txhex);
+      tx = namecoinjs.Transaction.fromHex(txhex);
     } catch(e) {
       throw Object.assign(new Error('Invalid transaction (could not parse)'), { code: -4 });
     }
@@ -1165,7 +1165,7 @@ export class Common {
           }
           // Definitely taproot. Get script
           const script = witness[witness.length - scriptSpendMinLength];
-          const decompiled = bitcoinjs.script.decompile(script);
+          const decompiled = namecoinjs.script.decompile(script);
           if (!decompiled || decompiled.length < 2) {
             // Skip this input
             return;
@@ -1175,8 +1175,8 @@ export class Common {
             const first = decompiled[i];
             const second = decompiled[i + 1];
             if (
-              first === bitcoinjs.opcodes.OP_FALSE &&
-              second === bitcoinjs.opcodes.OP_IF
+              first === namecoinjs.opcodes.OP_FALSE &&
+              second === namecoinjs.opcodes.OP_IF
             ) {
               throw Object.assign(new Error('Unreachable taproot scripts not allowed'), { code: -5 });
             }
@@ -1191,7 +1191,7 @@ export class Common {
 
   private static isValidLeafVersion(leafVersion: number): boolean {
     // See Note 7 in BIP341
-    // https://github.com/bitcoin/bips/blob/66a1a8151021913047934ebab3f8883f2f8ca75b/bip-0341.mediawiki#cite_note-7
+    // https://github.com/namecoin/bips/blob/66a1a8151021913047934ebab3f8883f2f8ca75b/bip-0341.mediawiki#cite_note-7
     // "What constraints are there on the leaf version?"
 
     // Must be an integer between 0 and 255

@@ -7,6 +7,16 @@
   z-index: 100;
 }
 
+.wip-disclaimer {
+  background: rgba(255, 193, 7, 0.12);
+  border-bottom: 1px solid rgba(255, 193, 7, 0.25);
+  color: #ffc107;
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 6px 10px;
+  text-align: center;
+}
+
 li.nav-item.active {
   background-color: var(--tertiary);
 }
@@ -234,7 +244,7 @@ nav {
   display: flex;
 }
 
-.mempool-logo, app-svg-images {
+app-svg-images {
   align-self: center;
   width: 140px;
   height: 35px;

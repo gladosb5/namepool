@@ -147,7 +147,7 @@
         {
             "poolId": 152,
             "name": "Carbon Negative",
-            "link": "https://github.com/bitcoin-data/mining-pools/issues/48",
+            "link": "https://github.com/namecoin-data/mining-pools/issues/48",
             "blockCount": 7,
             "rank": 13,
             "emptyBlocks": 0,
@@ -195,7 +195,7 @@
         {
             "poolId": 1,
             "name": "Unknown",
-            "link": "https://learnmeabitcoin.com/technical/coinbase-transaction",
+            "link": "https://learnmeanamecoin.com/technical/coinbase-transaction",
             "blockCount": 4,
             "rank": 17,
             "emptyBlocks": 0,

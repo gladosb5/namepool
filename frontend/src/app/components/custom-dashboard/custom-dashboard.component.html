@@ -1,6 +1,6 @@
 
 <div class="container-xl dashboard-container">
-  <div class="row row-cols-1 row-cols-md-2" *ngIf="{ value: (mempoolInfoData$ | async) } as mempoolInfoData">
+  <div class="row row-cols-1 row-cols-md-2" *ngIf="{ value: (mempoolInfoData$ | async) } as namepoolInfoData">
     @for (widget of widgets; track widget.component) {
       @switch (widget.component) {
         @case ('fees') {
@@ -22,8 +22,8 @@
           <div class="col" [style.order]="isMobile && widget.mobileOrder || 8">
             <div class="card graph-card">
               <div class="card-body pl-lg-3 pr-lg-3 pl-2 pr-2">
-                <a class="title-link mb-0" style="margin-top: -2px" href="" [routerLink]="['/mempool-block/0' | relativeUrl]">
-                  <h5 class="card-title d-inline"><span>Mempool Goggles&trade;</span> : {{ goggleCycle[goggleIndex].name }}</h5>
+                <a class="title-link mb-0" style="margin-top: -2px" href="" [routerLink]="['/namepool-block/0' | relativeUrl]">
+                  <h5 class="card-title d-inline"><span>Namepool Goggles&trade;</span> : {{ goggleCycle[goggleIndex].name }}</h5>
                   <span>&nbsp;</span>
                   <fa-icon [icon]="['fas', 'external-link-alt']" [fixedWidth]="true" style="vertical-align: text-top; font-size: 13px; color: var(--title-fg)"></fa-icon>
                 </a>
@@ -34,7 +34,7 @@
                     </label>
                   </div>
                 </div>
-                <div class="mempool-block-wrapper" *ngIf="webGlEnabled">
+                <div class="namepool-block-wrapper" *ngIf="webGlEnabled">
                   <app-mempool-block-overview
                     [index]="0"
                     [resolution]="goggleResolution"
@@ -51,41 +51,41 @@
           <div class="col" [style.order]="isMobile && widget.mobileOrder || 8">
             <div class="card graph-card">
               <div class="card-body">
-                <ng-container *ngTemplateOutlet="mempoolTable; context: { $implicit: mempoolInfoData }"></ng-container>
+                <ng-container *ngTemplateOutlet="namepoolTable; context: { $implicit: namepoolInfoData }"></ng-container>
                   <h5 class="card-title mt-3" i18n="dashboard.incoming-transactions">Incoming Transactions</h5>
-                  <div class="mempool-graph" *ngIf="(mempoolStats$ | async) as mempoolStats">
+                  <div class="namepool-graph" *ngIf="(mempoolStats$ | async) as namepoolStats">
                     <app-incoming-transactions-graph
                       [height]="incomingGraphHeight"
                       [left]="50"
                       [right]="20"
-                      [data]="mempoolStats?.weightPerSecond"
+                      [data]="namepoolStats?.weightPerSecond"
                       [windowPreferenceOverride]="'2h'"
                       ></app-incoming-transactions-graph>
                   </div>
               </div>
             </div>
           </div>
-          <ng-template #mempoolTable let-mempoolInfoData>
-            <div class="mempool-info-data">
+          <ng-template #namepoolTable let-namepoolInfoData>
+            <div class="namepool-info-data">
               <div class="item">
-                <h5 *ngIf="!mempoolInfoData.value || mempoolInfoData.value.memPoolInfo.mempoolminfee === mempoolInfoData.value.memPoolInfo.minrelaytxfee || (stateService.env.BASE_MODULE === 'liquid' && mempoolInfoData.value.memPoolInfo.mempoolminfee === 0.000001) else purgingText" class="card-title" i18n="dashboard.minimum-fee|Minimum mempool fee">Minimum fee</h5>
+                <h5 *ngIf="!namepoolInfoData.value || namepoolInfoData.value.memPoolInfo.namepoolminfee === namepoolInfoData.value.memPoolInfo.minrelaytxfee || (stateService.env.BASE_MODULE === 'liquid' && namepoolInfoData.value.memPoolInfo.namepoolminfee === 0.000001) else purgingText" class="card-title" i18n="dashboard.minimum-fee|Minimum namepool fee">Minimum fee</h5>
                 <ng-template #purgingText><h5 class="card-title" i18n="dashboard.purging|Purgin below fee">Purging</h5></ng-template>
-                <p class="card-text" *ngIf="(isLoadingWebSocket$ | async) === false && mempoolInfoData.value; else loading">
-                  <ng-template [ngIf]="mempoolInfoData.value.memPoolInfo.mempoolminfee !== mempoolInfoData.value.memPoolInfo.minrelaytxfee">&lt; </ng-template><app-fee-rate [fee]="mempoolInfoData.value.memPoolInfo.mempoolminfee * 100000"></app-fee-rate>
+                <p class="card-text" *ngIf="(isLoadingWebSocket$ | async) === false && namepoolInfoData.value; else loading">
+                  <ng-template [ngIf]="namepoolInfoData.value.memPoolInfo.namepoolminfee !== namepoolInfoData.value.memPoolInfo.minrelaytxfee">&lt; </ng-template><app-fee-rate [fee]="namepoolInfoData.value.memPoolInfo.namepoolminfee * 100000"></app-fee-rate>
                 </p>
               </div>
               <div class="item">
                 <h5 class="card-title" i18n="dashboard.unconfirmed|Unconfirmed count">Unconfirmed</h5>
-                <p class="card-text" *ngIf="(isLoadingWebSocket$ | async) === false && mempoolInfoData.value; else loading">
-                  {{ mempoolInfoData.value.memPoolInfo.size | number }} <span i18n="dashboard.txs">TXs</span>
+                <p class="card-text" *ngIf="(isLoadingWebSocket$ | async) === false && namepoolInfoData.value; else loading">
+                  {{ namepoolInfoData.value.memPoolInfo.size | number }} <span i18n="dashboard.txs">TXs</span>
                 </p>
               </div>
               <div class="item bar">
                 <h5 class="card-title" i18n="dashboard.memory-usage|Memory usage">Memory Usage</h5>
-                <div class="card-text" *ngIf="(isLoadingWebSocket$ | async) === false && mempoolInfoData.value; else loadingbig">
+                <div class="card-text" *ngIf="(isLoadingWebSocket$ | async) === false && namepoolInfoData.value; else loadingbig">
                   <div class="progress">
-                    <div class="progress-bar {{ mempoolInfoData.value.mempoolSizeProgress }}" role="progressbar" [ngStyle]="{'width': (mempoolInfoData.value.memPoolInfo.usage / mempoolInfoData.value.memPoolInfo.maxmempool * 100) + '%' }">&nbsp;</div>
-                    <div class="progress-text">&lrm;<span [innerHTML]="mempoolInfoData.value.memPoolInfo.usage | bytes : 2 : 'B' : null : false : 3"></span> / <span [innerHTML]="mempoolInfoData.value.memPoolInfo.maxmempool | bytes"></span></div>
+                    <div class="progress-bar {{ namepoolInfoData.value.namepoolSizeProgress }}" role="progressbar" [ngStyle]="{'width': (namepoolInfoData.value.memPoolInfo.usage / namepoolInfoData.value.memPoolInfo.maxnamepool * 100) + '%' }">&nbsp;</div>
+                    <div class="progress-text">&lrm;<span [innerHTML]="namepoolInfoData.value.memPoolInfo.usage | bytes : 2 : 'B' : null : false : 3"></span> / <span [innerHTML]="namepoolInfoData.value.memPoolInfo.maxnamepool | bytes"></span></div>
                   </div>
                 </div>
               </div>
@@ -162,7 +162,7 @@
                       <td class="table-cell-transaction-count">{{ block.tx_count | number }}</td>
                       <td class="table-cell-size">
                         <div class="progress">
-                          <div class="progress-bar progress-mempool {{ network$ | async }}" role="progressbar" [ngStyle]="{'width': (block.weight / stateService.env.BLOCK_WEIGHT_UNITS)*100 + '%' }">&nbsp;</div>
+                          <div class="progress-bar progress-namepool {{ network$ | async }}" role="progressbar" [ngStyle]="{'width': (block.weight / stateService.env.BLOCK_WEIGHT_UNITS)*100 + '%' }">&nbsp;</div>
                           <div class="progress-text" [innerHTML]="block.size | bytes: 2"></div>
                         </div>
                       </td>

@@ -2,9 +2,9 @@ import config from '../config';
 import logger from '../logger';
 import { BlockExtended } from '../mempool.interfaces';
 import BlocksSummariesRepository from '../repositories/BlocksSummariesRepository';
-import bitcoinApi, { bitcoinCoreApi } from './bitcoin/bitcoin-api-factory';
-import bitcoinClient from './bitcoin/bitcoin-client';
-import { IEsploraApi } from './bitcoin/esplora-api.interface';
+import namecoinApi, { namecoinCoreApi } from './namecoin/namecoin-api-factory';
+import namecoinClient from './namecoin/namecoin-client';
+import { IEsploraApi } from './namecoin/esplora-api.interface';
 import blocks from './blocks';
 import { Common } from './common';
 
@@ -41,9 +41,9 @@ class ChainTips {
 
   public async updateOrphanedBlocks(): Promise<void> {
     try {
-      this.chainTips = await bitcoinClient.getChainTips();
+      this.chainTips = await namecoinClient.getChainTips();
 
-      const activeTipHeight = this.chainTips.find(tip => tip.status === 'active')?.height || (await bitcoinApi.$getBlockHeightTip());
+      const activeTipHeight = this.chainTips.find(tip => tip.status === 'active')?.height || (await namecoinApi.$getBlockHeightTip());
       let minIndexHeight = 0;
       const indexedBlockAmount = Math.min(config.MEMPOOL.INDEXING_BLOCKS_AMOUNT, activeTipHeight);
       if (indexedBlockAmount > 0) {
@@ -62,7 +62,7 @@ class ChainTips {
           do {
             let orphan = this.blockCache[hash];
             if (!orphan) {
-              const block = await bitcoinCoreApi.$getBlock(hash);
+              const block = await namecoinCoreApi.$getBlock(hash);
               if (block && block.stale) {
                 newOrphans++;
                 orphan = {
@@ -147,7 +147,7 @@ class ChainTips {
         continue;
       }
       if (blockhash && !block) {
-        block = await bitcoinCoreApi.$getBlock(blockhash);
+        block = await namecoinCoreApi.$getBlock(blockhash);
       }
       if (!block) {
         continue;

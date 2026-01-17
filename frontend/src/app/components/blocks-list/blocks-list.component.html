@@ -9,6 +9,61 @@
 
   <div class="clearfix"></div>
 
+  <div *ngIf="!widget" class="blocks-filters">
+    <div class="filter-item">
+      <label class="mb-0" for="blocksSort" i18n="blocks.filter.sort">Sort</label>
+      <select
+        id="blocksSort"
+        class="custom-select custom-select-sm form-control-secondary form-control"
+        [value]="sort"
+        (change)="onSortChange($any($event.target).value)"
+      >
+        <option value="height_desc" i18n="blocks.filter.sort.height_desc">Newest (height)</option>
+        <option value="height_asc" i18n="blocks.filter.sort.height_asc">Oldest (height)</option>
+        <option value="size_desc" i18n="blocks.filter.sort.size_desc">Largest (size)</option>
+        <option value="size_asc" i18n="blocks.filter.sort.size_asc">Smallest (size)</option>
+        <option value="tx_desc" i18n="blocks.filter.sort.tx_desc">Most transactions</option>
+        <option value="tx_asc" i18n="blocks.filter.sort.tx_asc">Fewest transactions</option>
+        <option value="timestamp_desc" i18n="blocks.filter.sort.timestamp_desc">Newest (timestamp)</option>
+        <option value="timestamp_asc" i18n="blocks.filter.sort.timestamp_asc">Oldest (timestamp)</option>
+        <option *ngIf="isMempoolModule" value="fees_desc" i18n="blocks.filter.sort.fees_desc">Highest fees</option>
+        <option *ngIf="isMempoolModule" value="fees_asc" i18n="blocks.filter.sort.fees_asc">Lowest fees</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label class="mb-0" for="blocksMinSize" i18n="blocks.filter.minSize">Min size</label>
+      <select
+        id="blocksMinSize"
+        class="custom-select custom-select-sm form-control-secondary form-control"
+        [value]="minSizeBytes ?? ''"
+        (change)="onMinSizeChange($any($event.target).value)"
+      >
+        <option value="" i18n="blocks.filter.minSize.any">Any</option>
+        <option value="100000" i18n="blocks.filter.minSize.100k">≥ 100 kB</option>
+        <option value="250000" i18n="blocks.filter.minSize.250k">≥ 250 kB</option>
+        <option value="500000" i18n="blocks.filter.minSize.500k">≥ 500 kB</option>
+        <option value="1000000" i18n="blocks.filter.minSize.1m">≥ 1 MB</option>
+      </select>
+    </div>
+
+    <div class="filter-item">
+      <label class="mb-0" for="blocksMinTx" i18n="blocks.filter.minTx">Min TXs</label>
+      <input
+        id="blocksMinTx"
+        class="form-control form-control-sm form-control-secondary"
+        type="number"
+        min="0"
+        placeholder="Any"
+        i18n-placeholder="blocks.filter.any"
+        [value]="minTxCount ?? ''"
+        (input)="onMinTxChange($any($event.target).value)"
+      />
+    </div>
+
+    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="resetFilters()" i18n="blocks.filter.reset">Reset</button>
+  </div>
+
   <div style="min-height: 295px">
     <table class="table table-borderless">
       <thead>
@@ -81,7 +136,7 @@
           </td>
           <td class="size" *ngIf="!widget" [class]="isMempoolModule ? '' : 'legacy'">
             <div class="progress">
-              <div class="progress-bar progress-mempool" role="progressbar"
+              <div class="progress-bar progress-namepool" role="progressbar"
                 [ngStyle]="{'width': (block.weight / stateService.env.BLOCK_WEIGHT_UNITS)*100 + '%' }"></div>
               <div class="progress-text" [innerHTML]="block.size | bytes: 2"></div>
             </div>

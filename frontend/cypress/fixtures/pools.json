@@ -44,9 +44,9 @@
             "name" : "BTC.TOP",
             "link" : "http://www.btc.top/"
         },
-        "pool.bitcoin.com" : {
-            "name" : "Bitcoin.com",
-            "link" : "https://www.bitcoin.com/"
+        "pool.namecoin.com" : {
+            "name" : "Namecoin.com",
+            "link" : "https://www.namecoin.com/"
         },
         "Mined By 175btc.com" : {
             "name" : "175btc",
@@ -68,9 +68,9 @@
             "name" : "BitMinter",
             "link" : "https://bitminter.com/"
         },
-        "/Bitcoin-Russia.ru/" : {
-            "name" : "BitcoinRussia",
-            "link" : "https://bitcoin-russia.ru"
+        "/Namecoin-Russia.ru/" : {
+            "name" : "NamecoinRussia",
+            "link" : "https://namecoin-russia.ru"
         },
         "btcserv" : {
             "name" : "BTCServ",
@@ -126,7 +126,7 @@
         },
         "st mining corp" : {
             "name" : "ST Mining Corp",
-            "link" : "https://bitcointalk.org/index.php?topic=77000.msg3207708#msg3207708"
+            "link" : "https://namecointalk.org/index.php?topic=77000.msg3207708#msg3207708"
         },
         "bitparking" : {
             "name" : "Bitparking",
@@ -232,9 +232,9 @@
             "name" : "BitClub",
             "link" : "https://bitclubpool.com/"
         },
-        "bitcoinaffiliatenetwork.com" : {
-            "name" : "Bitcoin Affiliate Network",
-            "link" : "https://mining.bitcoinaffiliatenetwork.com/"
+        "namecoinaffiliatenetwork.com" : {
+            "name" : "Namecoin Affiliate Network",
+            "link" : "https://mining.namecoinaffiliatenetwork.com/"
         },
         "BTCChina Pool" : {
             "name" : "BTCC",
@@ -380,9 +380,9 @@
             "name" : "58COIN",
             "link" : "https://www.58coin.com"
         },
-        "/Bitcoin-India/" : {
-            "name": "Bitcoin India",
-            "link": "https://bitcoin-india.org"
+        "/Namecoin-India/" : {
+            "name": "Namecoin India",
+            "link": "https://namecoin-india.org"
         },
         "--Nug--" : {
             "name": "shawnp0wers",
@@ -432,9 +432,9 @@
             "name": "Helix",
             "link": ""
         },
-        "/Bitcoin-Ukraine.com.ua/": {
-            "name": "Bitcoin-Ukraine",
-            "link": "https://bitcoin-ukraine.com.ua/"
+        "/Namecoin-Ukraine.com.ua/": {
+            "name": "Namecoin-Ukraine",
+            "link": "https://namecoin-ukraine.com.ua/"
         },
         "/poolin.com": {
             "name" : "Poolin",
@@ -579,12 +579,12 @@
             "link" : "https://ghash.io/"
         },
         "14R2r9FkyDmyxGB9xUVwVLdgsX9YfdVamk" : {
-            "name" : "BitcoinRussia",
-            "link" : "https://bitcoin-russia.ru/"
+            "name" : "NamecoinRussia",
+            "link" : "https://namecoin-russia.ru/"
         },
         "165GCEAx81wce33FWEnPCRhdjcXCrBJdKn" : {
-            "name" : "BitcoinRussia",
-            "link" : "https://bitcoin-russia.ru/"
+            "name" : "NamecoinRussia",
+            "link" : "https://namecoin-russia.ru/"
         },
         "17kkmDx8eSwj2JTTULb3HkJhCmexfysExz" : {
             "name" : "Polmine",
@@ -859,8 +859,8 @@
             "link" : "http://haozhuzhu.com"
         },
         "1AZ6BkCo4zgTuuLpRStJH8iNsehXTMp456" : {
-            "name" : "BitcoinIndia",
-            "link" : "https://pool.bitcoin-india.org/"
+            "name" : "NamecoinIndia",
+            "link" : "https://pool.namecoin-india.org/"
         },
         "1FLH1SoLv4U68yUERhDiWzrJn5TggMqkaZ" : {
             "name" : "Waterhole",

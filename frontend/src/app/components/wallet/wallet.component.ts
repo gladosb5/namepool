@@ -68,7 +68,7 @@ export class WalletComponent implements OnInit, OnDestroy {
         this.walletName = walletName;
         this.websocketService.startTrackingWallet(walletName);
         this.seoService.setTitle($localize`:@@wallet.component.browser-title:Wallet: ${walletName}:INTERPOLATION:`);
-        this.seoService.setDescription($localize`:@@meta.description.bitcoin.wallet:See mempool transactions, confirmed transactions, balance, and more for ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'}${seoDescriptionNetwork(this.stateService.network)} wallet ${walletName}:INTERPOLATION:.`);
+        this.seoService.setDescription($localize`:@@meta.description.namecoin.wallet:See mempool transactions, confirmed transactions, balance, and more for ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Namecoin'}${seoDescriptionNetwork(this.stateService.network)} wallet ${walletName}:INTERPOLATION:.`);
       }),
       switchMap((walletName: string) => this.apiService.getWallet$(walletName).pipe(
         catchError((err) => {

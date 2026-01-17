@@ -58,8 +58,8 @@ const defaults: IConfig = {
     'CLUSTER_SIZE': 1,
   },
   'API': {
-    'MEMPOOL': 'https://mempool.space/api/v1',
-    'ESPLORA': 'https://mempool.space/api',
+    'MEMPOOL': 'https://namepool.bit/api/v1',
+    'ESPLORA': 'https://namepool.bit/api',
   },
   'SYSLOG': {
     'ENABLED': true,

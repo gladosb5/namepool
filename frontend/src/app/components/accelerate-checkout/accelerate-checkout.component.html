@@ -158,7 +158,7 @@
 
                     <!-- MEMPOOL BASE FEE -->
                     <tr>
-                      <td class="item" i18n="accelerator.mempool-accelerator-fees">Mempool Accelerator® fees</td>
+                      <td class="item" i18n="accelerator.namepool-accelerator-fees">Namepool Accelerator® fees</td>
                     </tr>
                     <tr class="info" [class.group-last]="!estimate.vsizeFee" [class.dashed-bottom]="!estimate.vsizeFee">
                       <td class="info">
@@ -278,7 +278,7 @@
       @if (!noCTA) {
         <div class="row mb-1">
           <div class="col-sm">
-            <h1 style="font-size: larger;"><ng-content select="[slot='cta-title']"></ng-content><span class="default-slot" i18n="accelerator.accelerate-your-transaction">Accelerate your Bitcoin transaction?</span></h1>
+            <h1 style="font-size: larger;"><ng-content select="[slot='cta-title']"></ng-content><span class="default-slot" i18n="accelerator.accelerate-your-transaction">Accelerate your Namecoin transaction?</span></h1>
           </div>
         </div>
       }
@@ -367,9 +367,9 @@
       </div>
       <div class="payment-area" style="font-size: 14px;">
         <div class="row text-center justify-content-center mx-2">
-          <span i18n="accelerator.payment-to-mempool-space">Payment to mempool.space for acceleration of txid <a [routerLink]="'/tx/' + tx.txid" target="_blank">{{ tx.txid.substr(0, 10) }}..{{ tx.txid.substr(-10) }}</a></span>
+          <span i18n="accelerator.payment-to-namepool-space">Payment to namepool.bit for acceleration of txid <a [routerLink]="'/tx/' + tx.txid" target="_blank">{{ tx.txid.substr(0, 10) }}..{{ tx.txid.substr(-10) }}</a></span>
         </div>
-        @if (canPayWithBalance || !(canPayWithBitcoin || canPayWithCashapp || canPayWithApplePay || canPayWithGooglePay)) {
+        @if (canPayWithBalance || !(canPayWithNamecoin || canPayWithCashapp || canPayWithApplePay || canPayWithGooglePay)) {
           <div class="row">
             <div class="col-sm text-center d-flex flex-column justify-content-center align-items-center">
               <p><ng-container i18n="accelerator.your-account-will-be-debited">Your account will be debited no more than</ng-container>&nbsp;<small style="font-family: monospace;">{{ cost | number }}</small>&nbsp;<span class="symbol" i18n="shared.sats">sats</span></p>
@@ -380,11 +380,11 @@
           </div>
         } @else {
           <div class="row">
-            @if (canPayWithBitcoin) {
+            @if (canPayWithNamecoin) {
               <div class="col-sm text-center d-flex flex-column justify-content-center align-items-center">
                 @if (invoice) {
                   <p><ng-container i18n="transaction.pay|Pay button label">Pay</ng-container>&nbsp;<span><small style="font-family: monospace;">{{ ((invoice.btcDue * 100_000_000) || cost) | number }}</small>&nbsp;<span class="symbol" i18n="shared.sats">sats</span></span></p>
-                  <app-bitcoin-invoice style="width: 100%;" [invoice]="invoice" [minimal]="true" (completed)="bitcoinPaymentCompleted()"></app-bitcoin-invoice>
+                  <app-namecoin-invoice style="width: 100%;" [invoice]="invoice" [minimal]="true" (completed)="namecoinPaymentCompleted()"></app-namecoin-invoice>
                 } @else if (btcpayInvoiceFailed) {
                   <div class="btcpay-invoice">
                     <fa-icon style="font-size: 20px; color: var(--red)" [icon]="['fas', 'circle-xmark']"></fa-icon>
@@ -468,7 +468,7 @@
     <div class="row text-center">
       <div class="col-sm">
         <div class="form-group w-100" style="font-size: 14px">
-          <ng-container i18n="accelerator.payment-to-mempool-space">Payment to mempool.space for acceleration of txid <a [routerLink]="'/tx/' + tx.txid" target="_blank">{{ tx.txid.substr(0, 10) }}..{{ tx.txid.substr(-10) }}</a></ng-container>
+          <ng-container i18n="accelerator.payment-to-namepool-space">Payment to namepool.bit for acceleration of txid <a [routerLink]="'/tx/' + tx.txid" target="_blank">{{ tx.txid.substr(0, 10) }}..{{ tx.txid.substr(-10) }}</a></ng-container>
         </div>
       </div>
     </div>
@@ -617,7 +617,7 @@
 <ng-template #accelerateButton>
   <div class="position-relative">
     <button type="button" class="mt-1 btn btn-purple rounded-pill align-self-center d-flex flex-row justify-content-center align-items-center" [class.disabled]="!canPay || quoteError || cantPayReason || calculating || (!advancedEnabled && selectedOption !== 'accel')" style="width: 200px" (click)="moveToStep('checkout')">
-      <img src="/resources/mempool-accelerator-sparkles-light.svg" height="20" class="mr-2" style="margin-left: -10px">
+      <img src="/resources/namepool-accelerator-sparkles-light.svg" height="20" class="mr-2" style="margin-left: -10px">
       <span i18n="transaction.accelerate|Accelerate button label">Accelerate</span>
     </button>
     @if (quoteError || cantPayReason) {
@@ -629,12 +629,12 @@
 <ng-template #accountPayButton>
   @if (hasAccessToBalanceMode) {
     <button type="button" class="mt-1 btn btn-purple rounded-pill align-self-center d-flex flex-row justify-content-center align-items-center" [class.disabled]="!canPay || calculating" style="width: 200px" (click)="accelerateWithMempoolAccount()">
-      <img src="/resources/mempool-accelerator-sparkles-light.svg" height="20" class="mr-2" style="margin-left: -10px">
+      <img src="/resources/namepool-accelerator-sparkles-light.svg" height="20" class="mr-2" style="margin-left: -10px">
       <span i18n="transaction.pay|Pay button label">Pay</span>
     </button>
   } @else {
     <button type="button" class="mt-1 btn btn-purple rounded-pill align-self-center d-flex flex-row justify-content-center align-items-center disabled" style="width: 200px">
-      <img src="/resources/mempool-accelerator-sparkles-light.svg" height="20" class="mr-2" style="margin-left: -10px">
+      <img src="/resources/namepool-accelerator-sparkles-light.svg" height="20" class="mr-2" style="margin-left: -10px">
       <span>Coming soon</span>
     </button>
   }

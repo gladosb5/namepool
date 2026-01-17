@@ -2,13 +2,13 @@ import { AccelerationInfo } from '../api/acceleration/acceleration';
 import { RowDataPacket } from 'mysql2';
 import DB from '../database';
 import logger from '../logger';
-import { IEsploraApi } from '../api/bitcoin/esplora-api.interface';
+import { IEsploraApi } from '../api/namecoin/esplora-api.interface';
 import { Common } from '../api/common';
 import config from '../config';
 import blocks from '../api/blocks';
 import accelerationApi, { Acceleration, AccelerationHistory } from '../api/services/acceleration';
 import accelerationCosts from '../api/acceleration/acceleration';
-import bitcoinApi from '../api/bitcoin/bitcoin-api-factory';
+import namecoinApi from '../api/namecoin/namecoin-api-factory';
 import transactionUtils from '../api/transaction-utils';
 import { BlockExtended, MempoolTransactionExtended } from '../mempool.interfaces';
 import { makeBlockTemplate } from '../api/mini-miner';
@@ -273,7 +273,7 @@ class AccelerationRepository {
 
     logger.debug(`Fetching accelerations between block ${lastSyncedHeight} and ${currentHeight}`);
 
-    // Fetch accelerations from mempool.space since the last synced block;
+    // Fetch accelerations from namepool.bit since the last synced block;
     const accelerationsByBlock: {[height: number]: AccelerationHistory[]} = {};
     const blockHashes = {};
     let done = false;
@@ -317,7 +317,7 @@ class AccelerationRepository {
       const accelerations = accelerationsByBlock[height];
       try {
         const block = await blocks.$getBlock(blockHashes[height]) as BlockExtended;
-        const transactions = (await bitcoinApi.$getTxsForBlock(blockHashes[height])).map(tx => transactionUtils.extendMempoolTransaction(tx));
+        const transactions = (await namecoinApi.$getTxsForBlock(blockHashes[height])).map(tx => transactionUtils.extendMempoolTransaction(tx));
 
         const blockTxs = {};
         for (const tx of transactions) {

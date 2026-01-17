@@ -1,6 +1,9 @@
 const fs = require('fs');
 
-const CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const PRIMARY_CONFIG_FILE_NAME = 'namepool-frontend-config.json';
+const LEGACY_CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const CONFIG_FILE_NAME = fs.existsSync(PRIMARY_CONFIG_FILE_NAME) ? PRIMARY_CONFIG_FILE_NAME
+  : (fs.existsSync(LEGACY_CONFIG_FILE_NAME) ? LEGACY_CONFIG_FILE_NAME : PRIMARY_CONFIG_FILE_NAME);
 const GENERATED_CONFIG_FILE_NAME = 'generated-config.js';
 
 let settings = [];

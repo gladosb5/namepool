@@ -1,6 +1,10 @@
 <ng-container *ngIf="{ val: network$ | async } as network">
 <header *ngIf="headerVisible" class="sticky-header">
 
+  <div class="wip-disclaimer" role="note" i18n="master-page.wip-disclaimer">
+    Work in progress: this site is under active development and bugs can occur.
+  </div>
+
   <nav class="navbar navbar-expand-md navbar-dark">
   <!-- Hamburger -->
   <ng-container *ngIf="servicesEnabled">
@@ -26,8 +30,7 @@
           </div>
           <div class="vertical-line"></div>
         </ng-template>
-        <app-svg-images *ngIf="!officialMempoolSpace" name="mempoolSpace" viewBox="0 0 500 126" class="mempool-logo" [ngStyle]="{'opacity': connectionState.val === 2 ? 1 : 0.5 }"></app-svg-images>
-        <app-svg-images *ngIf="officialMempoolSpace" name="officialMempoolSpace" viewBox="0 0 500 126"></app-svg-images>
+        <app-svg-images name="namepoolSpace" viewBox="0 0 500 126" [ngStyle]="{'opacity': connectionState.val === 2 ? 1 : 0.5 }"></app-svg-images>
       }
       <div class="connection-badge">
         <div class="badge badge-warning" *ngIf="connectionState.val === 0" i18n="master-page.offline">Offline</div>
@@ -50,8 +53,7 @@
         @if (enterpriseInfo?.header_img) {
           <img [src]="enterpriseInfo?.header_img" [alt]="enterpriseInfo.title" height="36px">
         } @else {
-          <app-svg-images *ngIf="!officialMempoolSpace" name="mempoolSpace" viewBox="0 0 500 126" class="mempool-logo" [ngStyle]="{'opacity': connectionState.val === 2 ? 1 : 0.5 }"></app-svg-images>
-          <app-svg-images *ngIf="officialMempoolSpace" name="officialMempoolSpace" viewBox="0 0 500 126"></app-svg-images>
+          <app-svg-images name="namepoolSpace" viewBox="0 0 500 126" [ngStyle]="{'opacity': connectionState.val === 2 ? 1 : 0.5 }"></app-svg-images>
         }
           <div class="connection-badge">
           <div class="badge badge-warning" *ngIf="connectionState.val === 0" i18n="master-page.offline">Offline</div>
@@ -63,10 +65,10 @@
 
   <div (window:resize)="onResize()" ngbDropdown class="dropdown-container" *ngIf="isDropdownVisible">
     <button ngbDropdownToggle type="button" class="btn btn-secondary dropdown-toggle-split d-flex justify-content-center align-items-center" aria-haspopup="true">
-      <app-svg-images class="d-flex justify-content-center align-items-center current-network-svg" [name]="network.val === '' ? 'bitcoin' : network.val" width="20" height="20" viewBox="0 0 65 65"></app-svg-images>
+      <app-svg-images class="d-flex justify-content-center align-items-center current-network-svg" [name]="network.val === '' ? 'namecoin' : network.val" width="20" height="20" viewBox="0 0 65 65"></app-svg-images>
     </button>
     <div ngbDropdownMenu [ngClass]="{'dropdown-menu-right' : isMobile}">
-      <a ngbDropdownItem *ngIf="env.MAINNET_ENABLED" class="mainnet" [routerLink]="networkPaths['mainnet'] || '/'"><app-svg-images name="bitcoin" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Mainnet</a>
+      <a ngbDropdownItem *ngIf="env.MAINNET_ENABLED" class="mainnet" [routerLink]="networkPaths['mainnet'] || '/'"><app-svg-images name="namecoin" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Mainnet</a>
       <a ngbDropdownItem *ngIf="env.SIGNET_ENABLED" class="signet" [class.active]="network.val === 'signet'" [routerLink]="networkPaths['signet'] || '/signet'"><app-svg-images name="signet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Signet</a>
       <a ngbDropdownItem *ngIf="env.TESTNET_ENABLED" class="testnet" [class.active]="network.val === 'testnet'" [routerLink]="networkPaths['testnet'] || '/testnet'"><app-svg-images name="testnet" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet3</a>
       <a ngbDropdownItem *ngIf="env.TESTNET4_ENABLED" class="testnet4" [class.active]="network.val === 'testnet4'" [routerLink]="networkPaths['testnet4'] || '/testnet4'"><app-svg-images name="testnet4" width="22" height="22" viewBox="0 0 65 65" style="width: 25px; height: 25px;" class="mainnet mr-1"></app-svg-images> Testnet4</a>
@@ -108,17 +110,17 @@
           <div class="svg-wrapper"><app-svg-images name="nav-chart-area" width="21.59" height="100%"></app-svg-images></div>
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active" id="btn-faucet" *ngIf="stateService.isMempoolSpaceBuild && stateService.env.OFFICIAL_MEMPOOL_SPACE && stateService.network === 'testnet4'">
+      <li class="nav-item" routerLinkActive="active" id="btn-faucet" *ngIf="stateService.isNamepoolSpaceBuild && stateService.env.OFFICIAL_MEMPOOL_SPACE && stateService.network === 'testnet4'">
         <a class="nav-link" [routerLink]="['/faucet' | relativeUrl]" (click)="collapse()">
           <div class="svg-wrapper"><app-svg-images name="nav-faucet-drip" width="21.59" height="100%"></app-svg-images></div>
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active" id="btn-docs" *ngIf="!officialMempoolSpaceBuild">
+      <li class="nav-item" routerLinkActive="active" id="btn-docs" *ngIf="!officialNamepoolSpaceBuild">
         <a class="nav-link" [routerLink]="['/docs' | relativeUrl ]" (click)="collapse()">
           <div class="svg-wrapper"><app-svg-images name="nav-book" width="21.59" height="100%"></app-svg-images></div>
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active" id="btn-enterprise" *ngIf="officialMempoolSpaceBuild">
+      <li class="nav-item" routerLinkActive="active" id="btn-enterprise" *ngIf="officialNamepoolSpaceBuild">
         <a class="nav-link" [routerLink]="['/enterprise' | relativeUrl ]" (click)="collapse()">
           <div class="svg-wrapper"><app-svg-images name="nav-enterprise" width="21.59" height="100%"></app-svg-images></div>
         </a>

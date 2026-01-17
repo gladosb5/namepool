@@ -11,6 +11,7 @@ import { OpenGraphService } from '@app/services/opengraph.service';
 })
 export class TrademarkPolicyComponent {
   officialMempoolSpace = this.stateService.env.OFFICIAL_MEMPOOL_SPACE;
+  officialNamepoolSpace = this.officialMempoolSpace;
 
   constructor(
     private stateService: StateService,
@@ -20,7 +21,7 @@ export class TrademarkPolicyComponent {
 
   ngOnInit(): void {
     this.seoService.setTitle('Trademark Policy');
-    this.seoService.setDescription('An overview of the trademarks registered by Mempool Holdings S.A. de C.V. and The Mempool Open Source Project® and what we consider to be lawful usage of those trademarks.');
+    this.seoService.setDescription('An overview of the trademarks registered by Namepool and The Namepool Open Source Project® and what we consider to be lawful usage of those trademarks.');
     this.ogService.setManualOgImage('trademark-policy.jpg');
   }
 }

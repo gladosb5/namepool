@@ -10,6 +10,7 @@ import { OpenGraphService } from '@app/services/opengraph.service';
 })
 export class TermsOfServiceComponent {
   officialMempoolSpace = this.stateService.env.OFFICIAL_MEMPOOL_SPACE;
+  officialNamepoolSpace = this.officialMempoolSpace;
 
   constructor(
     private stateService: StateService,
@@ -19,7 +20,7 @@ export class TermsOfServiceComponent {
 
   ngOnInit(): void {
     this.seoService.setTitle('Terms of Service');
-    this.seoService.setDescription('Out of respect for the Bitcoin community, the mempool.space website is Bitcoin Only and does not display any advertising.');
+    this.seoService.setDescription('Out of respect for the Namecoin community, the namepool.bit website is Namecoin Only and does not display any advertising.');
     this.ogService.setManualOgImage('tos.jpg');
   }
 }

@@ -20,7 +20,7 @@ let routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -38,12 +38,12 @@ let routes: Routes = [
       },
       {
         path: 'status',
-        data: { networks: ['bitcoin', 'liquid'] },
+        data: { networks: ['namecoin', 'liquid'] },
         component: StatusViewComponent
       },
       {
         path: '',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -58,7 +58,7 @@ let routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -76,12 +76,12 @@ let routes: Routes = [
       },
       {
         path: 'status',
-        data: { networks: ['bitcoin', 'liquid'] },
+        data: { networks: ['namecoin', 'liquid'] },
         component: StatusViewComponent
       },
       {
         path: '',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -101,7 +101,7 @@ let routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -119,12 +119,12 @@ let routes: Routes = [
       },
       {
         path: 'status',
-        data: { networks: ['bitcoin', 'liquid'] },
+        data: { networks: ['namecoin', 'liquid'] },
         component: StatusViewComponent
       },
       {
         path: '',
-        loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+        loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
         data: { preload: true },
       },
       {
@@ -136,7 +136,7 @@ let routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+    loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
     data: { preload: true },
   },
   {
@@ -205,12 +205,12 @@ let routes: Routes = [
   },
   {
     path: 'status',
-    data: { networks: ['bitcoin', 'liquid'] },
+    data: { networks: ['namecoin', 'liquid'] },
     component: StatusViewComponent
   },
   {
     path: '',
-    loadChildren: () => import('@app/bitcoin-graphs.module').then(m => m.BitcoinGraphsModule),
+    loadChildren: () => import('@app/namecoin-graphs.module').then(m => m.NamecoinGraphsModule),
     data: { preload: true },
   },
 ];
@@ -241,7 +241,7 @@ if (browserWindowEnv && browserWindowEnv.BASE_MODULE === 'liquid') {
         },
         {
           path: 'status',
-          data: { networks: ['bitcoin', 'liquid'] },
+          data: { networks: ['namecoin', 'liquid'] },
           component: StatusViewComponent
         },
         {
@@ -289,7 +289,7 @@ if (browserWindowEnv && browserWindowEnv.BASE_MODULE === 'liquid') {
     },
     {
       path: 'status',
-      data: { networks: ['bitcoin', 'liquid']},
+      data: { networks: ['namecoin', 'liquid']},
       component: StatusViewComponent
     },
     {

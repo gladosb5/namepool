@@ -1,7 +1,7 @@
 <div class="container-xl" (window:resize)="onResize($event)">
 
   <div class="title-block" [class.time-ltr]="timeLtr" id="block">
-    <div *ngIf="block?.stale" class="alert alert-mempool" role="alert">
+    <div *ngIf="block?.stale" class="alert alert-namepool" role="alert">
       <span i18n="block.reorged|Block reorg" class="alert-text">This block does not belong to the main chain, it has been replaced by:</span>
       <app-truncate [text]="block.canonical" [lastChars]="12" [link]="['/block/' | relativeUrl, block.canonical]" [maxWidth]="480"></app-truncate>
     </div>
@@ -135,7 +135,7 @@
   <ng-template #restOfTable>
     <ng-container *ngIf="block && !isLoadingBlock; else loadingRest">
       <tr *ngIf="network !== 'liquid' && network !== 'liquidtestnet'">
-        <td i18n="mempool-block.fee-span">Fee span</td>
+        <td i18n="namepool-block.fee-span">Fee span</td>
         <td><app-fee-rate [fee]="block.extras?.minFee" [showUnit]="false"></app-fee-rate> - <app-fee-rate [fee]="block.extras?.maxFee"></app-fee-rate></td>
       </tr>
       <tr *ngIf="block.extras?.medianFee != undefined">
@@ -199,7 +199,7 @@
             {{ block.extras.pool.name }}
           </a>
         </td>
-        <td *ngIf="!stateService.env.MINING_DASHBOARD && stateService.env.BASE_MODULE === 'mempool'">
+        <td *ngIf="!stateService.env.MINING_DASHBOARD && stateService.env.BASE_MODULE === 'namepool'">
           <span placement="bottom" class="badge"
             [class]="block.extras.pool.slug === 'unknown' ? 'badge-secondary' : 'badge-primary'">
             {{ block.extras.pool.name }}
@@ -474,7 +474,7 @@
         <td [innerHTML]="'&lrm;' + (blockAudit.expectedWeight | wuBytes: 2)"></td>
       </tr>
       <tr>
-        <td i18n="mempool-block.transactions">Transactions</td>
+        <td i18n="namepool-block.transactions">Transactions</td>
         <td>{{ blockAudit.template?.length || 0 }}</td>
       </tr>
     </tbody>
@@ -506,7 +506,7 @@
         </td>
       </tr>
       <tr>
-        <td i18n="mempool-block.transactions">Transactions</td>
+        <td i18n="namepool-block.transactions">Transactions</td>
         <td>
           {{ block.tx_count }}
           <span *ngIf="blockAudit.txDelta" class="difference" [class.positive]="blockAudit.txDelta <= 0" [class.negative]="blockAudit.txDelta > 0">
@@ -544,7 +544,7 @@
         </td>
       </tr>
       <tr>
-        <td i18n="mempool-block.transactions">Transactions</td>
+        <td i18n="namepool-block.transactions">Transactions</td>
         <td>{{ staleStats.txCount || 0 }}
           @if (staleStats.txDelta && (canonicalStats.txDelta >= 100 || canonicalStats.txDelta <= -100)) {
             <span class="difference" [class.positive]="staleStats.txDelta > 0" [class.negative]="staleStats.txDelta <= 0">
@@ -583,7 +583,7 @@
         </td>
       </tr>
       <tr>
-        <td i18n="mempool-block.transactions">Transactions</td>
+        <td i18n="namepool-block.transactions">Transactions</td>
         <td>
           {{ canonicalStats.txCount || 0 }}
           @if (canonicalStats.txDelta && canonicalStats.txDelta < 100 && canonicalStats.txDelta > -100) {
@@ -609,7 +609,7 @@
         <td><span class="skeleton-loader"></span></td>
       </tr>
       <tr>
-        <td i18n="mempool-block.transactions">Transactions</td>
+        <td i18n="namepool-block.transactions">Transactions</td>
         <td><span class="skeleton-loader"></span></td>
       </tr>
     </tbody>

@@ -7,7 +7,7 @@
   "MEMPOOL": {
     "HTTP_HOST": "http://localhost",
     "HTTP_PORT": 4200,
-    "NETWORK": "bitcoin" // "bitcoin" | "liquid" | "bisq" (optional - defaults to "bitcoin")
+    "NETWORK": "namecoin" // "namecoin" | "liquid" | "bisq" (optional - defaults to "namecoin")
   },
   "PUPPETEER": {
     "ENABLED": false, // optional, boolean, enables puppeteer and /render endpoints (default true)

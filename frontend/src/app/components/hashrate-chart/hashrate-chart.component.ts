@@ -6,7 +6,7 @@ import { ApiService } from '@app/services/api.service';
 import { SeoService } from '@app/services/seo.service';
 import { formatNumber } from '@angular/common';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { selectPowerOfTen } from '@app/bitcoin.utils';
+import { selectPowerOfTen } from '@app/namecoin.utils';
 import { StorageService } from '@app/services/storage.service';
 import { MiningService } from '@app/services/mining.service';
 import { download } from '@app/shared/graphs.utils';
@@ -76,7 +76,7 @@ export class HashrateChartComponent implements OnInit {
       this.miningWindowPreference = '1y';
     } else {
       this.seoService.setTitle($localize`:@@3510fc6daa1d975f331e3a717bdf1a34efa06dff:Hashrate & Difficulty`);
-      this.seoService.setDescription($localize`:@@meta.description.bitcoin.graphs.hashrate:See hashrate and difficulty for the Bitcoin${seoDescriptionNetwork(this.network)} network visualized over time.`);
+      this.seoService.setDescription($localize`:@@meta.description.namecoin.graphs.hashrate:See hashrate and difficulty for the Namecoin${seoDescriptionNetwork(this.network)} network visualized over time.`);
       this.miningWindowPreference = this.miningService.getDefaultTimespan('3m');
     }
     this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });

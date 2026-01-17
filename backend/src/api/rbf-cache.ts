@@ -1,8 +1,8 @@
 import config from "../config";
 import logger from "../logger";
 import { MempoolTransactionExtended, TransactionStripped } from "../mempool.interfaces";
-import bitcoinApi from './bitcoin/bitcoin-api-factory';
-import { IEsploraApi } from "./bitcoin/esplora-api.interface";
+import namecoinApi from './namecoin/namecoin-api-factory';
+import { IEsploraApi } from "./namecoin/esplora-api.interface";
 import { Common } from "./common";
 import redisCache from "./redis-cache";
 
@@ -562,7 +562,7 @@ class RbfCache {
         const slice = txids.slice(i * sliceLength, (i + 1) * sliceLength);
         processedCount += slice.length;
         try {
-          const txs = await bitcoinApi.$getRawTransactions(slice);
+          const txs = await namecoinApi.$getRawTransactions(slice);
           processTxs(txs);
           logger.debug(`fetched and processed ${processedCount} of ${txids.length} cached rbf transactions (${(processedCount / txids.length * 100).toFixed(2)}%)`);
         } catch (err) {
@@ -573,7 +573,7 @@ class RbfCache {
       const txs: IEsploraApi.Transaction[] = [];
       for (const txid of txids) {
         try {
-          const tx = await bitcoinApi.$getRawTransaction(txid, true, false);
+          const tx = await namecoinApi.$getRawTransaction(txid, true, false);
           txs.push(tx);
         } catch (err) {
           // some 404s are expected, so continue quietly

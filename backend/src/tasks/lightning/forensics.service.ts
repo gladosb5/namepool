@@ -1,9 +1,9 @@
 import DB from '../../database';
 import logger from '../../logger';
 import channelsApi from '../../api/explorer/channels.api';
-import bitcoinApi from '../../api/bitcoin/bitcoin-api-factory';
+import namecoinApi from '../../api/namecoin/namecoin-api-factory';
 import config from '../../config';
-import { IEsploraApi } from '../../api/bitcoin/esplora-api.interface';
+import { IEsploraApi } from '../../api/namecoin/esplora-api.interface';
 import { Common } from '../../api/common';
 import { ILightningApi } from '../../api/lightning/lightning-api.interface';
 
@@ -90,7 +90,7 @@ class ForensicsService {
         // fetch outspends in bulk
         try {
           const outspendTxids = channels.map(channel => channel.closing_transaction_id);
-          allOutspends = await bitcoinApi.$getBatchedOutspendsInternal(outspendTxids);
+          allOutspends = await namecoinApi.$getBatchedOutspendsInternal(outspendTxids);
           logger.info(`Fetched outspends for ${allOutspends.length} txs from esplora for LN forensics`);
           await Common.sleep$(config.LIGHTNING.FORENSICS_RATE_LIMIT);
         } catch (e) {
@@ -384,7 +384,7 @@ class ForensicsService {
       const prevChannelTx = await this.fetchTransaction(input.txid, true);
       let outspends: IEsploraApi.Outspend[] | undefined;
       try {
-        outspends = await bitcoinApi.$getOutspends(input.txid);
+        outspends = await namecoinApi.$getOutspends(input.txid);
         await Common.sleep$(config.LIGHTNING.FORENSICS_RATE_LIMIT);
       } catch (e) {
         logger.err(`Failed to call ${config.ESPLORA.REST_API_URL + '/tx/' + input.txid + '/outspends'}. Reason ${e instanceof Error ? e.message : e}`);
@@ -469,7 +469,7 @@ class ForensicsService {
     let tx = this.txCache[txid];
     if (!tx) {
       try {
-        tx = await bitcoinApi.$getRawTransaction(txid);
+        tx = await namecoinApi.$getRawTransaction(txid);
         this.txCache[txid] = tx;
         if (temp) {
           this.tempCached.push(txid);
@@ -491,7 +491,7 @@ class ForensicsService {
     // filter out any transactions we already have in the cache
     const needToFetch: string[] = uniqueTxids.filter(txid => !this.txCache[txid]);
     try {
-      const txs = await bitcoinApi.$getRawTransactions(needToFetch);
+      const txs = await namecoinApi.$getRawTransactions(needToFetch);
       for (const tx of txs) {
         this.txCache[tx.txid] = tx;
         if (temp) {

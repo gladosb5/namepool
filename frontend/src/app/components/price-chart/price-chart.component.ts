@@ -74,8 +74,8 @@ export class PriceChartComponent implements OnInit {
     } else if (this.widget) {
       this.miningWindowPreference = '1y';
     } else {
-      this.seoService.setTitle($localize`:@@price-chart.title:Bitcoin Price`);
-      this.seoService.setDescription($localize`:@@price-chart.description:See the Bitcoin price in USD visualized over time.`);
+      this.seoService.setTitle($localize`:@@price-chart.title:Namecoin Price`);
+      this.seoService.setDescription($localize`:@@price-chart.description:See the Namecoin price in USD visualized over time.`);
       this.miningWindowPreference = this.miningService.getDefaultTimespan('1m');
     }
     this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });
@@ -228,7 +228,7 @@ export class PriceChartComponent implements OnInit {
           // legendHoverLink: false,
           zlevel: 0,
           yAxisIndex: 0,
-          name: 'BTC Price (' + this.currency + ')',
+          name: 'NMC Price (' + this.currency + ')',
           data: data.priceData,
           type: 'line',
           smooth: 0.25,
@@ -286,7 +286,7 @@ export class PriceChartComponent implements OnInit {
     download(this.chartInstance.getDataURL({
       pixelRatio: 2,
       excludeComponents: ['dataZoom'],
-    }), `btc-price-${this.currentTimespan}-${Math.round(now.getTime() / 1000)}.svg`);
+    }), `nmc-price-${this.currentTimespan}-${Math.round(now.getTime() / 1000)}.svg`);
     // @ts-ignore
     this.chartOptions.grid.bottom = prevBottom;
     this.chartOptions.backgroundColor = 'none';

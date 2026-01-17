@@ -201,7 +201,7 @@ export class AddressComponent implements OnInit, OnDestroy {
             this.addressString = this.addressString.toLowerCase();
           }
           this.seoService.setTitle($localize`:@@address.component.browser-title:Address: ${this.addressString}:INTERPOLATION:`);
-          this.seoService.setDescription($localize`:@@meta.description.bitcoin.address:See mempool transactions, confirmed transactions, balance, and more for ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'}${seoDescriptionNetwork(this.stateService.network)} address ${this.addressString}:INTERPOLATION:.`);
+          this.seoService.setDescription($localize`:@@meta.description.namecoin.address:See mempool transactions, confirmed transactions, balance, and more for ${this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Namecoin'}${seoDescriptionNetwork(this.stateService.network)} address ${this.addressString}:INTERPOLATION:.`);
 
           this.addressTypeInfo = new AddressTypeInfo(this.stateService.network || 'mainnet', this.addressString);
 
@@ -614,8 +614,8 @@ export class AddressComponent implements OnInit, OnDestroy {
   }
 
   showTaprootPsbtButton(): boolean {
-    const isBitcoin = this.stateService.network !== 'liquid' && this.stateService.network !== 'liquidtestnet';
-    return this.addressTypeInfo?.type === 'v1_p2tr' && isBitcoin && this.tapTreeIncomplete;
+    const isNamecoin = this.stateService.network !== 'liquid' && this.stateService.network !== 'liquidtestnet';
+    return this.addressTypeInfo?.type === 'v1_p2tr' && isNamecoin && this.tapTreeIncomplete;
   }
 
   @HostListener('window:resize', ['$event'])

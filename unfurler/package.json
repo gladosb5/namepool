@@ -1,15 +1,15 @@
 {
-  "name": "mempool-unfurl",
+  "name": "namepool-unfurl",
   "version": "3.2.0-dev",
-  "description": "Renderer for mempool open graph link preview images",
+  "description": "Renderer for namepool open graph link preview images",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mempool/mempool"
+    "url": "git+https://github.com/namepool/namepool"
   },
   "main": "index.ts",
   "scripts": {
     "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "npm run tsc && rsync -av ../frontend/dist/mempool/browser/resources dist/",
+    "build": "npm run tsc && rsync -av ../frontend/dist/namepool/browser/resources dist/",
     "start": "node --max-old-space-size=2048 dist/index.js",
     "unfurler": "node --max-old-space-size=4096 dist/index.js",
     "lint": "./node_modules/.bin/eslint . --ext .ts",

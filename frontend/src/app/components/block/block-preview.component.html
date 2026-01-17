@@ -64,7 +64,7 @@
                 {{ block.extras.pool.name }}
               </a>
             </td>
-            <td *ngIf="!stateService.env.MINING_DASHBOARD && stateService.env.BASE_MODULE === 'mempool'">
+            <td *ngIf="!stateService.env.MINING_DASHBOARD && stateService.env.BASE_MODULE === 'namepool'">
               <span [attr.data-cy]="'block-details-miner-badge'" placement="bottom" class="badge"
                 [class]="!block?.extras.pool.name || block?.extras.pool.slug === 'unknown' ? 'badge-secondary' : 'badge-primary'">
                 <span class="miner-name" *ngIf="block.extras.pool.minerNames?.length > 1 && block.extras.pool.minerNames[1] != ''">

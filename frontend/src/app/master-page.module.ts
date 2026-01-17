@@ -110,7 +110,7 @@ const routes: Routes = [
       {
         path: 'lightning',
         loadChildren: () => import('@app/lightning/lightning.module').then(m => m.LightningModule),
-        data: { preload: browserWindowEnv && browserWindowEnv.LIGHTNING === true, networks: ['bitcoin'] },
+        data: { preload: browserWindowEnv && browserWindowEnv.LIGHTNING === true, networks: ['namecoin'] },
       },
       {
         path: 'tools/calculator',
@@ -123,12 +123,12 @@ const routes: Routes = [
 if (window['__env']?.OFFICIAL_MEMPOOL_SPACE) {
   routes[0].children.push({
     path: 'monitoring',
-    data: { networks: ['bitcoin', 'liquid'] },
+    data: { networks: ['namecoin', 'liquid'] },
     component: ServerHealthComponent
   });
   routes[0].children.push({
     path: 'nodes',
-    data: { networks: ['bitcoin', 'liquid'] },
+    data: { networks: ['namecoin', 'liquid'] },
     component: ServerStatusComponent
   });
   if (window['isMempoolSpaceBuild']) {
@@ -141,7 +141,7 @@ if (window['__env']?.OFFICIAL_MEMPOOL_SPACE) {
       data: { preload: true, networkSpecific: true },
       children: [{
         path: '',
-        data: { networks: ['bitcoin'] },
+        data: { networks: ['namecoin'] },
         component: FaucetComponent,
       }]
     })

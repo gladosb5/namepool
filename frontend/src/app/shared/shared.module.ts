@@ -121,14 +121,14 @@ import { ClockchainComponent } from '@components/clockchain/clockchain.component
 import { ClockFaceComponent } from '@components/clock-face/clock-face.component';
 import { ClockComponent } from '@components/clock/clock.component';
 import { CalculatorComponent } from '@components/calculator/calculator.component';
-import { BitcoinsatoshisPipe } from '@app/shared/pipes/bitcoinsatoshis.pipe';
+import { NamecoinsatoshisPipe } from '@app/shared/pipes/namecoinsatoshis.pipe';
 import { HttpErrorComponent } from '@app/shared/components/http-error/http-error.component';
 import { TwitterWidgetComponent } from '@components/twitter-widget/twitter-widget.component';
 import { SimpleProofWidgetComponent } from '@components/simpleproof-widget/simpleproof-widget.component';
 import { SimpleProofCuboWidgetComponent } from '@components/simpleproof-widget/simpleproof-cubo-widget.component';
 import { FaucetComponent } from '@components/faucet/faucet.component';
 import { TwitterLogin } from '@components/twitter-login/twitter-login.component';
-import { BitcoinInvoiceComponent } from '@components/bitcoin-invoice/bitcoin-invoice.component';
+import { NamecoinInvoiceComponent } from '@components/namecoin-invoice/namecoin-invoice.component';
 
 import { OnlyVsizeDirective, OnlyWeightDirective } from '@app/shared/components/weight-directives/weight-directives';
 import { GithubLogin } from '@components/github-login.component/github-login.component';
@@ -232,7 +232,7 @@ import { GithubLogin } from '@components/github-login.component/github-login.com
     TestnetAlertComponent,
     GlobalFooterComponent,
     CalculatorComponent,
-    BitcoinsatoshisPipe,
+    NamecoinsatoshisPipe,
     BlockViewComponent,
     EightBlocksComponent,
     MempoolBlockViewComponent,
@@ -255,7 +255,7 @@ import { GithubLogin } from '@components/github-login.component/github-login.com
     FaucetComponent,
     TwitterLogin,
     GithubLogin,
-    BitcoinInvoiceComponent,
+    NamecoinInvoiceComponent,
   ],
   imports: [
     CommonModule,
@@ -395,8 +395,8 @@ import { GithubLogin } from '@components/github-login.component/github-login.com
     SimpleProofCuboWidgetComponent,
     TwitterLogin,
     GithubLogin,
-    BitcoinInvoiceComponent,
-    BitcoinsatoshisPipe,
+    NamecoinInvoiceComponent,
+    NamecoinsatoshisPipe,
 
     MempoolBlockOverviewComponent,
     ClockchainComponent,

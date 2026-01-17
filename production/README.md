@@ -1,14 +1,14 @@
 # Deploying an Enterprise Production Instance
 
-These instructions are for setting up a serious production Mempool website for Bitcoin (mainnet, testnet, signet), Liquid (mainnet, testnet).
+These instructions are for setting up a serious production Namepool website for Namecoin (mainnet, testnet, signet), Liquid (mainnet, testnet).
 
-Again, this setup is no joke—home users should use [one of the other installation methods](../#installation-methods). Support is only provided to project sponsors through [Mempool Enterprise®](https://mempool.space/enterprise).
+Again, this setup is no joke—home users should use [one of the other installation methods](../#installation-methods). Support is only provided to project sponsors through [Namepool Enterprise®](https://namepool.bit/enterprise).
 
-You can also have the mempool.space team run a highly-performant and highly-available instance of Mempool for you on their own global ISP infrastructure. See <a href="https://mempool.space/enterprise" target="_blank">Mempool Enterprise®</a> for more details.
+You can also have the namepool.bit team run a highly-performant and highly-available instance of Namepool for you on their own global ISP infrastructure. See <a href="https://namepool.bit/enterprise" target="_blank">Namepool Enterprise®</a> for more details.
 
 ### Server Hardware
 
-Mempool v3 is powered by [mempool/electrs](https://github.com/mempool/electrs), which is a beast. 
+Namepool v3 is powered by [mempool/electrs](https://github.com/mempool/electrs), which is a beast. 
 
 I recommend a beefy server:
 
@@ -22,7 +22,7 @@ If you don't have a fast SSD or NVMe-backed disk, that's fine—go online and bu
 
 ## FreeBSD 13
 
-The mempool.space site is powered by FreeBSD with ZFS root and ARC cache for maximum performance. Linux probably works fine too, but why settle?
+The namepool.bit site is powered by FreeBSD with ZFS root and ARC cache for maximum performance. Linux probably works fine too, but why settle?
 
 ### Filesystem
 
@@ -38,15 +38,15 @@ nvm        3.62T  1.25T  2.38T        -         -     2%    34%  1.00x    ONLINE
 For maximum flexibility of configuration, I recommend separate partitions for each data folder:
 ```
 Filesystem                             Size    Used   Avail Capacity  Mounted on
-nvm/bitcoin                          766G    648M    765G     0%    /bitcoin
-nvm/bitcoin/blocks                   1.1T    375G    765G    33%    /bitcoin/blocks
-nvm/bitcoin/chainstate               770G    4.5G    765G     1%    /bitcoin/chainstate
-nvm/bitcoin/electrs                  772G    7.3G    765G     1%    /bitcoin/electrs
-nvm/bitcoin/indexes                  799G     34G    765G     4%    /bitcoin/indexes
-nvm/bitcoin/testnet3                 765G    5.0M    765G     0%    /bitcoin/testnet3
-nvm/bitcoin/testnet3/blocks          786G     21G    765G     3%    /bitcoin/testnet3/blocks
-nvm/bitcoin/testnet3/chainstate      766G    1.1G    765G     0%    /bitcoin/testnet3/chainstate
-nvm/bitcoin/testnet3/indexes         768G    2.9G    765G     0%    /bitcoin/testnet3/indexes
+nvm/namecoin                          766G    648M    765G     0%    /namecoin
+nvm/namecoin/blocks                   1.1T    375G    765G    33%    /namecoin/blocks
+nvm/namecoin/chainstate               770G    4.5G    765G     1%    /namecoin/chainstate
+nvm/namecoin/electrs                  772G    7.3G    765G     1%    /namecoin/electrs
+nvm/namecoin/indexes                  799G     34G    765G     4%    /namecoin/indexes
+nvm/namecoin/testnet3                 765G    5.0M    765G     0%    /namecoin/testnet3
+nvm/namecoin/testnet3/blocks          786G     21G    765G     3%    /namecoin/testnet3/blocks
+nvm/namecoin/testnet3/chainstate      766G    1.1G    765G     0%    /namecoin/testnet3/chainstate
+nvm/namecoin/testnet3/indexes         768G    2.9G    765G     0%    /namecoin/testnet3/indexes
 nvm/electrs                          765G    128K    765G     0%    /electrs
 nvm/electrs/liquid                   765G    104K    765G     0%    /electrs/liquid
 nvm/electrs/liquid/cache             765G    7.8M    765G     0%    /electrs/liquid/newindex/cache
@@ -99,10 +99,10 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ### Tor
 
-Install Tor add Bitcoin to the `_tor` group:
+Install Tor add Namecoin to the `_tor` group:
 ```
 pkg install -y tor
-pw user mod bitcoin -G _tor
+pw user mod namecoin -G _tor
 ```
 
 Then configure `/usr/local/etc/tor/torrc` as follows:
@@ -127,16 +127,16 @@ HiddenServicePort 80 127.0.0.1:83
 HiddenServiceVersion 3
 ```
 
-### Bitcoin
+### Namecoin
 
-Build [Bitcoin Core](https://github.com/bitcoin/bitcoin) from source. Alternatively, install the OS packages:
+Build [Namecoin Core](https://github.com/namecoin/namecoin) from source. Alternatively, install the OS packages:
 ```
-pkg install -y bitcoin-daemon bitcoin-utils
+pkg install -y namecoin-daemon namecoin-utils
 ```
 
-Configure your `bitcoin.conf` like this:
+Configure your `namecoin.conf` like this:
 ```
-datadir=/bitcoin
+datadir=/namecoin
 server=1
 txindex=1
 listen=1
@@ -256,15 +256,15 @@ grant all on mempool_liquidtestnet.* to 'mempool_liquidtestnet'@'localhost' iden
 ```
 
 
-### Mempool
+### Namepool
 
-After all 3 electrs instances are fully indexed, install your 3 Mempool nodes:
+After all 3 electrs instances are fully indexed, install your 3 Namepool nodes:
 ```
 ./mempool-install-all
 ./mempool-upgrade-all
 ```
 
-Finally, start your 3 Mempool backends:
+Finally, start your 3 Namepool backends:
 ```
 ./mempool-start-all
 ```
@@ -291,4 +291,4 @@ service nginx restart
 
 ### Done
 
-If everything went well, your site should look like the one at https://mempool.space/.
+If everything went well, your site should look like the one at https://namepool.bit/.

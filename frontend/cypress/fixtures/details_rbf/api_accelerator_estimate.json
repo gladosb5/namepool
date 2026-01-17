@@ -9,7 +9,7 @@
     "targetFeeRate": 3,
     "nextBlockFee": 672,
     "userBalance": 0,
-    "mempoolBaseFee": 50000,
+    "namepoolBaseFee": 50000,
     "vsizeFee": 0,
     "pools": [
         36,
@@ -40,7 +40,7 @@
     ],
     "hasAccess": false,
     "availablePaymentMethods": {
-        "bitcoin": {
+        "namecoin": {
             "enabled": true,
             "min": 1000,
             "max": 10000000

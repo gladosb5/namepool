@@ -1,6 +1,6 @@
 import DB from '../database';
 import logger from '../logger';
-import bitcoinApi from '../api/bitcoin/bitcoin-api-factory';
+import namecoinApi from '../api/namecoin/namecoin-api-factory';
 import { BlockAudit, AuditScore, TransactionAudit, TransactionStripped } from '../mempool.interfaces';
 
 interface MigrationAudit {

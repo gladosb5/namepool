@@ -4,14 +4,16 @@ __MEMPOOL_BACKEND_MAINNET_HTTP_PORT__=${BACKEND_MAINNET_HTTP_PORT:=8999}
 __MEMPOOL_FRONTEND_HTTP_PORT__=${FRONTEND_HTTP_PORT:=8080}
 
 __PROXIED_SERVICES__=${PROXIED_SERVICES:=false}
-__PROXIED_SERVICES_HOST__=${PROXIED_SERVICES_HOST:=https://mempool.space}
+__PROXIED_SERVICES_HOST__=${PROXIED_SERVICES_HOST:=https://namepool.bit}
+NGINX_NAMEPOOL_CONF=/etc/nginx/nginx-namepool.conf
 
 if [ "${__PROXIED_SERVICES__}" = "true" ]; then
-  sed -i "s|proxy_pass https://mempool.space;|proxy_pass ${__PROXIED_SERVICES_HOST__};|g" /etc/nginx/conf.d/nginx-mempool.conf
+  sed -i "s|proxy_pass https://namepool.bit;|proxy_pass ${__PROXIED_SERVICES_HOST__};|g" ${NGINX_NAMEPOOL_CONF}
 fi
 
-sed -i "s/__MEMPOOL_BACKEND_MAINNET_HTTP_HOST__/${__MEMPOOL_BACKEND_MAINNET_HTTP_HOST__}/g" /etc/nginx/conf.d/nginx-mempool.conf
-sed -i "s/__MEMPOOL_BACKEND_MAINNET_HTTP_PORT__/${__MEMPOOL_BACKEND_MAINNET_HTTP_PORT__}/g" /etc/nginx/conf.d/nginx-mempool.conf
+sed -i "s/__MEMPOOL_BACKEND_MAINNET_HTTP_HOST__/${__MEMPOOL_BACKEND_MAINNET_HTTP_HOST__}/g" ${NGINX_NAMEPOOL_CONF}
+sed -i "s/__MEMPOOL_BACKEND_MAINNET_HTTP_PORT__/${__MEMPOOL_BACKEND_MAINNET_HTTP_PORT__}/g" ${NGINX_NAMEPOOL_CONF}
+sed -i "s/127.0.0.1:8999/${__MEMPOOL_BACKEND_MAINNET_HTTP_HOST__}:${__MEMPOOL_BACKEND_MAINNET_HTTP_PORT__}/g" ${NGINX_NAMEPOOL_CONF}
 
 cp /etc/nginx/nginx.conf /patch/nginx.conf
 sed -i "s/__MEMPOOL_FRONTEND_HTTP_PORT__/${__MEMPOOL_FRONTEND_HTTP_PORT__}/g" /patch/nginx.conf
@@ -38,7 +40,7 @@ __BLOCK_WEIGHT_UNITS__=${BLOCK_WEIGHT_UNITS:=4000000}
 __MEMPOOL_BLOCKS_AMOUNT__=${MEMPOOL_BLOCKS_AMOUNT:=8}
 __BASE_MODULE__=${BASE_MODULE:=mempool}
 __ROOT_NETWORK__=${ROOT_NETWORK:=}
-__MEMPOOL_WEBSITE_URL__=${MEMPOOL_WEBSITE_URL:=https://mempool.space}
+__MEMPOOL_WEBSITE_URL__=${MEMPOOL_WEBSITE_URL:=https://namepool.bit}
 __LIQUID_WEBSITE_URL__=${LIQUID_WEBSITE_URL:=https://liquid.network}
 __MINING_DASHBOARD__=${MINING_DASHBOARD:=true}
 __LIGHTNING__=${LIGHTNING:=false}
@@ -48,7 +50,7 @@ __TESTNET_BLOCK_AUDIT_START_HEIGHT__=${TESTNET_BLOCK_AUDIT_START_HEIGHT:=0}
 __SIGNET_BLOCK_AUDIT_START_HEIGHT__=${SIGNET_BLOCK_AUDIT_START_HEIGHT:=0}
 __ACCELERATOR__=${ACCELERATOR:=false}
 __ACCELERATOR_BUTTON__=${ACCELERATOR_BUTTON:=true}
-__SERVICES_API__=${SERVICES_API:=https://mempool.space/api/v1/services}
+__SERVICES_API__=${SERVICES_API:=https://namepool.bit/api/v1/services}
 __PUBLIC_ACCELERATIONS__=${PUBLIC_ACCELERATIONS:=false}
 __HISTORICAL_PRICE__=${HISTORICAL_PRICE:=true}
 __ADDITIONAL_CURRENCIES__=${ADDITIONAL_CURRENCIES:=false}
@@ -86,7 +88,7 @@ export __HISTORICAL_PRICE__
 export __ADDITIONAL_CURRENCIES__
 export __STRATUM_ENABLED__
 
-folder=$(find /var/www/mempool -name "config.js" | xargs dirname)
+folder=$(find /var/www/namepool -name "config.js" | xargs dirname)
 echo ${folder}
 envsubst < ${folder}/config.template.js > ${folder}/config.js
 

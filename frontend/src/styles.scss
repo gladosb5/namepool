@@ -396,7 +396,7 @@ html:lang(ru) .card-title {
 
 /* MEMPOOL CHARTS - start */
 
-.mempool-wrapper-tooltip-chart {
+.namepool-wrapper-tooltip-chart {
   height: 250px;
 }
 
@@ -745,19 +745,19 @@ h1, h2, h3 {
   text-align: center;
 }
 
-.progress-mempool {
+.progress-namepool {
   background: repeating-linear-gradient(to right, var(--secondary), var(--secondary) 0%, var(--primary) 0%, var(--mainnet-alt) 100%);
 }
 
-.progress-mempool.testnet {
+.progress-namepool.testnet {
   background: repeating-linear-gradient(to right, var(--secondary), var(--secondary) 0%, var(--testnet) 0%, var(--testnet-alt) 100%);
 }
 
-.progress-mempool.signet {
+.progress-namepool.signet {
   background: repeating-linear-gradient(to right, var(--secondary), var(--secondary) 0%, var(--signet) 0%, var(--signet-alt) 100%);
 }
 
-.progress-mempool.liquid {
+.progress-namepool.liquid {
   background: repeating-linear-gradient(to right, var(--secondary), var(--secondary) 0%, var(--liquid) 0%, var(--testnet-alt) 100%);
 }
 
@@ -786,7 +786,7 @@ h1, h2, h3 {
   margin-top: 0.75rem !important;
 }
 
-.alert-mempool {
+.alert-namepool {
   color: #fff;
   background-color: var(--tertiary);
   border-color: var(--alert-bg);
@@ -929,8 +929,8 @@ th {
     }
   }
 
-  .etaDeepMempool {
-    @extend .etaDeepMempool;
+  .etaDeepNamepool {
+    @extend .etaDeepNamepool;
     @media (max-width: 995px) {
       justify-content: right !important;
     }
@@ -949,7 +949,7 @@ th {
     direction: rtl !important;
   }
 
-  .bitcoin-satoshis-text {
+  .namecoin-satoshis-text {
     direction: ltr !important;
   }
 
@@ -1032,7 +1032,7 @@ th {
     text-align: left !important;
   }
 
-  .bitcoin-block {
+  .namecoin-block {
     direction: rtl;
   }
 
@@ -1130,8 +1130,8 @@ th {
     }
   }
 
-  .mempool-graph {
-    @extend .mempool-graph;
+  .namepool-graph {
+    @extend .namepool-graph;
     direction: ltr;
   }
   .title-block {

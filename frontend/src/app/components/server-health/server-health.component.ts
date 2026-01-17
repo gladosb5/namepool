@@ -20,7 +20,7 @@ export class ServerHealthComponent implements OnInit {
 
   repoMap = {
     frontend: 'mempool',
-    hybrid: 'mempool.space',
+    hybrid: 'namepool.bit',
     backend: 'mempool',
     electrs: 'electrs',
   };

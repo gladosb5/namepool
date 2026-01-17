@@ -1,19 +1,19 @@
 {
-  "name": "mempool-frontend",
+  "name": "namepool-frontend",
   "version": "3.3-dev",
-  "description": "Bitcoin mempool visualizer and blockchain explorer backend",
+  "description": "Namecoin namepool visualizer and blockchain explorer frontend",
   "license": "GNU Affero General Public License v3.0",
-  "homepage": "https://mempool.space",
+  "homepage": "https://namepool.bit",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mempool/mempool"
+    "url": "git+https://github.com/namepool/namepool"
   },
   "bugs": {
-    "url": "https://github.com/mempool/mempool/issues"
+    "url": "https://github.com/namepool/namepool/issues"
   },
   "keywords": [
-    "bitcoin",
-    "mempool",
+    "namecoin",
+    "namepool",
     "blockchain",
     "explorer",
     "liquid"
@@ -33,7 +33,7 @@
     "start:local-prod": "npm run generate-config && npm run sync-assets-dev && npm run ng -- serve -c local-prod",
     "start:mixed": "npm run generate-config && npm run sync-assets-dev && npm run ng -- serve -c mixed",
     "build": "npm run generate-config && npm run ng -- build --configuration production --localize && npm run sync-assets-dev && npm run sync-assets",
-    "sync-assets": "rsync -av ./src/resources ./dist/mempool/browser && node sync-assets.js 'dist/mempool/browser/resources/'",
+    "sync-assets": "rsync -av ./src/resources ./dist/namepool/browser && node sync-assets.js 'dist/namepool/browser/resources/'",
     "sync-assets-dev": "node sync-assets.js 'src/resources/'",
     "generate-config": "node generate-config.js",
     "test": "npm run ng -- test",
@@ -42,12 +42,12 @@
     "prettier": "prettier --write \"src/app/**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
     "e2e": "npm run generate-config && npm run ng -- e2e",
     "e2e:ci": "npm run cypress:run:ci",
-    "dev:ssr": "npm run generate-config && ng run mempool:serve-ssr",
+    "dev:ssr": "npm run generate-config && ng run namepool:serve-ssr",
     "serve:ssr": "npm run generate-config && node server.run.js",
-    "build:ssr": "npm run build && ng run mempool:server:production && ./node_modules/typescript/bin/tsc server.run.ts",
-    "config:defaults:mempool": "node update-config.js TESTNET_ENABLED=true TESTNET4_ENABLED=true SIGNET_ENABLED=true LIQUID_ENABLED=true LIQUID_TESTNET_ENABLED=true ITEMS_PER_PAGE=25 BASE_MODULE=mempool BLOCK_WEIGHT_UNITS=4000000 && npm run generate-config",
+    "build:ssr": "npm run build && ng run namepool:server:production && ./node_modules/typescript/bin/tsc server.run.ts",
+    "config:defaults:namepool": "node update-config.js TESTNET_ENABLED=true TESTNET4_ENABLED=true SIGNET_ENABLED=true LIQUID_ENABLED=true LIQUID_TESTNET_ENABLED=true ITEMS_PER_PAGE=25 BASE_MODULE=namepool BLOCK_WEIGHT_UNITS=4000000 && npm run generate-config",
     "config:defaults:liquid": "node update-config.js TESTNET_ENABLED=true TESTNET4_ENABLED=true SIGNET_ENABLED=true LIQUID_ENABLED=true LIQUID_TESTNET_ENABLED=true ITEMS_PER_PAGE=25 BASE_MODULE=liquid BLOCK_WEIGHT_UNITS=300000 && npm run generate-config",
-    "prerender": "npm run ng -- run mempool:prerender",
+    "prerender": "npm run ng -- run namepool:prerender",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:record": "cypress run --record",

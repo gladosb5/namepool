@@ -23,7 +23,9 @@ export class GlobalFooterComponent implements OnInit, OnDestroy, OnChanges {
   private destroy$: Subject<any> = new Subject<any>();
   env: Env;
   officialMempoolSpace = this.stateService.env.OFFICIAL_MEMPOOL_SPACE;
+  officialNamepoolSpace = this.officialMempoolSpace;
   mempoolSpaceBuild = window['isMempoolSpaceBuild'];
+  namepoolSpaceBuild = this.stateService.isNamepoolSpaceBuild;
   backendInfo$: Observable<IBackendInfo>;
   servicesBackendInfo$: Observable<IBackendInfo>;
   frontendGitCommitHash = this.stateService.env.GIT_COMMIT_HASH;

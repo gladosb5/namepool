@@ -9,9 +9,9 @@ on:
         default: 'master'
         type: string
       mempool_hostname:
-        description: 'Mempool Hostname'
+        description: 'Namepool Hostname'
         required: true
-        default: 'mempool.space'
+        default: 'namepool.bit'
         type: string 
       liquid_hostname:
         description: 'Liquid Hostname'

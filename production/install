@@ -35,7 +35,7 @@ TOR_INSTALL=ON
 CERTBOT_INSTALL=ON
 
 # install 4 network daemons
-BITCOIN_INSTALL=ON
+NAMECOIN_INSTALL=ON
 ELEMENTS_INSTALL=ON
 CLN_INSTALL=ON
 
@@ -46,21 +46,21 @@ UNFURL_INSTALL=ON
 CKPOOL_INSTALL=ON
 
 # configure 4 network instances
-BITCOIN_MAINNET_ENABLE=ON
-BITCOIN_MAINNET_MINFEE_ENABLE=ON
-BITCOIN_TESTNET_ENABLE=ON
-BITCOIN_TESTNET4_ENABLE=ON
-BITCOIN_SIGNET_ENABLE=ON
-BITCOIN_MAINNET_LIGHTNING_ENABLE=ON
-BITCOIN_TESTNET_LIGHTNING_ENABLE=ON
-BITCOIN_SIGNET_LIGHTNING_ENABLE=ON
+NAMECOIN_MAINNET_ENABLE=ON
+NAMECOIN_MAINNET_MINFEE_ENABLE=ON
+NAMECOIN_TESTNET_ENABLE=ON
+NAMECOIN_TESTNET4_ENABLE=ON
+NAMECOIN_SIGNET_ENABLE=ON
+NAMECOIN_MAINNET_LIGHTNING_ENABLE=ON
+NAMECOIN_TESTNET_LIGHTNING_ENABLE=ON
+NAMECOIN_SIGNET_LIGHTNING_ENABLE=ON
 ELEMENTS_LIQUID_ENABLE=ON
 ELEMENTS_LIQUIDTESTNET_ENABLE=ON
 
 # enable lightmode and disable compaction to fit on 1TB SSD drive
-BITCOIN_ELECTRS_INSTALL=ON
-BITCOIN_ELECTRS_LIGHT_MODE=ON
-BITCOIN_ELECTRS_COMPACTION=OFF
+NAMECOIN_ELECTRS_INSTALL=ON
+NAMECOIN_ELECTRS_LIGHT_MODE=ON
+NAMECOIN_ELECTRS_COMPACTION=OFF
 ELEMENTS_ELECTRS_INSTALL=ON
 ELEMENTS_ELECTRS_LIGHT_MODE=ON
 ELEMENTS_ELECTRS_COMPACTION=OFF
@@ -86,38 +86,38 @@ MD5=md5sum
 ##################################################
 
 # used for firewall configuration
-BITCOIN_MAINNET_P2P_HOST=127.0.0.1
-BITCOIN_MAINNET_P2P_PORT=8333
+NAMECOIN_MAINNET_P2P_HOST=127.0.0.1
+NAMECOIN_MAINNET_P2P_PORT=8333
 # used for RPC communication
-BITCOIN_MAINNET_RPC_HOST=127.0.0.1
-BITCOIN_MAINNET_RPC_PORT=8332
+NAMECOIN_MAINNET_RPC_HOST=127.0.0.1
+NAMECOIN_MAINNET_RPC_PORT=8332
 # generate random hex string
-BITCOIN_RPC_USER=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
-BITCOIN_RPC_PASS=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
+NAMECOIN_RPC_USER=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
+NAMECOIN_RPC_PASS=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
 
 # used for firewall configuration
-BITCOIN_TESTNET_P2P_HOST=127.0.0.1
-BITCOIN_TESTNET_P2P_PORT=18333
+NAMECOIN_TESTNET_P2P_HOST=127.0.0.1
+NAMECOIN_TESTNET_P2P_PORT=18333
 # used for RPC communication
-BITCOIN_TESTNET_RPC_HOST=127.0.0.1
-BITCOIN_TESTNET_RPC_PORT=18332
+NAMECOIN_TESTNET_RPC_HOST=127.0.0.1
+NAMECOIN_TESTNET_RPC_PORT=18332
 
 # used for firewall configuration
-BITCOIN_TESTNET4_P2P_HOST=127.0.0.1
-BITCOIN_TESTNET4_P2P_PORT=48333
+NAMECOIN_TESTNET4_P2P_HOST=127.0.0.1
+NAMECOIN_TESTNET4_P2P_PORT=48333
 # used for RPC communication
-BITCOIN_TESTNET4_RPC_HOST=127.0.0.1
-BITCOIN_TESTNET4_RPC_PORT=48332
+NAMECOIN_TESTNET4_RPC_HOST=127.0.0.1
+NAMECOIN_TESTNET4_RPC_PORT=48332
 
 # used for firewall configuration
-BITCOIN_SIGNET_P2P_HOST=127.0.0.1
-BITCOIN_SIGNET_P2P_PORT=18333
+NAMECOIN_SIGNET_P2P_HOST=127.0.0.1
+NAMECOIN_SIGNET_P2P_PORT=18333
 # used for RPC communication
-BITCOIN_SIGNET_RPC_HOST=127.0.0.1
-BITCOIN_SIGNET_RPC_PORT=18332
+NAMECOIN_SIGNET_RPC_HOST=127.0.0.1
+NAMECOIN_SIGNET_RPC_PORT=18332
 # generate random hex string
-BITCOIN_SIGNET_RPC_USER=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
-BITCOIN_SIGNET_RPC_PASS=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
+NAMECOIN_SIGNET_RPC_USER=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
+NAMECOIN_SIGNET_RPC_PASS=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
 
 # used for firewall configuration
 ELEMENTS_LIQUID_P2P_HOST=127.0.0.1
@@ -130,7 +130,7 @@ ELEMENTS_RPC_USER=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
 ELEMENTS_RPC_PASS=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
 
 # set either socket or TCP host/port, not both
-#ELECTRS_MAINNET_HTTP_SOCK=/tmp/bitcoin.mainnet.electrs
+#ELECTRS_MAINNET_HTTP_SOCK=/tmp/namecoin.mainnet.electrs
 ELECTRS_MAINNET_HTTP_HOST=127.0.0.1
 ELECTRS_MAINNET_HTTP_PORT=3000
 
@@ -140,27 +140,27 @@ ELECTRS_LIQUID_HTTP_HOST=127.0.0.1
 ELECTRS_LIQUID_HTTP_PORT=3001
 
 # set either socket or TCP host/port, not both
-#ELECTRS_TESTNET_HTTP_SOCK=/tmp/bitcoin.testnet.electrs
+#ELECTRS_TESTNET_HTTP_SOCK=/tmp/namecoin.testnet.electrs
 ELECTRS_TESTNET_HTTP_HOST=127.0.0.1
 ELECTRS_TESTNET_HTTP_PORT=3002
 
 # set either socket or TCP host/port, not both
-#ELECTRS_TESTNET4_HTTP_SOCK=/tmp/bitcoin.testnet4.electrs
+#ELECTRS_TESTNET4_HTTP_SOCK=/tmp/namecoin.testnet4.electrs
 ELECTRS_TESTNET4_HTTP_HOST=127.0.0.1
 ELECTRS_TESTNET4_HTTP_PORT=3005
 
 # set either socket or TCP host/port, not both
-#ELECTRS_SIGNET_HTTP_SOCK=/tmp/bitcoin.testnet.electrs
+#ELECTRS_SIGNET_HTTP_SOCK=/tmp/namecoin.testnet.electrs
 ELECTRS_SIGNET_HTTP_HOST=127.0.0.1
 ELECTRS_SIGNET_HTTP_PORT=3003
 
 # set either socket or TCP host/port, not both
-#ELECTRS_LIQUIDTESTNET_HTTP_SOCK=/tmp/bitcoin.testnet.electrs
+#ELECTRS_LIQUIDTESTNET_HTTP_SOCK=/tmp/namecoin.testnet.electrs
 ELECTRS_LIQUIDTESTNET_HTTP_HOST=127.0.0.1
 ELECTRS_LIQUIDTESTNET_HTTP_PORT=3004
 
 # set either socket or TCP host/port, not both
-#MEMPOOL_MAINNET_HTTP_SOCK=/tmp/bitcoin.mainnet.mempool
+#MEMPOOL_MAINNET_HTTP_SOCK=/tmp/namecoin.mainnet.mempool
 MEMPOOL_MAINNET_HTTP_HOST=127.0.0.1
 MEMPOOL_MAINNET_HTTP_PORT=8999
 
@@ -170,34 +170,34 @@ MEMPOOL_LIQUID_HTTP_HOST=127.0.0.1
 MEMPOOL_LIQUID_HTTP_PORT=8998
 
 # set either socket or TCP host/port, not both
-#MEMPOOL_TESTNET_HTTP_SOCK=/tmp/bitcoin.testnet.mempool
+#MEMPOOL_TESTNET_HTTP_SOCK=/tmp/namecoin.testnet.mempool
 MEMPOOL_TESTNET_HTTP_HOST=127.0.0.1
 MEMPOOL_TESTNET_HTTP_PORT=8997
 
 # set either socket or TCP host/port, not both
-#MEMPOOL_TESTNET4_HTTP_SOCK=/tmp/bitcoin.testnet.mempool
+#MEMPOOL_TESTNET4_HTTP_SOCK=/tmp/namecoin.testnet.mempool
 MEMPOOL_TESTNET4_HTTP_HOST=127.0.0.1
 MEMPOOL_TESTNET4_HTTP_PORT=8990
 
 # set either socket or TCP host/port, not both
-#MEMPOOL_SIGNET_HTTP_SOCK=/tmp/bitcoin.bisq.mempool
+#MEMPOOL_SIGNET_HTTP_SOCK=/tmp/namecoin.bisq.mempool
 MEMPOOL_SIGNET_HTTP_HOST=127.0.0.1
 MEMPOOL_SIGNET_HTTP_PORT=8995
 
 # set either socket or TCP host/port, not both
-#MEMPOOL_LIQUIDTESTNET_HTTP_SOCK=/tmp/bitcoin.bisq.mempool
+#MEMPOOL_LIQUIDTESTNET_HTTP_SOCK=/tmp/namecoin.bisq.mempool
 MEMPOOL_LIQUIDTESTNET_HTTP_HOST=127.0.0.1
 MEMPOOL_LIQUIDTESTNET_HTTP_PORT=8994
 
-# set CKPool bitcoin mainnet port
+# set CKPool namecoin mainnet port
 CKPOOL_MAINNET_STRATUM_HOST=127.0.0.1
 CKPOOL_MAINNET_STRATUM_PORT=3333
 
-# set CKPool bitcoin mainnet port
+# set CKPool namecoin mainnet port
 CKPOOL_TESTNET_STRATUM_HOST=127.0.0.1
 CKPOOL_TESTNET_STRATUM_PORT=3334
 
-# set CKPool bitcoin mainnet port
+# set CKPool namecoin mainnet port
 CKPOOL_TESTNET4_STRATUM_HOST=127.0.0.1
 CKPOOL_TESTNET4_STRATUM_PORT=3335
 
@@ -279,39 +279,39 @@ MEMPOOL_MYSQL_CREDENTIALS="${MEMPOOL_HOME}/.mysql_credentials"
 # name of Tor hidden service in torrc
 MEMPOOL_TOR_HS=mempool
 
-# bitcoin user/group
-BITCOIN_USER=bitcoin
-BITCOIN_GROUP=bitcoin
-# bitcoin core data folder, needs about 300GB
-BITCOIN_HOME=/bitcoin
+# namecoin user/group
+NAMECOIN_USER=namecoin
+NAMECOIN_GROUP=namecoin
+# namecoin core data folder, needs about 300GB
+NAMECOIN_HOME=/namecoin
 
 # ckpool user/group
 CKPOOL_HOME=/ckpool
 CKPOOL_USER=ckpool
 CKPOOL_GROUP=ckpool
 
-# bitcoin testnet data
-BITCOIN_TESTNET_DATA=${BITCOIN_HOME}/testnet3
-# bitcoin testnet4 data
-BITCOIN_TESTNET4_DATA=${BITCOIN_HOME}/testnet4
-# bitcoin signet data
-BITCOIN_SIGNET_DATA=${BITCOIN_HOME}/signet
+# namecoin testnet data
+NAMECOIN_TESTNET_DATA=${NAMECOIN_HOME}/testnet3
+# namecoin testnet4 data
+NAMECOIN_TESTNET4_DATA=${NAMECOIN_HOME}/testnet4
+# namecoin signet data
+NAMECOIN_SIGNET_DATA=${NAMECOIN_HOME}/signet
 
-# bitcoin electrs source/binaries
-BITCOIN_ELECTRS_HOME=${BITCOIN_HOME}/electrs
+# namecoin electrs source/binaries
+NAMECOIN_ELECTRS_HOME=${NAMECOIN_HOME}/electrs
 
 # electrs database root
 ELECTRS_DATA_ROOT=/electrs
-# bitcoin electrs data, needs about 350GB, and uses double that during compaction
+# namecoin electrs data, needs about 350GB, and uses double that during compaction
 ELECTRS_MAINNET_ZPOOL=${ZPOOL}
 ELECTRS_MAINNET_DATA=${ELECTRS_DATA_ROOT}/mainnet
-# bitcoin testnet electrs database, only a few GB
+# namecoin testnet electrs database, only a few GB
 ELECTRS_TESTNET_ZPOOL=${ZPOOL}
 ELECTRS_TESTNET_DATA=${ELECTRS_DATA_ROOT}/testnet
-# bitcoin testnet4 electrs database, only a few GB
+# namecoin testnet4 electrs database, only a few GB
 ELECTRS_TESTNET4_ZPOOL=${ZPOOL}
 ELECTRS_TESTNET4_DATA=${ELECTRS_DATA_ROOT}/testnet4
-# bitcoin signet electrs database, only a few GB
+# namecoin signet electrs database, only a few GB
 ELECTRS_SIGNET_ZPOOL=${ZPOOL}
 ELECTRS_SIGNET_DATA=${ELECTRS_DATA_ROOT}/signet
 # liquid electrs data, needs about 5GB
@@ -347,16 +347,16 @@ MINFEE_HOME=/minfee
 
 ##### git repo settings, shouldn't need changing
 
-MEMPOOL_REPO_URL=https://github.com/mempool/mempool
-MEMPOOL_REPO_NAME=mempool
+MEMPOOL_REPO_URL=https://github.com/namepool/namepool
+MEMPOOL_REPO_NAME=namepool
 MEMPOOL_REPO_BRANCH=master
 MEMPOOL_LATEST_RELEASE=master
 
-BITCOIN_REPO_URL=https://github.com/bitcoin/bitcoin
-BITCOIN_REPO_NAME=bitcoin
-BITCOIN_REPO_BRANCH=master
-#BITCOIN_LATEST_RELEASE=$(curl -s https://api.github.com/repos/bitcoin/bitcoin/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
-BITCOIN_LATEST_RELEASE=v30.0
+NAMECOIN_REPO_URL=https://github.com/namecoin/namecoin
+NAMECOIN_REPO_NAME=namecoin
+NAMECOIN_REPO_BRANCH=master
+#NAMECOIN_LATEST_RELEASE=$(curl -s https://api.github.com/repos/namecoin/namecoin/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+NAMECOIN_LATEST_RELEASE=v30.0
 echo -n '.'
 
 CKPOOL_REPO_URL=https://github.com/mempool/ckpool
@@ -365,7 +365,7 @@ CKPOOL_REPO_BRANCH=master
 CKPOOL_LATEST_RELEASE=master
 echo -n '.'
 
-UNFURL_REPO_URL=https://github.com/mempool/mempool
+UNFURL_REPO_URL=https://github.com/namepool/namepool
 UNFURL_REPO_NAME=unfurl
 UNFURL_REPO_BRANCH=master
 #UNFURL_LATEST_RELEASE=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
@@ -379,10 +379,10 @@ ELEMENTS_REPO_BRANCH=master
 ELEMENTS_LATEST_RELEASE=elements-23.3.0
 echo -n '.'
 
-BITCOIN_ELECTRS_REPO_URL=https://github.com/mempool/electrs
-BITCOIN_ELECTRS_REPO_NAME=electrs
-BITCOIN_ELECTRS_REPO_BRANCH=mempool
-BITCOIN_ELECTRS_LATEST_RELEASE=mempool
+NAMECOIN_ELECTRS_REPO_URL=https://github.com/mempool/electrs
+NAMECOIN_ELECTRS_REPO_NAME=electrs
+NAMECOIN_ELECTRS_REPO_BRANCH=mempool
+NAMECOIN_ELECTRS_LATEST_RELEASE=mempool
 
 ELEMENTS_ELECTRS_REPO_URL=https://github.com/mempool/electrs
 ELEMENTS_ELECTRS_REPO_NAME=electrs
@@ -557,60 +557,60 @@ zfsCreateFilesystems()
     zfs create -o "mountpoint=/var/cache/nginx" "${ZPOOL}/cache"
 
     zfs create -o "mountpoint=${ELEMENTS_HOME}" "${ZPOOL}/elements"
-    zfs create -o "mountpoint=${BITCOIN_HOME}" "${ZPOOL}/bitcoin"
+    zfs create -o "mountpoint=${NAMECOIN_HOME}" "${ZPOOL}/namecoin"
     zfs create -o "mountpoint=${MINFEE_HOME}" "${ZPOOL}/minfee"
     zfs create -o "mountpoint=${ELECTRS_HOME}" "${ZPOOL}/electrs"
     zfs create -o "mountpoint=${MEMPOOL_HOME}" "${ZPOOL}/mempool"
     zfs create -o "mountpoint=${MYSQL_HOME}" "${ZPOOL}/mysql" || true
 
-    zfs create -o "mountpoint=${BITCOIN_ELECTRS_HOME}" "${ZPOOL}/bitcoin/electrs"
+    zfs create -o "mountpoint=${NAMECOIN_ELECTRS_HOME}" "${ZPOOL}/namecoin/electrs"
 
     zfs create -o "mountpoint=${ELEMENTS_HOME}/liquidv1" "${ZPOOL}/elements/liquidv1"
     zfs create -o "mountpoint=${ELEMENTS_ELECTRS_HOME}" "${ZPOOL}/elements/electrs"
 
-    # create /bitcoin/socket with custom ACL for electrs unix sockets
-    zfs create -o "mountpoint=${BITCOIN_HOME}/socket" "${ZPOOL}/bitcoin/socket"
+    # create /namecoin/socket with custom ACL for electrs unix sockets
+    zfs create -o "mountpoint=${NAMECOIN_HOME}/socket" "${ZPOOL}/namecoin/socket"
 
     # create /elements/socket with custom ACL for electrs unix sockets
     zfs create -o "mountpoint=${ELEMENTS_HOME}/socket" "${ZPOOL}/elements/socket"
 
-    # Bitcoin Mainnet
-    if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
+    # Namecoin Mainnet
+    if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
         for folder in chainstate indexes blocks
         do
-            zfs create -o "mountpoint=${BITCOIN_HOME}/${folder}" "${ZPOOL}/bitcoin/${folder}"
+            zfs create -o "mountpoint=${NAMECOIN_HOME}/${folder}" "${ZPOOL}/namecoin/${folder}"
         done
     fi
 
-    # Bitcoin Testnet
-    if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
-        zfs create -o "mountpoint=${BITCOIN_TESTNET_DATA}" "${ZPOOL}/bitcoin/testnet"
+    # Namecoin Testnet
+    if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
+        zfs create -o "mountpoint=${NAMECOIN_TESTNET_DATA}" "${ZPOOL}/namecoin/testnet"
         for folder in chainstate indexes blocks
         do
-            zfs create -o "mountpoint=${BITCOIN_TESTNET_DATA}/${folder}" "${ZPOOL}/bitcoin/testnet/${folder}"
+            zfs create -o "mountpoint=${NAMECOIN_TESTNET_DATA}/${folder}" "${ZPOOL}/namecoin/testnet/${folder}"
         done
     fi
 
-    # Bitcoin Testnet4
-    if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
-        zfs create -o "mountpoint=${BITCOIN_TESTNET4_DATA}" "${ZPOOL}/bitcoin/testnet4"
+    # Namecoin Testnet4
+    if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
+        zfs create -o "mountpoint=${NAMECOIN_TESTNET4_DATA}" "${ZPOOL}/namecoin/testnet4"
         for folder in chainstate indexes blocks
         do
-            zfs create -o "mountpoint=${BITCOIN_TESTNET4_DATA}/${folder}" "${ZPOOL}/bitcoin/testnet4/${folder}"
+            zfs create -o "mountpoint=${NAMECOIN_TESTNET4_DATA}/${folder}" "${ZPOOL}/namecoin/testnet4/${folder}"
         done
     fi
 
-    # Bitcoin Signet
-    if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-        zfs create -o "mountpoint=${BITCOIN_SIGNET_DATA}" "${ZPOOL}/bitcoin/signet"
+    # Namecoin Signet
+    if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+        zfs create -o "mountpoint=${NAMECOIN_SIGNET_DATA}" "${ZPOOL}/namecoin/signet"
         for folder in chainstate indexes blocks
         do
-            zfs create -o "mountpoint=${BITCOIN_SIGNET_DATA}/${folder}" "${ZPOOL}/bitcoin/signet/${folder}"
+            zfs create -o "mountpoint=${NAMECOIN_SIGNET_DATA}/${folder}" "${ZPOOL}/namecoin/signet/${folder}"
         done
     fi
 
     # electrs mainnet data
-    if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
         zfs create -o "mountpoint=${ELECTRS_MAINNET_DATA}" "${ELECTRS_MAINNET_ZPOOL}/electrs/mainnet"
         for folder in cache history txstore
         do
@@ -619,7 +619,7 @@ zfsCreateFilesystems()
     fi
 
     # electrs testnet data
-    if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
         zfs create -o "mountpoint=${ELECTRS_TESTNET_DATA}" "${ELECTRS_TESTNET_ZPOOL}/electrs/testnet"
         for folder in cache history txstore
         do
@@ -628,7 +628,7 @@ zfsCreateFilesystems()
     fi
 
     # electrs testnet4 data
-    if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
         zfs create -o "mountpoint=${ELECTRS_TESTNET4_DATA}" "${ELECTRS_TESTNET4_ZPOOL}/electrs/testnet4"
         for folder in cache history txstore
         do
@@ -637,7 +637,7 @@ zfsCreateFilesystems()
     fi
 
     # electrs signet data
-    if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
         zfs create -o "mountpoint=${ELECTRS_SIGNET_DATA}" "${ELECTRS_SIGNET_ZPOOL}/electrs/signet"
         for folder in cache history txstore
         do
@@ -670,45 +670,45 @@ zfsCreateFilesystems()
 
 ext4CreateDir()
 {
-    mkdir -p "/backup" "${ELEMENTS_HOME}" "${BITCOIN_HOME}" "${MINFEE_HOME}" "${ELECTRS_HOME}" "${MEMPOOL_HOME}" "${MYSQL_HOME}" "${BITCOIN_ELECTRS_HOME}" "${ELEMENTS_HOME}/liquidv1" "${ELEMENTS_ELECTRS_HOME}"
+    mkdir -p "/backup" "${ELEMENTS_HOME}" "${NAMECOIN_HOME}" "${MINFEE_HOME}" "${ELECTRS_HOME}" "${MEMPOOL_HOME}" "${MYSQL_HOME}" "${NAMECOIN_ELECTRS_HOME}" "${ELEMENTS_HOME}/liquidv1" "${ELEMENTS_ELECTRS_HOME}"
 
-    # Bitcoin Mainnet
-    if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
+    # Namecoin Mainnet
+    if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
         for folder in chainstate indexes blocks
         do
-            mkdir -p "${BITCOIN_HOME}/${folder}"
+            mkdir -p "${NAMECOIN_HOME}/${folder}"
         done
     fi
 
-    # Bitcoin Testnet
-    if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
-        mkdir -p "${BITCOIN_TESTNET_DATA}"
+    # Namecoin Testnet
+    if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
+        mkdir -p "${NAMECOIN_TESTNET_DATA}"
         for folder in chainstate indexes blocks
         do
-            mkdir -p "${BITCOIN_TESTNET_DATA}/${folder}"
+            mkdir -p "${NAMECOIN_TESTNET_DATA}/${folder}"
         done
     fi
 
-    # Bitcoin Testnet4
-    if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
-        mkdir -p "${BITCOIN_TESTNET4_DATA}"
+    # Namecoin Testnet4
+    if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
+        mkdir -p "${NAMECOIN_TESTNET4_DATA}"
         for folder in chainstate indexes blocks
         do
-            mkdir -p "${BITCOIN_TESTNET4_DATA}/${folder}"
+            mkdir -p "${NAMECOIN_TESTNET4_DATA}/${folder}"
         done
     fi
 
-    # Bitcoin Signet
-    if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-        mkdir -p "${BITCOIN_SIGNET_DATA}"
+    # Namecoin Signet
+    if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+        mkdir -p "${NAMECOIN_SIGNET_DATA}"
         for folder in chainstate indexes blocks
         do
-            mkdir -p "${BITCOIN_SIGNET_DATA}/${folder}"
+            mkdir -p "${NAMECOIN_SIGNET_DATA}/${folder}"
         done
     fi
 
     # electrs mainnet data
-    if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
         mkdir -p "${ELECTRS_MAINNET_DATA}"
         for folder in cache history txstore
         do
@@ -717,7 +717,7 @@ ext4CreateDir()
     fi
 
     # electrs testnet data
-    if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
         mkdir -p "${ELECTRS_TESTNET_DATA}"
         for folder in cache history txstore
         do
@@ -726,7 +726,7 @@ ext4CreateDir()
     fi
 
     # electrs testnet4 data
-    if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
         mkdir -p "${ELECTRS_TESTNET4_DATA}"
         for folder in cache history txstore
         do
@@ -735,7 +735,7 @@ ext4CreateDir()
     fi
 
     # electrs signet data
-    if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
+    if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
         mkdir -p "${ELECTRS_SIGNET_DATA}"
         for folder in cache history txstore
         do
@@ -776,7 +776,7 @@ ext4CreateDir()
 
 ##### Determine what actually needs to be installed
 
-# does bitcoin exist?
+# does namecoin exist?
 
 ##########
 # dialog #
@@ -816,14 +816,14 @@ returncode=0
 $CUT >$input <<-EOF
 Tor:Enable Tor v3 HS Onion:ON
 CKPool:Enable CKPool Stratum Interface:ON
-Mainnet:Enable Bitcoin Mainnet:ON
-Mainnet-Minfee:Enable Bitcoin Mainnet Minfee:ON
-LN-Mainnet:Enable Bitcoin Mainnet Lightning:ON
-LN-Testnet:Enable Bitcoin Testnet Lightning:ON
-LN-Signet:Enable Bitcoin Signet Lightning:ON
-Testnet:Enable Bitcoin Testnet:ON
-Testnet4:Enable Bitcoin Testnet4:ON
-Signet:Enable Bitcoin Signet:ON
+Mainnet:Enable Namecoin Mainnet:ON
+Mainnet-Minfee:Enable Namecoin Mainnet Minfee:ON
+LN-Mainnet:Enable Namecoin Mainnet Lightning:ON
+LN-Testnet:Enable Namecoin Testnet Lightning:ON
+LN-Signet:Enable Namecoin Signet Lightning:ON
+Testnet:Enable Namecoin Testnet:ON
+Testnet4:Enable Namecoin Testnet4:ON
+Signet:Enable Namecoin Signet:ON
 Liquid:Enable Elements Liquid:ON
 Liquidtestnet:Enable Elements Liquidtestnet:ON
 CoreLN:Enable Core Lightning:ON
@@ -860,57 +860,57 @@ else
 fi
 
 if grep Mainnet $tempfile >/dev/null 2>&1;then
-    BITCOIN_MAINNET_ENABLE=ON
+    NAMECOIN_MAINNET_ENABLE=ON
 else
-    BITCOIN_MAINNET_ENABLE=OFF
+    NAMECOIN_MAINNET_ENABLE=OFF
 fi
 
 if grep Mainnet-Minfee $tempfile >/dev/null 2>&1;then
-    BITCOIN_MAINNET_MINFEE_ENABLE=ON
+    NAMECOIN_MAINNET_MINFEE_ENABLE=ON
 else
-    BITCOIN_MAINNET_MINFEE_ENABLE=OFF
+    NAMECOIN_MAINNET_MINFEE_ENABLE=OFF
 fi
 
 if grep Testnet $tempfile >/dev/null 2>&1;then
-    BITCOIN_TESTNET_ENABLE=ON
+    NAMECOIN_TESTNET_ENABLE=ON
 else
-    BITCOIN_TESTNET_ENABLE=OFF
+    NAMECOIN_TESTNET_ENABLE=OFF
 fi
 
 if grep Testnet4 $tempfile >/dev/null 2>&1;then
-    BITCOIN_TESTNET4_ENABLE=ON
+    NAMECOIN_TESTNET4_ENABLE=ON
 else
-    BITCOIN_TESTNET4_ENABLE=OFF
+    NAMECOIN_TESTNET4_ENABLE=OFF
 fi
 
 if grep Signet $tempfile >/dev/null 2>&1;then
-    BITCOIN_SIGNET_ENABLE=ON
+    NAMECOIN_SIGNET_ENABLE=ON
 else
-    BITCOIN_SIGNET_ENABLE=OFF
+    NAMECOIN_SIGNET_ENABLE=OFF
 fi
 
-if [ "${BITCOIN_MAINNET_ENABLE}" = ON -o "${BITCOIN_MAINNET_MINFEE_ENABLE}" = ON -o "${BITCOIN_TESTNET_ENABLE}" = ON -o "${BITCOIN_TESTNET4_ENABLE}" = ON -o "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-    BITCOIN_INSTALL=ON
+if [ "${NAMECOIN_MAINNET_ENABLE}" = ON -o "${NAMECOIN_MAINNET_MINFEE_ENABLE}" = ON -o "${NAMECOIN_TESTNET_ENABLE}" = ON -o "${NAMECOIN_TESTNET4_ENABLE}" = ON -o "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+    NAMECOIN_INSTALL=ON
 else
-    BITCOIN_INSTALL=OFF
+    NAMECOIN_INSTALL=OFF
 fi
 
 if grep LN-Mainnet $tempfile >/dev/null 2>&1;then
-    BITCOIN_MAINNET_LIGHTNING_ENABLE=ON
+    NAMECOIN_MAINNET_LIGHTNING_ENABLE=ON
 else
-    BITCOIN_MAINNET_LIGHTNING_ENABLE=OFF
+    NAMECOIN_MAINNET_LIGHTNING_ENABLE=OFF
 fi
 
 if grep LN-Testnet $tempfile >/dev/null 2>&1;then
-    BITCOIN_TESTNET_LIGHTNING_ENABLE=ON
+    NAMECOIN_TESTNET_LIGHTNING_ENABLE=ON
 else
-    BITCOIN_TESTNET_LIGHTNING_ENABLE=OFF
+    NAMECOIN_TESTNET_LIGHTNING_ENABLE=OFF
 fi
 
 if grep LN-Signet $tempfile >/dev/null 2>&1;then
-    BITCOIN_SIGNET_LIGHTNING_ENABLE=ON
+    NAMECOIN_SIGNET_LIGHTNING_ENABLE=ON
 else
-    BITCOIN_SIGNET_LIGHTNING_ENABLE=OFF
+    NAMECOIN_SIGNET_LIGHTNING_ENABLE=OFF
 fi
 
 if grep Liquid $tempfile >/dev/null 2>&1;then
@@ -937,10 +937,10 @@ else
     CLN_INSTALL=OFF
 fi
 
-if [ "${BITCOIN_MAINNET_ENABLE}" = ON -o "${BITCOIN_TESTNET_ENABLE}" = ON -o "${BITCOIN_TESTNET4_ENABLE}" = ON -o "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-    BITCOIN_ELECTRS_INSTALL=ON
+if [ "${NAMECOIN_MAINNET_ENABLE}" = ON -o "${NAMECOIN_TESTNET_ENABLE}" = ON -o "${NAMECOIN_TESTNET4_ENABLE}" = ON -o "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+    NAMECOIN_ELECTRS_INSTALL=ON
 else
-    BITCOIN_ELECTRS_INSTALL=OFF
+    NAMECOIN_ELECTRS_INSTALL=OFF
 fi
 
 if [ "${ELEMENTS_LIQUID_ENABLE}" = ON -o "${ELEMENTS_LIQUIDTESTNET_ENABLE}" = ON ];then
@@ -980,17 +980,17 @@ fi
 #    "BISQ_REPO_BRANCH"                  2 1 "${BISQ_REPO_BRANCH}"                   2 35 35 0 \
 #    "BISQ_REPO_NAME"                    3 1 "${BISQ_REPO_NAME}"                     3 35 35 0 \
 #    "BISQ_REPO_URL"                     4 1 "${BISQ_REPO_URL}"                      4 35 35 0 \
-#    "BITCOIN_ELECTRS_LATEST_RELEASE"    5 1 "${BITCOIN_ELECTRS_LATEST_RELEASE}"    5 35 35 0 \
-#    "BITCOIN_ELECTRS_LIGHT_MODE"        6 1 "${BITCOIN_ELECTRS_LIGHT_MODE}"        6 35 35 0 \
-#    "BITCOIN_ELECTRS_REPO_BRANCH"       7 1 "${BITCOIN_ELECTRS_REPO_BRANCH}"       7 35 35 0 \
-#    "BITCOIN_ELECTRS_REPO_NAME"         8 1 "${BITCOIN_ELECTRS_REPO_NAME}"         8 35 35 0 \
-#    "BITCOIN_ELECTRS_REPO_URL"          9 1 "${BITCOIN_ELECTRS_REPO_URL}"          9 35 35 0 \
-#    "BITCOIN_LATEST_RELEASE"            10 1 "${BITCOIN_LATEST_RELEASE}"            10 35 35 0 \
-#    "BITCOIN_MAINNET_ENABLE"            11 1 "${BITCOIN_MAINNET_ENABLE}"            11 35 35 0 \
-#    "BITCOIN_REPO_BRANCH"               12 1 "${BITCOIN_REPO_BRANCH}"               12 35 35 0 \
-#    "BITCOIN_REPO_NAME"                 13 1 "${BITCOIN_REPO_NAME}"                 13 35 35 0 \
-#    "BITCOIN_REPO_URL"                  14 1 "${BITCOIN_REPO_URL}"                  14 35 35 0 \
-#    "BITCOIN_TESTNET_ENABLE"            15 1 "${BITCOIN_TESTNET_ENABLE}"            15 35 35 0 \
+#    "NAMECOIN_ELECTRS_LATEST_RELEASE"    5 1 "${NAMECOIN_ELECTRS_LATEST_RELEASE}"    5 35 35 0 \
+#    "NAMECOIN_ELECTRS_LIGHT_MODE"        6 1 "${NAMECOIN_ELECTRS_LIGHT_MODE}"        6 35 35 0 \
+#    "NAMECOIN_ELECTRS_REPO_BRANCH"       7 1 "${NAMECOIN_ELECTRS_REPO_BRANCH}"       7 35 35 0 \
+#    "NAMECOIN_ELECTRS_REPO_NAME"         8 1 "${NAMECOIN_ELECTRS_REPO_NAME}"         8 35 35 0 \
+#    "NAMECOIN_ELECTRS_REPO_URL"          9 1 "${NAMECOIN_ELECTRS_REPO_URL}"          9 35 35 0 \
+#    "NAMECOIN_LATEST_RELEASE"            10 1 "${NAMECOIN_LATEST_RELEASE}"            10 35 35 0 \
+#    "NAMECOIN_MAINNET_ENABLE"            11 1 "${NAMECOIN_MAINNET_ENABLE}"            11 35 35 0 \
+#    "NAMECOIN_REPO_BRANCH"               12 1 "${NAMECOIN_REPO_BRANCH}"               12 35 35 0 \
+#    "NAMECOIN_REPO_NAME"                 13 1 "${NAMECOIN_REPO_NAME}"                 13 35 35 0 \
+#    "NAMECOIN_REPO_URL"                  14 1 "${NAMECOIN_REPO_URL}"                  14 35 35 0 \
+#    "NAMECOIN_TESTNET_ENABLE"            15 1 "${NAMECOIN_TESTNET_ENABLE}"            15 35 35 0 \
 #    "ELEMENTS_INSTALL"                  16 1 "${ELEMENTS_INSTALL}"                  16 35 35 0 \
 #    "ELEMENTS_LATEST_RELEASE"           17 1 "${ELEMENTS_LATEST_RELEASE}"           17 35 35 0 \
 #    "ELEMENTS_LIQUID_ENABLE"            18 1 "${ELEMENTS_LIQUID_ENABLE}"            18 35 35 0 \
@@ -1137,27 +1137,27 @@ if [ "${TOR_INSTALL}" = ON ];then
         ;;
     esac
 
-    # start tor now so it can bootstrap in time for bitcoin starting a few mins later
+    # start tor now so it can bootstrap in time for namecoin starting a few mins later
     echo "[*] Starting Tor service"
     osSudo "${ROOT_USER}" service tor restart
 fi
 
 ########################
-# Bitcoin installation #
+# Namecoin installation #
 ########################
 
-if [ "${BITCOIN_INSTALL}" = ON ];then
+if [ "${NAMECOIN_INSTALL}" = ON ];then
 
-    echo "[*] Creating Bitcoin user with Tor access"
-    osGroupCreate "${BITCOIN_GROUP}"
+    echo "[*] Creating Namecoin user with Tor access"
+    osGroupCreate "${NAMECOIN_GROUP}"
     if [ "${TOR_INSTALL}" = ON ];then
-        osUserCreate "${BITCOIN_USER}" "${BITCOIN_HOME}" "${BITCOIN_GROUP}" "${TOR_GROUP}"
+        osUserCreate "${NAMECOIN_USER}" "${NAMECOIN_HOME}" "${NAMECOIN_GROUP}" "${TOR_GROUP}"
     else
-        osUserCreate "${BITCOIN_USER}" "${BITCOIN_HOME}" "${BITCOIN_GROUP}"
+        osUserCreate "${NAMECOIN_USER}" "${NAMECOIN_HOME}" "${NAMECOIN_GROUP}"
     fi
-    osSudo "${ROOT_USER}" chsh -s `which zsh` "${BITCOIN_USER}"
+    osSudo "${ROOT_USER}" chsh -s `which zsh` "${NAMECOIN_USER}"
 
-    echo "[*] Creating Bitcoin minfee user with Tor access"
+    echo "[*] Creating Namecoin minfee user with Tor access"
     osGroupCreate "${MINFEE_GROUP}"
     if [ "${TOR_INSTALL}" = ON ];then
         osUserCreate "${MINFEE_USER}" "${MINFEE_HOME}" "${MINFEE_GROUP}" "${TOR_GROUP}"
@@ -1167,50 +1167,50 @@ if [ "${BITCOIN_INSTALL}" = ON ];then
     osSudo "${ROOT_USER}" chown -R "${MINFEE_USER}:${MINFEE_GROUP}" "${MINFEE_HOME}"
     osSudo "${ROOT_USER}" chsh -s `which zsh` "${MINFEE_USER}"
     osSudo "${MINFEE_USER}" touch "${MINFEE_HOME}/.zshrc"
-    osSudo "${MINFEE_USER}" ln -s . .bitcoin
+    osSudo "${MINFEE_USER}" ln -s . .namecoin
 
-    echo "[*] Creating Bitcoin data folder"
-    osSudo "${ROOT_USER}" mkdir -p "${BITCOIN_HOME}"
-    osSudo "${ROOT_USER}" chown -R "${BITCOIN_USER}:${BITCOIN_GROUP}" "${BITCOIN_HOME}"
-    osSudo "${BITCOIN_USER}" touch "${BITCOIN_HOME}/.zshrc"
-    osSudo "${BITCOIN_USER}" ln -s . .bitcoin
+    echo "[*] Creating Namecoin data folder"
+    osSudo "${ROOT_USER}" mkdir -p "${NAMECOIN_HOME}"
+    osSudo "${ROOT_USER}" chown -R "${NAMECOIN_USER}:${NAMECOIN_GROUP}" "${NAMECOIN_HOME}"
+    osSudo "${NAMECOIN_USER}" touch "${NAMECOIN_HOME}/.zshrc"
+    osSudo "${NAMECOIN_USER}" ln -s . .namecoin
 
-    echo "[*] Cloning Bitcoin repo from ${BITCOIN_REPO_URL}"
-    osSudo "${BITCOIN_USER}" git config --global advice.detachedHead false
-    osSudo "${BITCOIN_USER}" git clone --branch "${BITCOIN_REPO_BRANCH}" "${BITCOIN_REPO_URL}" "${BITCOIN_HOME}/${BITCOIN_REPO_NAME}"
+    echo "[*] Cloning Namecoin repo from ${NAMECOIN_REPO_URL}"
+    osSudo "${NAMECOIN_USER}" git config --global advice.detachedHead false
+    osSudo "${NAMECOIN_USER}" git clone --branch "${NAMECOIN_REPO_BRANCH}" "${NAMECOIN_REPO_URL}" "${NAMECOIN_HOME}/${NAMECOIN_REPO_NAME}"
 
-    echo "[*] Checking out Bitcoin ${BITCOIN_LATEST_RELEASE}"
-    osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_HOME}/${BITCOIN_REPO_NAME} && git checkout ${BITCOIN_LATEST_RELEASE}"
+    echo "[*] Checking out Namecoin ${NAMECOIN_LATEST_RELEASE}"
+    osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_HOME}/${NAMECOIN_REPO_NAME} && git checkout ${NAMECOIN_LATEST_RELEASE}"
 
-    echo "[*] Building Bitcoin from source repo"
+    echo "[*] Building Namecoin from source repo"
 
     # use cmake if > v28
-    if [ "${BITCOIN_LATEST_RELEASE:1:2}" -gt "28" ];then
-        osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_REPO_NAME} && cmake -B build -DWITH_GUI=OFF -DENABLE_IPC=OFF -DENABLE_WALLET=OFF -DBUILD_BITCOIN_TESTS=OFF"
-        osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_REPO_NAME} && cmake --build build -j${NPROC}"
+    if [ "${NAMECOIN_LATEST_RELEASE:1:2}" -gt "28" ];then
+        osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_REPO_NAME} && cmake -B build -DWITH_GUI=OFF -DENABLE_IPC=OFF -DENABLE_WALLET=OFF -DBUILD_NAMECOIN_TESTS=OFF"
+        osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_REPO_NAME} && cmake --build build -j${NPROC}"
 
-        echo "[*] Installing Bitcoin binaries into OS"
-        osSudo "${ROOT_USER}" sh -c "cd ${BITCOIN_HOME}/${BITCOIN_REPO_NAME}/build && cmake --install ."
+        echo "[*] Installing Namecoin binaries into OS"
+        osSudo "${ROOT_USER}" sh -c "cd ${NAMECOIN_HOME}/${NAMECOIN_REPO_NAME}/build && cmake --install ."
     else # use gmake if <= v28
-        osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_REPO_NAME} && ./autogen.sh --quiet"
-        osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_REPO_NAME} && MAKE=gmake CC=cc CXX=c++ CPPFLAGS=-I/usr/local/include ./configure --with-gui=no --disable-wallet --disable-tests"
-        osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_REPO_NAME} && gmake -j${NPROC}"
+        osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_REPO_NAME} && ./autogen.sh --quiet"
+        osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_REPO_NAME} && MAKE=gmake CC=cc CXX=c++ CPPFLAGS=-I/usr/local/include ./configure --with-gui=no --disable-wallet --disable-tests"
+        osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_REPO_NAME} && gmake -j${NPROC}"
 
-        echo "[*] Installing Bitcoin binaries into OS"
-        osSudo "${ROOT_USER}" sh -c "cd ${BITCOIN_HOME}/${BITCOIN_REPO_NAME} && gmake install"
+        echo "[*] Installing Namecoin binaries into OS"
+        osSudo "${ROOT_USER}" sh -c "cd ${NAMECOIN_HOME}/${NAMECOIN_REPO_NAME} && gmake install"
     fi
 
-    echo "[*] Installing Bitcoin configuration"
-    osSudo "${ROOT_USER}" install -c -o "${BITCOIN_USER}" -g "${BITCOIN_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/bitcoin.conf" "${BITCOIN_HOME}/bitcoin.conf"
+    echo "[*] Installing Namecoin configuration"
+    osSudo "${ROOT_USER}" install -c -o "${NAMECOIN_USER}" -g "${NAMECOIN_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/namecoin.conf" "${NAMECOIN_HOME}/namecoin.conf"
 
-    echo "[*] Installing Bitcoin minfee configuration"
-    osSudo "${ROOT_USER}" install -c -o "${MINFEE_USER}" -g "${MINFEE_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/bitcoin.minfee.conf" "${MINFEE_HOME}/bitcoin.conf"
+    echo "[*] Installing Namecoin minfee configuration"
+    osSudo "${ROOT_USER}" install -c -o "${MINFEE_USER}" -g "${MINFEE_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/namecoin.minfee.conf" "${MINFEE_HOME}/namecoin.conf"
 
-    echo "[*] Installing Bitcoin RPC credentials"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_USER__/${BITCOIN_RPC_USER}/" "${BITCOIN_HOME}/bitcoin.conf"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_PASS__/${BITCOIN_RPC_PASS}/" "${BITCOIN_HOME}/bitcoin.conf"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_USER__/${BITCOIN_RPC_USER}/" "${MINFEE_HOME}/bitcoin.conf"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_PASS__/${BITCOIN_RPC_PASS}/" "${MINFEE_HOME}/bitcoin.conf"
+    echo "[*] Installing Namecoin RPC credentials"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_USER__/${NAMECOIN_RPC_USER}/" "${NAMECOIN_HOME}/namecoin.conf"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_PASS__/${NAMECOIN_RPC_PASS}/" "${NAMECOIN_HOME}/namecoin.conf"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_USER__/${NAMECOIN_RPC_USER}/" "${MINFEE_HOME}/namecoin.conf"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_PASS__/${NAMECOIN_RPC_PASS}/" "${MINFEE_HOME}/namecoin.conf"
 fi
 
 #######################
@@ -1270,15 +1270,15 @@ if [ "${CKPOOL_INSTALL}" = ON ]; then
 
     TEMP_CRON_FILE="tmp_cron"
 
-    if [ "${BITCOIN_MAINNET_ENABLE}" = ON ]; then
-        install_ckpool_cron "mainnet" "Mainnet" "bitcoin" 2333
+    if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ]; then
+        install_ckpool_cron "mainnet" "Mainnet" "namecoin" 2333
     fi
 
-    if [ "${BITCOIN_TESTNET_ENABLE}" = ON ]; then
+    if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ]; then
         install_ckpool_cron "testnet" "Testnet" "testnet" 2334
     fi
 
-    if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ]; then
+    if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ]; then
         install_ckpool_cron "testnet4" "Testnet4" "testnet4" 2335
     fi
 fi
@@ -1323,40 +1323,40 @@ if [ "${ELEMENTS_INSTALL}" = ON ];then
     osSudo "${ROOT_USER}" install -c -o "${ELEMENTS_USER}" -g "${ELEMENTS_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/elements.conf" "${ELEMENTS_HOME}/elements.conf"
 
     echo "[*] Configuring Elements Liquid RPC credentials in elements.conf"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_USER__/${BITCOIN_RPC_USER}/" "${ELEMENTS_HOME}/elements.conf"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_PASS__/${BITCOIN_RPC_PASS}/" "${ELEMENTS_HOME}/elements.conf"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_USER__/${NAMECOIN_RPC_USER}/" "${ELEMENTS_HOME}/elements.conf"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_PASS__/${NAMECOIN_RPC_PASS}/" "${ELEMENTS_HOME}/elements.conf"
     osSudo "${ROOT_USER}" sed -i.orig "s/__ELEMENTS_RPC_USER__/${ELEMENTS_RPC_USER}/" "${ELEMENTS_HOME}/elements.conf"
     osSudo "${ROOT_USER}" sed -i.orig "s/__ELEMENTS_RPC_PASS__/${ELEMENTS_RPC_PASS}/" "${ELEMENTS_HOME}/elements.conf"
 fi
 
 ###################################
-# Bitcoin -> Electrs installation #
+# Namecoin -> Electrs installation #
 ###################################
 
-if [ "${BITCOIN_ELECTRS_INSTALL}" = ON ];then
+if [ "${NAMECOIN_ELECTRS_INSTALL}" = ON ];then
 
-    echo "[*] Creating Bitcoin Electrs data folder"
-    osSudo "${ROOT_USER}" mkdir -p "${BITCOIN_ELECTRS_HOME}"
-    osSudo "${ROOT_USER}" chown -R "${BITCOIN_USER}:${BITCOIN_GROUP}" "${BITCOIN_ELECTRS_HOME}"
-    if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
-        osSudo "${ROOT_USER}" chown -R "${BITCOIN_USER}:${BITCOIN_GROUP}" "${ELECTRS_MAINNET_DATA}"
+    echo "[*] Creating Namecoin Electrs data folder"
+    osSudo "${ROOT_USER}" mkdir -p "${NAMECOIN_ELECTRS_HOME}"
+    osSudo "${ROOT_USER}" chown -R "${NAMECOIN_USER}:${NAMECOIN_GROUP}" "${NAMECOIN_ELECTRS_HOME}"
+    if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
+        osSudo "${ROOT_USER}" chown -R "${NAMECOIN_USER}:${NAMECOIN_GROUP}" "${ELECTRS_MAINNET_DATA}"
     fi
-    if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
-        osSudo "${ROOT_USER}" chown -R "${BITCOIN_USER}:${BITCOIN_GROUP}" "${ELECTRS_TESTNET_DATA}"
+    if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
+        osSudo "${ROOT_USER}" chown -R "${NAMECOIN_USER}:${NAMECOIN_GROUP}" "${ELECTRS_TESTNET_DATA}"
     fi
-    if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
-        osSudo "${ROOT_USER}" chown -R "${BITCOIN_USER}:${BITCOIN_GROUP}" "${ELECTRS_TESTNET4_DATA}"
+    if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
+        osSudo "${ROOT_USER}" chown -R "${NAMECOIN_USER}:${NAMECOIN_GROUP}" "${ELECTRS_TESTNET4_DATA}"
     fi
-    if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-        osSudo "${ROOT_USER}" chown -R "${BITCOIN_USER}:${BITCOIN_GROUP}" "${ELECTRS_SIGNET_DATA}"
+    if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+        osSudo "${ROOT_USER}" chown -R "${NAMECOIN_USER}:${NAMECOIN_GROUP}" "${ELECTRS_SIGNET_DATA}"
     fi
 
-    echo "[*] Cloning Bitcoin Electrs repo from ${BITCOIN_ELECTRS_REPO_URL}"
-    osSudo "${BITCOIN_USER}" git config --global advice.detachedHead false
-    osSudo "${BITCOIN_USER}" git clone --branch "${BITCOIN_ELECTRS_REPO_BRANCH}" "${BITCOIN_ELECTRS_REPO_URL}" "${BITCOIN_HOME}/${BITCOIN_ELECTRS_REPO_NAME}"
+    echo "[*] Cloning Namecoin Electrs repo from ${NAMECOIN_ELECTRS_REPO_URL}"
+    osSudo "${NAMECOIN_USER}" git config --global advice.detachedHead false
+    osSudo "${NAMECOIN_USER}" git clone --branch "${NAMECOIN_ELECTRS_REPO_BRANCH}" "${NAMECOIN_ELECTRS_REPO_URL}" "${NAMECOIN_HOME}/${NAMECOIN_ELECTRS_REPO_NAME}"
 
-    echo "[*] Checking out Electrs ${BITCOIN_ELECTRS_LATEST_RELEASE}"
-    osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_HOME}/${BITCOIN_ELECTRS_REPO_NAME} && git checkout ${BITCOIN_ELECTRS_LATEST_RELEASE}"
+    echo "[*] Checking out Electrs ${NAMECOIN_ELECTRS_LATEST_RELEASE}"
+    osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_HOME}/${NAMECOIN_ELECTRS_REPO_NAME} && git checkout ${NAMECOIN_ELECTRS_LATEST_RELEASE}"
 
     case $OS in
         FreeBSD)
@@ -1364,12 +1364,12 @@ if [ "${BITCOIN_ELECTRS_INSTALL}" = ON ];then
         ;;
         Debian)
            echo "[*] Installing Rust from rustup.rs"
-           osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_ELECTRS_HOME} && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+           osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_ELECTRS_HOME} && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
         ;;
     esac
 
-    echo "[*] Building Bitcoin Electrs release binary"
-    osSudo "${BITCOIN_USER}" sh -c "cd ${BITCOIN_ELECTRS_HOME} && cargo run --release --bin electrs -- --version"
+    echo "[*] Building Namecoin Electrs release binary"
+    osSudo "${NAMECOIN_USER}" sh -c "cd ${NAMECOIN_ELECTRS_HOME} && cargo run --release --bin electrs -- --version"
 fi
 
 ##################################
@@ -1421,7 +1421,7 @@ if [ "${ELEMENTS_ELECTRS_INSTALL}" = ON ];then
 fi
 
 ##############################
-# Core Lightning for Bitcoin #
+# Core Lightning for Namecoin #
 ##############################
 
 if [ "${CLN_INSTALL}" = ON ];then
@@ -1435,16 +1435,16 @@ case $OS in
         osSudo "${ROOT_USER}" pw usermod ${MEMPOOL_USER} -G "${CLN_GROUP}"
         osSudo "${ROOT_USER}" chsh -s `which zsh` "${CLN_USER}"
         echo "export PATH=$PATH:$HOME/.local/bin" >> "${CLN_HOME}/.zshrc"
-        osSudo "${ROOT_USER}" mkdir -p "${CLN_HOME}/.lightning/bitcoin"
+        osSudo "${ROOT_USER}" mkdir -p "${CLN_HOME}/.lightning/namecoin"
         osSudo "${ROOT_USER}" mkdir -p "${CLN_HOME}/.lightning/signet"
         osSudo "${ROOT_USER}" mkdir -p "${CLN_HOME}/.lightning/testnet"
         osSudo "${ROOT_USER}" chmod 750 "${CLN_HOME}" "${CLN_HOME}/.lightning"
-        osSudo "${ROOT_USER}" chmod 750 "${CLN_HOME}" "${CLN_HOME}/.lightning/bitcoin"
+        osSudo "${ROOT_USER}" chmod 750 "${CLN_HOME}" "${CLN_HOME}/.lightning/namecoin"
         osSudo "${ROOT_USER}" chmod 750 "${CLN_HOME}" "${CLN_HOME}/.lightning/signet"
         osSudo "${ROOT_USER}" chmod 750 "${CLN_HOME}" "${CLN_HOME}/.lightning/testnet"
         osSudo "${ROOT_USER}" chown -R "${CLN_USER}:${CLN_GROUP}" "${CLN_HOME}"
-        echo "[*] Creating symlink to .bitcoin folder"
-        osSudo "${CLN_USER}" ln -s "${BITCOIN_HOME}/.bitcoin" "${CLN_HOME}/.bitcoin"
+        echo "[*] Creating symlink to .namecoin folder"
+        osSudo "${CLN_USER}" ln -s "${NAMECOIN_HOME}/.namecoin" "${CLN_HOME}/.namecoin"
 
         echo "[*] Installing Core Lightning package"
         osPackageInstall ${CLN_PKG}
@@ -1458,8 +1458,8 @@ case $OS in
 #        crontab_cln+="@reboot sleep 10 ; screen -dmS main lightningd --rpc-file-mode 0660 --alias `hostname` --disable-ip-discovery --autolisten false --bind-addr $public_ipv4 --announce-addr $public_ipv4 --bind-addr $public_ipv6 --announce-addr $public_ipv6\n"
 #        crontab_cln+="@reboot sleep 10 ; screen -dmS tes lightningd --rpc-file-mode 0660 --alias `hostname` --network testnet --disable-ip-discovery --autolisten false --bind-addr $public_ipv4 --announce-addr $public_ipv4 --bind-addr $public_ipv6 --announce-addr $public_ipv6\n"
 #        crontab_cln+="@reboot sleep 10 ; screen -dmS sig lightningd --rpc-file-mode 0660 --alias `hostname` --network signet --disable-ip-discovery --autolisten false --bind-addr $public_ipv4 --announce-addr $public_ipv4 --bind-addr $public_ipv6 --announce-addr $public_ipv6 \n"
-#        crontab_cln+="@reboot sleep 20 ; /mempool/mempool.space/lightning-seeder >/dev/null 2>&1\n"
-#        crontab_cln+="1 * * * * /mempool/mempool.space/lightning-seeder >/dev/null 2>&1\n"
+#        crontab_cln+="@reboot sleep 20 ; /mempool/namepool.bit/lightning-seeder >/dev/null 2>&1\n"
+#        crontab_cln+="1 * * * * /mempool/namepool.bit/lightning-seeder >/dev/null 2>&1\n"
 #        echo "${crontab_cln}" | crontab -u "${CLN_USER}" -
     ;;
     Debian)
@@ -1538,97 +1538,97 @@ EOF
 fi
 
 ################################
-# Bitcoin instance for Mainnet #
+# Namecoin instance for Mainnet #
 ################################
 
-if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
-    echo "[*] Installing Bitcoin Mainnet service"
+if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
+    echo "[*] Installing Namecoin Mainnet service"
     case $OS in
 
         FreeBSD)
-            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 755 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/freebsd/rc.d/bitcoin" "${FREEBSD_SERVICE_HOME}"
+            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 755 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/freebsd/rc.d/namecoin" "${FREEBSD_SERVICE_HOME}"
         ;;
 
         Debian)
-            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/bitcoin.service" "${DEBIAN_SERVICE_HOME}"
+            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/namecoin.service" "${DEBIAN_SERVICE_HOME}"
         ;;
     esac
 fi
 
 #######################################
-# Bitcoin instance for Mainnet Minfee #
+# Namecoin instance for Mainnet Minfee #
 #######################################
 
-if [ "${BITCOIN_MAINNET_MINFEE_ENABLE}" = ON ];then
-    echo "[*] Installing Bitcoin Minfee service"
+if [ "${NAMECOIN_MAINNET_MINFEE_ENABLE}" = ON ];then
+    echo "[*] Installing Namecoin Minfee service"
     case $OS in
 
         FreeBSD)
         ;;
 
         Debian)
-            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/bitcoin-minfee.service" "${DEBIAN_SERVICE_HOME}"
+            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/namecoin-minfee.service" "${DEBIAN_SERVICE_HOME}"
         ;;
     esac
 fi
 
 ################################
-# Bitcoin instance for Testnet #
+# Namecoin instance for Testnet #
 ################################
 
-if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
-    echo "[*] Installing Bitcoin Testnet service"
+if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
+    echo "[*] Installing Namecoin Testnet service"
     case $OS in
 
         FreeBSD)
         ;;
 
         Debian)
-            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/bitcoin-testnet.service" "${DEBIAN_SERVICE_HOME}"
+            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/namecoin-testnet.service" "${DEBIAN_SERVICE_HOME}"
         ;;
     esac
 fi
 
 #################################
-# Bitcoin instance for Testnet4 #
+# Namecoin instance for Testnet4 #
 #################################
 
-if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
-    echo "[*] Installing Bitcoin Testnet service"
+if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
+    echo "[*] Installing Namecoin Testnet service"
     case $OS in
 
         FreeBSD)
         ;;
 
         Debian)
-            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/bitcoin-testnet4.service" "${DEBIAN_SERVICE_HOME}"
+            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/namecoin-testnet4.service" "${DEBIAN_SERVICE_HOME}"
         ;;
     esac
 fi
 
 ###############################
-# Bitcoin instance for Signet #
+# Namecoin instance for Signet #
 ###############################
 
-if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-    echo "[*] Installing Bitcoin Signet service"
+if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+    echo "[*] Installing Namecoin Signet service"
     case $OS in
 
         FreeBSD)
         ;;
 
         Debian)
-            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/bitcoin-signet.service" "${DEBIAN_SERVICE_HOME}"
+            osSudo "${ROOT_USER}" install -c -o "${ROOT_USER}" -g "${ROOT_GROUP}" -m 644 "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/linux/namecoin-signet.service" "${DEBIAN_SERVICE_HOME}"
         ;;
     esac
 fi
 
 ###############################
-# Bitcoin instance for Liquid #
+# Namecoin instance for Liquid #
 ###############################
 
 if [ "${ELEMENTS_LIQUID_ENABLE}" = ON ];then
-    echo "[*] Installing Bitcoin Liquid service"
+    echo "[*] Installing Namecoin Liquid service"
     case $OS in
 
         FreeBSD)
@@ -1641,11 +1641,11 @@ if [ "${ELEMENTS_LIQUID_ENABLE}" = ON ];then
 fi
 
 #######################################
-# Bitcoin instance for Liquid Testnet #
+# Namecoin instance for Liquid Testnet #
 #######################################
 
 if [ "${ELEMENTS_LIQUID_ENABLE}" = ON ];then
-    echo "[*] Installing Bitcoin Liquid service"
+    echo "[*] Installing Namecoin Liquid service"
     case $OS in
 
         FreeBSD)
@@ -1658,33 +1658,33 @@ if [ "${ELEMENTS_LIQUID_ENABLE}" = ON ];then
 fi
 
 ########################################
-# Electrs instance for Bitcoin Mainnet #
+# Electrs instance for Namecoin Mainnet #
 ########################################
-if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
+if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
     echo "[*] FIXME: must only crontab enabled daemons"
 fi
 
 ########################################
-# Electrs instance for Bitcoin Testnet #
+# Electrs instance for Namecoin Testnet #
 ########################################
 
-if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
+if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
     echo "[*] FIXME: must only crontab enabled daemons"
 fi
 
 #########################################
-# Electrs instance for Bitcoin Testnet4 #
+# Electrs instance for Namecoin Testnet4 #
 #########################################
 
-if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
+if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
     echo "[*] FIXME: must only crontab enabled daemons"
 fi
 
 #######################################
-# Electrs instance for Bitcoin Signet #
+# Electrs instance for Namecoin Signet #
 #######################################
 
-if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
+if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
     echo "[*] FIXME: must only crontab enabled daemons"
 fi
 
@@ -1707,8 +1707,8 @@ fi
 
 if [ "${ELEMENTS_LIQUIDTESTNET_ENABLE}" = ON ];then
     echo "[*] Installing Elements Liquid Testnet RPC credentials"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_USER__/${BITCOIN_RPC_USER}/" "${ELEMENTS_HOME}/elements.conf"
-    osSudo "${ROOT_USER}" sed -i.orig "s/__BITCOIN_RPC_PASS__/${BITCOIN_RPC_PASS}/" "${ELEMENTS_HOME}/elements.conf"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_USER__/${NAMECOIN_RPC_USER}/" "${ELEMENTS_HOME}/elements.conf"
+    osSudo "${ROOT_USER}" sed -i.orig "s/__NAMECOIN_RPC_PASS__/${NAMECOIN_RPC_PASS}/" "${ELEMENTS_HOME}/elements.conf"
     osSudo "${ROOT_USER}" sed -i.orig "s/__ELEMENTS_RPC_USER__/${ELEMENTS_RPC_USER}/" "${ELEMENTS_HOME}/elements.conf"
     osSudo "${ROOT_USER}" sed -i.orig "s/__ELEMENTS_RPC_PASS__/${ELEMENTS_RPC_PASS}/" "${ELEMENTS_HOME}/elements.conf"
 fi
@@ -1719,29 +1719,29 @@ fi
 echo "[*] Installing crontabs"
 case $OS in
     FreeBSD)
-        osSudo "${ROOT_USER}" crontab -u "${BITCOIN_USER}" "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/bitcoin.crontab"
+        osSudo "${ROOT_USER}" crontab -u "${NAMECOIN_USER}" "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/namecoin.crontab"
         osSudo "${ROOT_USER}" crontab -u "${MINFEE_USER}" "${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/minfee.crontab"
     ;;
     Debian)
-        crontab_bitcoin=()
-        if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
+        crontab_namecoin=()
+        if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
             echo "[*] Installing Electrs Mainnet Cronjob"
-            crontab_bitcoin+="@reboot sleep 30 ; screen -dmS mainnet /bitcoin/electrs/start mainnet\n"
+            crontab_namecoin+="@reboot sleep 30 ; screen -dmS mainnet /namecoin/electrs/start mainnet\n"
         fi
-        if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
+        if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
             echo "[*] Installing Electrs Testnet Cronjob"
-            crontab_bitcoin+="@reboot sleep 70 ; screen -dmS testnet /bitcoin/electrs/start testnet\n"
+            crontab_namecoin+="@reboot sleep 70 ; screen -dmS testnet /namecoin/electrs/start testnet\n"
         fi
-        if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
+        if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
             echo "[*] Installing Electrs Testnet4 Cronjob"
-            crontab_bitcoin+="@reboot sleep 110 ; screen -dmS testnet4 /bitcoin/electrs/start testnet4\n"
+            crontab_namecoin+="@reboot sleep 110 ; screen -dmS testnet4 /namecoin/electrs/start testnet4\n"
         fi
-        if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
+        if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
             echo "[*] Installing Electrs Signet Cronjob"
-            crontab_bitcoin+="@reboot sleep 90 ; screen -dmS signet /bitcoin/electrs/start signet\n"
+            crontab_namecoin+="@reboot sleep 90 ; screen -dmS signet /namecoin/electrs/start signet\n"
         fi
-        if [ "${BITCOIN_MAINNET_ENABLE}" = ON -o "${BITCOIN_TESTNET_ENABLE}" = ON -o "${BITCOIN_TESTNET4_ENABLE}" = ON -o "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-            echo "${crontab_bitcoin}" | crontab -u "${BITCOIN_USER}" -
+        if [ "${NAMECOIN_MAINNET_ENABLE}" = ON -o "${NAMECOIN_TESTNET_ENABLE}" = ON -o "${NAMECOIN_TESTNET4_ENABLE}" = ON -o "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+            echo "${crontab_namecoin}" | crontab -u "${NAMECOIN_USER}" -
         fi
 
         crontab_elements=()
@@ -1759,68 +1759,68 @@ case $OS in
     ;;
 esac
 
-##### Mempool -> Bitcoin Mainnet instance
+##### Mempool -> Namecoin Mainnet instance
 
-if [ "${BITCOIN_MAINNET_ENABLE}" = ON -o "${BITCOIN_TESTNET_ENABLE}" = ON -o "${BITCOIN_TESTNET4_ENABLE}" = ON -o "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-    echo "[*] Creating Mempool instance for Bitcoin Mainnet"
+if [ "${NAMECOIN_MAINNET_ENABLE}" = ON -o "${NAMECOIN_TESTNET_ENABLE}" = ON -o "${NAMECOIN_TESTNET4_ENABLE}" = ON -o "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+    echo "[*] Creating Mempool instance for Namecoin Mainnet"
     osSudo "${MEMPOOL_USER}" git config --global advice.detachedHead false
     osSudo "${MEMPOOL_USER}" git clone --branch "${MEMPOOL_REPO_BRANCH}" "${MEMPOOL_REPO_URL}" "${MEMPOOL_HOME}/mainnet"
 
-    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Bitcoin Mainnet"
+    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Namecoin Mainnet"
     osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME}/mainnet && git checkout ${MEMPOOL_LATEST_RELEASE}"
 fi
 
-if [ "${BITCOIN_MAINNET_LIGHTNING_ENABLE}" = ON ];then
-    echo "[*] Creating Mempool instance for Lightning Network on Bitcoin Mainnet"
+if [ "${NAMECOIN_MAINNET_LIGHTNING_ENABLE}" = ON ];then
+    echo "[*] Creating Mempool instance for Lightning Network on Namecoin Mainnet"
     osSudo "${MEMPOOL_USER}" git config --global advice.detachedHead false
     osSudo "${MEMPOOL_USER}" git clone --branch "${MEMPOOL_REPO_BRANCH}" "${MEMPOOL_REPO_URL}" "${MEMPOOL_HOME}/mainnet-lightning"
 
-    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Lightning Network on Bitcoin Mainnet"
+    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Lightning Network on Namecoin Mainnet"
     osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME}/mainnet-lightning && git checkout ${MEMPOOL_LATEST_RELEASE}"
 fi
 
-if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
-    echo "[*] Creating Mempool instance for Bitcoin Testnet"
+if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
+    echo "[*] Creating Mempool instance for Namecoin Testnet"
     osSudo "${MEMPOOL_USER}" git config --global advice.detachedHead false
     osSudo "${MEMPOOL_USER}" git clone --branch "${MEMPOOL_REPO_BRANCH}" "${MEMPOOL_REPO_URL}" "${MEMPOOL_HOME}/testnet"
 
-    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Bitcoin Testnet"
+    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Namecoin Testnet"
     osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME}/testnet && git checkout ${MEMPOOL_LATEST_RELEASE}"
 fi
 
-if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
-    echo "[*] Creating Mempool instance for Bitcoin Testnet4"
+if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
+    echo "[*] Creating Mempool instance for Namecoin Testnet4"
     osSudo "${MEMPOOL_USER}" git config --global advice.detachedHead false
     osSudo "${MEMPOOL_USER}" git clone --branch "${MEMPOOL_REPO_BRANCH}" "${MEMPOOL_REPO_URL}" "${MEMPOOL_HOME}/testnet4"
 
-    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Bitcoin Testnet4"
+    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Namecoin Testnet4"
     osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME}/testnet4 && git checkout ${MEMPOOL_LATEST_RELEASE}"
 fi
 
-if [ "${BITCOIN_TESTNET_LIGHTNING_ENABLE}" = ON ];then
-    echo "[*] Creating Mempool instance for Lightning Network on Bitcoin Testnet"
+if [ "${NAMECOIN_TESTNET_LIGHTNING_ENABLE}" = ON ];then
+    echo "[*] Creating Mempool instance for Lightning Network on Namecoin Testnet"
     osSudo "${MEMPOOL_USER}" git config --global advice.detachedHead false
     osSudo "${MEMPOOL_USER}" git clone --branch "${MEMPOOL_REPO_BRANCH}" "${MEMPOOL_REPO_URL}" "${MEMPOOL_HOME}/testnet-lightning"
 
-    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Lightning Network on Bitcoin Testnet"
+    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Lightning Network on Namecoin Testnet"
     osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME}/testnet-lightning && git checkout ${MEMPOOL_LATEST_RELEASE}"
 fi
 
-if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-    echo "[*] Creating Mempool instance for Bitcoin Signet"
+if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+    echo "[*] Creating Mempool instance for Namecoin Signet"
     osSudo "${MEMPOOL_USER}" git config --global advice.detachedHead false
     osSudo "${MEMPOOL_USER}" git clone --branch "${MEMPOOL_REPO_BRANCH}" "${MEMPOOL_REPO_URL}" "${MEMPOOL_HOME}/signet"
 
-    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Bitcoin Signet"
+    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Namecoin Signet"
     osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME}/signet && git checkout ${MEMPOOL_LATEST_RELEASE}"
 fi
 
-if [ "${BITCOIN_SIGNET_LIGHTNING_ENABLE}" = ON ];then
-    echo "[*] Creating Mempool instance for Lightning Network on Bitcoin Signet"
+if [ "${NAMECOIN_SIGNET_LIGHTNING_ENABLE}" = ON ];then
+    echo "[*] Creating Mempool instance for Lightning Network on Namecoin Signet"
     osSudo "${MEMPOOL_USER}" git config --global advice.detachedHead false
     osSudo "${MEMPOOL_USER}" git clone --branch "${MEMPOOL_REPO_BRANCH}" "${MEMPOOL_REPO_URL}" "${MEMPOOL_HOME}/signet-lightning"
 
-    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Lightning Network on Bitcoin Signet"
+    echo "[*] Checking out Mempool ${MEMPOOL_LATEST_RELEASE} for Lightning Network on Namecoin Signet"
     osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME}/signet-lightning && git checkout ${MEMPOOL_LATEST_RELEASE}"
 fi
 
@@ -1938,8 +1938,8 @@ echo "[*] Setting permissions for electrs sockets"
 case $OS in
 
     FreeBSD)
-        setfacl -m "user:bitcoin:full_set:f:allow,user:mempool:full_set:f:allow,user:www:full_set:f:allow,everyone@::f:allow" "${BITCOIN_HOME}/socket"
-        chown "${BITCOIN_USER}:${BITCOIN_GROUP}" "${BITCOIN_HOME}/socket"
+        setfacl -m "user:namecoin:full_set:f:allow,user:mempool:full_set:f:allow,user:www:full_set:f:allow,everyone@::f:allow" "${NAMECOIN_HOME}/socket"
+        chown "${NAMECOIN_USER}:${NAMECOIN_GROUP}" "${NAMECOIN_HOME}/socket"
         setfacl -m "user:elements:full_set:f:allow,user:mempool:full_set:f:allow,user:www:full_set:f:allow,everyone@::f:allow" "${ELEMENTS_HOME}/socket"
         chown "${ELEMENTS_USER}:${ELEMENTS_GROUP}" "${ELEMENTS_HOME}/socket"
     ;;
@@ -1960,7 +1960,7 @@ moused_nondefault_enable="NO"
 nginx_enable="YES"
 #nginx_profiles="mempool"
 #nginx_mempool_flags="-p /mempool"
-#nginx_mempool_configfile="/mempool/mempool.space/nginx/nginx.conf"
+#nginx_mempool_configfile="/mempool/namepool.bit/nginx/nginx.conf"
 
 mysql_enable="YES"
 mysql_dbdir="/mysql"
@@ -1971,7 +1971,7 @@ nvidia_xorg_enable="YES"
 
 dbus_enable="YES"
 tor_enable="YES"
-bitcoin_enable="YES"
+namecoin_enable="YES"
 postfix_enable="YES"
 EOF
     ;;
@@ -1981,20 +1981,20 @@ EOF
         if [ "${TOR_ENABLE}" = ON ];then
             osSudo "${ROOT_USER}" systemctl enable tor.service
         fi
-        if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
-            osSudo "${ROOT_USER}" systemctl enable bitcoin.service
+        if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
+            osSudo "${ROOT_USER}" systemctl enable namecoin.service
         fi
-        if [ "${BITCOIN_MAINNET_MINFEE_ENABLE}" = ON ];then
-            osSudo "${ROOT_USER}" systemctl enable bitcoin-minfee.service
+        if [ "${NAMECOIN_MAINNET_MINFEE_ENABLE}" = ON ];then
+            osSudo "${ROOT_USER}" systemctl enable namecoin-minfee.service
         fi
-        if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
-            osSudo "${ROOT_USER}" systemctl enable bitcoin-testnet.service
+        if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
+            osSudo "${ROOT_USER}" systemctl enable namecoin-testnet.service
         fi
-        if [ "${BITCOIN_TESTNET4_ENABLE}" = ON ];then
-            osSudo "${ROOT_USER}" systemctl enable bitcoin-testnet4.service
+        if [ "${NAMECOIN_TESTNET4_ENABLE}" = ON ];then
+            osSudo "${ROOT_USER}" systemctl enable namecoin-testnet4.service
         fi
-        if [ "${BITCOIN_SIGNET_ENABLE}" = ON ];then
-            osSudo "${ROOT_USER}" systemctl enable bitcoin-signet.service
+        if [ "${NAMECOIN_SIGNET_ENABLE}" = ON ];then
+            osSudo "${ROOT_USER}" systemctl enable namecoin-signet.service
         fi
         if [ "${ELEMENTS_LIQUID_ENABLE}" = ON ];then
             osSudo "${ROOT_USER}" systemctl enable elements-liquid.service
@@ -2036,35 +2036,35 @@ osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME} && ./upgrade" || true
 
 ##### OS services
 
-#if [ "${BITCOIN_MAINNET_ENABLE}" = ON ];then
-#    echo "[*] Starting Bitcoin Mainnet"
+#if [ "${NAMECOIN_MAINNET_ENABLE}" = ON ];then
+#    echo "[*] Starting Namecoin Mainnet"
 #    case $OS in
 #
 #        FreeBSD)
-#            osSudo "${ROOT_USER}" service bitcoin onestart
-#            osSudo "${BITCOIN_USER}" sh -c "grep @reboot ${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/bitcoin.crontab|cut -d ';' -f2|zsh"
+#            osSudo "${ROOT_USER}" service namecoin onestart
+#            osSudo "${NAMECOIN_USER}" sh -c "grep @reboot ${MEMPOOL_HOME}/${MEMPOOL_REPO_NAME}/production/namecoin.crontab|cut -d ';' -f2|zsh"
 #        ;;
 #
 #        Debian)
-#            osSudo "${ROOT_USER}" systemctl start bitcoin
+#            osSudo "${ROOT_USER}" systemctl start namecoin
 #            osSudo "${ROOT_USER}" systemctl start electrs
-#            osSudo "${ROOT_USER}" journalctl --no-pager --unit bitcoin
+#            osSudo "${ROOT_USER}" journalctl --no-pager --unit namecoin
 #        ;;
 #    esac
 #fi
 #
-#if [ "${BITCOIN_TESTNET_ENABLE}" = ON ];then
-#    echo "[*] Starting Bitcoin Mainnet"
+#if [ "${NAMECOIN_TESTNET_ENABLE}" = ON ];then
+#    echo "[*] Starting Namecoin Mainnet"
 #    case $OS in
 #
 #        FreeBSD)
 #        ;;
 #
 #        Debian)
-#            echo "[*] Starting Bitcoin Testnet"
-#            osSudo "${ROOT_USER}" systemctl start bitcoin-testnet
+#            echo "[*] Starting Namecoin Testnet"
+#            osSudo "${ROOT_USER}" systemctl start namecoin-testnet
 #            osSudo "${ROOT_USER}" systemctl start electrs-testnet
-#            osSudo "${ROOT_USER}" journalctl --no-pager --unit bitcoin-testnet
+#            osSudo "${ROOT_USER}" journalctl --no-pager --unit namecoin-testnet
 #    esac
 #fi
 #if [ "${ELEMENTS_LIQUID_ENABLE}" = ON ];then
@@ -2083,7 +2083,7 @@ osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME} && ./upgrade" || true
 #    esac
 #fi
 
-#osSudo "${ROOT_USER}" tail "${BITCOIN_HOME}/debug.log"
+#osSudo "${ROOT_USER}" tail "${NAMECOIN_HOME}/debug.log"
 
 ##### OS notes
 
@@ -2101,8 +2101,8 @@ osSudo "${MEMPOOL_USER}" sh -c "cd ${MEMPOOL_HOME} && ./upgrade" || true
 #        echo "[*] Preparing firewall"
 #        osSudo "${ROOT_USER}" ufw default deny incoming
 #        osSudo "${ROOT_USER}" ufw default allow outgoing
-#        osSudo "${ROOT_USER}" ufw allow from any to any port ${BITCOIN_MAINNET_P2P_PORT} proto tcp
-#        osSudo "${ROOT_USER}" ufw allow from any to any port ${BITCOIN_TESTNET_P2P_PORT} proto tcp
+#        osSudo "${ROOT_USER}" ufw allow from any to any port ${NAMECOIN_MAINNET_P2P_PORT} proto tcp
+#        osSudo "${ROOT_USER}" ufw allow from any to any port ${NAMECOIN_TESTNET_P2P_PORT} proto tcp
 #        osSudo "${ROOT_USER}" ufw allow from any to any port ${ELEMENTS_LIQUID_P2P_PORT} proto tcp
 #    ;;
 #esac

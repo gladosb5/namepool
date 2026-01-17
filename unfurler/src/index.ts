@@ -41,19 +41,17 @@ class Server {
     this.mempoolUrl = new URL(this.mempoolHost);
     this.secureHost = config.SERVER.HOST.startsWith('https');
     this.secureMempoolHost = config.MEMPOOL.HTTP_HOST.startsWith('https');
-    this.network = config.MEMPOOL.NETWORK || 'bitcoin';
-    this.networkName = networks[this.network].networkName || capitalize(this.network);
+    this.network = config.MEMPOOL.NETWORK || 'namecoin';
+    const networkConfig = networks[this.network] || networks.namecoin;
+    this.networkName = networkConfig.networkName || capitalize(this.network);
 
     let canonical;
     switch(config.MEMPOOL.NETWORK) {
       case "liquid":
         canonical = "https://liquid.network"
         break;
-      case "onbtc":
-        canonical = "https://bitcoin.gob.sv"
-        break;
       default:
-        canonical = "https://mempool.space"
+        canonical = "https://namepool.bit"
     }
     this.canonicalHost = canonical;
 
@@ -96,7 +94,7 @@ class Server {
     this.server = http.createServer(this.app);
 
     this.server.listen(config.SERVER.HTTP_PORT, () => {
-      logger.info(`Mempool Unfurl Server is running on port ${config.SERVER.HTTP_PORT}`);
+      logger.info(`Namepool Unfurl Server is running on port ${config.SERVER.HTTP_PORT}`);
     });
   }
 
@@ -334,8 +332,8 @@ class Server {
     const { lang, path } = parseLanguageUrl(rawPath);
     const matchedRoute = matchRoute(this.network, path);
     let ogImageUrl = config.SERVER.HOST + (matchedRoute.staticImg || matchedRoute.fallbackImg);
-    let ogTitle = 'The Mempool Open Source Project®';
-    let ogDescription = 'Explore the full Bitcoin ecosystem with mempool.space';
+    let ogTitle = 'The Namepool Open Source Project®';
+    let ogDescription = 'Explore the full Namecoin ecosystem with namepool.bit';
 
     const canonical = this.canonicalHost + rawPath;
 
@@ -343,7 +341,7 @@ class Server {
       ogImageUrl = `${config.SERVER.HOST}/render/${lang || 'en'}/preview${path}`;
       ogTitle = `${this.networkName} ${matchedRoute.networkMode !== 'mainnet' ? capitalize(matchedRoute.networkMode) + ' ' : ''}${matchedRoute.title}`;
     } else {
-      ogTitle = networks[this.network].title;
+      ogTitle = (networks[this.network] || networks.namecoin).title;
     }
     if (matchedRoute.description) {
       ogDescription = matchedRoute.description;
@@ -367,7 +365,7 @@ class Server {
     <meta property="twitter:title" content="${ogTitle}">
     <meta property="twitter:description" content="${ogDescription}"/>
     <meta property="twitter:image:src" content="${ogImageUrl}"/>
-    <meta property="twitter:domain" content="mempool.space">
+    <meta property="twitter:domain" content="namepool.bit">
   </head>
   <body></body>
 </html>`;
@@ -390,7 +388,7 @@ class Server {
     const matchedRoute = matchRoute(this.network, path, 'sip');
 
     let ogImageUrl = config.SERVER.HOST + (matchedRoute.staticImg || matchedRoute.fallbackImg);
-    let ogTitle = 'The Mempool Open Source Project®';
+    let ogTitle = 'The Namepool Open Source Project®';
 
     const canonical = this.canonicalHost + rawPath;
 
@@ -419,7 +417,7 @@ class Server {
 const server = new Server();
 
 process.on('SIGTERM', async () => {
-  logger.info('Shutting down Mempool Unfurl Server');
+  logger.info('Shutting down Namepool Unfurl Server');
   await server.stopServer();
   process.exit(0);
 });

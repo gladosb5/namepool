@@ -3,7 +3,9 @@ const fs = require('fs');
 let PROXY_CONFIG;
 let configContent;
 
-const CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const PRIMARY_CONFIG_FILE_NAME = 'namepool-frontend-config.json';
+const LEGACY_CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const CONFIG_FILE_NAME = fs.existsSync(PRIMARY_CONFIG_FILE_NAME) ? PRIMARY_CONFIG_FILE_NAME : LEGACY_CONFIG_FILE_NAME;
 
 try {
     const rawConfig = fs.readFileSync(CONFIG_FILE_NAME);
@@ -14,7 +16,8 @@ try {
     if (e.code !== 'ENOENT') {
       throw new Error(e);
   } else {
-      console.log(`${CONFIG_FILE_NAME} file not found, using default config`);
+      console.log(`${PRIMARY_CONFIG_FILE_NAME} file not found, using default config`);
+      configContent = {};
   }
 }
 
@@ -26,14 +29,14 @@ PROXY_CONFIG = [
         '!/liquidtestnet', '!/liquidtestnet/**', '!/liquidtestnet/',
         '/testnet/api/**', '/signet/api/**', '/testnet4/api/**'
         ],
-        target: "https://mempool.space",
+        target: "https://namepool.bit",
         ws: true,
         secure: false,
         changeOrigin: true
     },
     {
         context: ['/api/v1/ws'],
-        target: "https://mempool.space",
+        target: "https://namepool.bit",
         ws: true,
         secure: false,
         changeOrigin: true,
@@ -57,7 +60,7 @@ PROXY_CONFIG = [
     },
     {
       context: ['/resources/mining-pools/**'],
-      target: "https://mempool.space",
+      target: "https://namepool.bit",
       secure: false,
       changeOrigin: true
   }
@@ -75,7 +78,7 @@ if (configContent && configContent.BASE_MODULE == "liquid") {
 } else {
     PROXY_CONFIG.push({
         context: ['/resources/assets.json', '/resources/assets.minimal.json', '/resources/worldmap.json'],
-        target: "https://mempool.space",
+        target: "https://namepool.bit",
         secure: false,
         changeOrigin: true,
     });

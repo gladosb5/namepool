@@ -8,7 +8,7 @@ WORKDIR /build
 COPY . .
 RUN apt-get update
 RUN apt-get install -y build-essential rsync
-RUN cp mempool-frontend-config.sample.json mempool-frontend-config.json
+RUN cp namepool-frontend-config.sample.json namepool-frontend-config.json
 RUN npm install --omit=dev --omit=optional
 
 RUN npm run build
@@ -19,9 +19,9 @@ WORKDIR /patch
 
 COPY --from=builder /build/entrypoint.sh .
 COPY --from=builder /build/wait-for .
-COPY --from=builder /build/dist/mempool /var/www/mempool
+COPY --from=builder /build/dist/namepool /var/www/namepool
 COPY --from=builder /build/nginx.conf /etc/nginx/
-COPY --from=builder /build/nginx-mempool.conf /etc/nginx/conf.d/
+COPY --from=builder /build/nginx-namepool.conf /etc/nginx/nginx-namepool.conf
 
 RUN chmod +x /patch/entrypoint.sh
 RUN chmod +x /patch/wait-for
@@ -31,7 +31,7 @@ RUN chown -R 1000:1000 /patch && chmod -R 755 /patch && \
         chown -R 1000:1000 /var/log/nginx && \
         chown -R 1000:1000 /etc/nginx/nginx.conf && \
         chown -R 1000:1000 /etc/nginx/conf.d && \
-        chown -R 1000:1000 /var/www/mempool
+        chown -R 1000:1000 /var/www/namepool
 
 RUN touch /var/run/nginx.pid && \
         chown -R 1000:1000 /var/run/nginx.pid

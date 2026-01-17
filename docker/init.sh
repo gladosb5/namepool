@@ -12,9 +12,9 @@ wget -O ./backend/GeoIP/GeoLite2-ASN.mmdb https://raw.githubusercontent.com/memp
 localhostIP="127.0.0.1"
 cp ./docker/frontend/* ./frontend
 cp ./nginx.conf ./frontend/
-cp ./nginx-mempool.conf ./frontend/
+cp ./nginx-namepool.conf ./frontend/
 sed -i"" -e "s/${localhostIP}:80/0.0.0.0:__MEMPOOL_FRONTEND_HTTP_PORT__/g" ./frontend/nginx.conf
 sed -i"" -e "s/${localhostIP}/0.0.0.0/g" ./frontend/nginx.conf
 sed -i"" -e "s/user nobody;//g" ./frontend/nginx.conf
-sed -i"" -e "s!/etc/nginx/nginx-mempool.conf!/etc/nginx/conf.d/nginx-mempool.conf!g" ./frontend/nginx.conf
-sed -i"" -e "s/${localhostIP}:8999/__MEMPOOL_BACKEND_MAINNET_HTTP_HOST__:__MEMPOOL_BACKEND_MAINNET_HTTP_PORT__/g" ./frontend/nginx-mempool.conf
+sed -i"" -e "s!/etc/nginx/nginx-namepool.conf!/etc/nginx/conf.d/nginx-namepool.conf!g" ./frontend/nginx.conf
+sed -i"" -e "s/${localhostIP}:8999/__MEMPOOL_BACKEND_MAINNET_HTTP_HOST__:__MEMPOOL_BACKEND_MAINNET_HTTP_PORT__/g" ./frontend/nginx-namepool.conf

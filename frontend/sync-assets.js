@@ -5,7 +5,9 @@ const path = require('node:path');
 
 // Configuration
 const LOG_TAG = '[sync-assets]';
-const CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const PRIMARY_CONFIG_FILE_NAME = 'namepool-frontend-config.json';
+const LEGACY_CONFIG_FILE_NAME = 'mempool-frontend-config.json';
+const CONFIG_FILE_NAME = fsSync.existsSync(PRIMARY_CONFIG_FILE_NAME) ? PRIMARY_CONFIG_FILE_NAME : LEGACY_CONFIG_FILE_NAME;
 
 const config = {
   verbose: parseInt(process.env.VERBOSE) === 1,
@@ -13,6 +15,7 @@ const config = {
   dryRun: parseInt(process.env.DRY_RUN) === 1,
   githubToken: process.env.GITHUB_TOKEN,
 };
+const failOnSyncError = parseInt(process.env.FAIL_ON_SYNC_ERROR) === 1;
 
 // Early exit if SKIP_SYNC is set
 if (parseInt(process.env.SKIP_SYNC) === 1) {
@@ -22,7 +25,7 @@ if (parseInt(process.env.SKIP_SYNC) === 1) {
 
 // Log configuration
 if (config.verbose) console.log(`${LOG_TAG} VERBOSE is set, logs will be more verbose`);
-if (config.mempoolCDN) console.log(`${LOG_TAG} MEMPOOL_CDN is set, assets will be downloaded from mempool.space`);
+if (config.mempoolCDN) console.log(`${LOG_TAG} MEMPOOL_CDN is set, assets will be downloaded from namepool.bit`);
 if (config.dryRun) console.log(`${LOG_TAG} DRY_RUN is set, not downloading any assets`);
 
 // Setup assets path
@@ -243,7 +246,7 @@ const downloadMiningPoolLogos = async () => {
         downloadUrl: poolLogo.download_url,
         cdnPattern: {
           from: "raw.githubusercontent.com/mempool/mining-pool-logos/master",
-          to: "mempool.space/resources/mining-pools"
+          to: "namepool.bit/resources/mining-pools"
         },
         itemName: poolLogo.name,
         downloadDir: `${ASSETS_PATH}/mining-pools/`
@@ -279,7 +282,7 @@ const downloadPromoVideoSubtitles = async () => {
         downloadUrl: subtitle.download_url,
         cdnPattern: {
           from: "raw.githubusercontent.com/mempool/mempool-promo/master/subtitles",
-          to: "mempool.space/resources/promo-video"
+          to: "namepool.bit/resources/promo-video"
         },
         itemName: subtitle.name,
         downloadDir: `${ASSETS_PATH}/promo-video/`
@@ -313,7 +316,7 @@ const downloadPromoVideo = async () => {
       downloadUrl: videoItem.download_url,
       cdnPattern: {
         from: "raw.githubusercontent.com/mempool/mempool-promo/master/promo.mp4",
-        to: "mempool.space/resources/promo-video/mempool-promo.mp4"
+        to: "namepool.bit/resources/promo-video/mempool-promo.mp4"
       },
       itemName: 'mempool-promo.mp4',
       downloadDir: `${ASSETS_PATH}/promo-video/`
@@ -371,7 +374,12 @@ const downloadLiquidAssets = () => {
 
     console.log(`${LOG_TAG} Asset synchronization complete`);
   } catch (error) {
-    console.error(`${LOG_TAG} Error:`, error.message);
-    process.exit(1);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`${LOG_TAG} Error: ${message}`);
+    if (failOnSyncError) {
+      process.exit(1);
+    }
+    console.log(`${LOG_TAG} Continuing despite sync error (set FAIL_ON_SYNC_ERROR=1 to fail the build).`);
+    process.exit(0);
   }
 })();

@@ -52,7 +52,7 @@
   }
 }
 
-.mempool-info-data {
+.namepool-info-data {
   min-height: 56px;
   display: block;
   @media (min-width: 485px) {
@@ -104,7 +104,7 @@
         color: var(--transparent-fg);
         font-size: 12px;
       }
-      .bitcoin-color {
+      .namecoin-color {
         color: var(--orange);
       }
     }
@@ -263,7 +263,7 @@
   }
 }
 
-.mempool-graph {
+.namepool-graph {
   height: 255px;
   @media (min-width: 768px) {
     height: 285px;
@@ -382,7 +382,7 @@
   color: inherit;
 }
 
-.mempool-block-wrapper {
+.namepool-block-wrapper {
   max-height: 410px;
   max-width: 410px;
   margin: auto;

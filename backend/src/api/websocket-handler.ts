@@ -27,7 +27,7 @@ import accelerationApi from './services/acceleration';
 import mempool from './mempool';
 import statistics from './statistics/statistics';
 import accelerationRepository from '../repositories/AccelerationRepository';
-import bitcoinApi from './bitcoin/bitcoin-api-factory';
+import namecoinApi from './namecoin/namecoin-api-factory';
 import walletApi from './services/wallets';
 
 interface AddressTransactions {
@@ -35,7 +35,7 @@ interface AddressTransactions {
   confirmed: MempoolTransactionExtended[],
   removed: MempoolTransactionExtended[],
 }
-import bitcoinSecondClient from './bitcoin/bitcoin-second-client';
+import namecoinSecondClient from './namecoin/namecoin-second-client';
 import { calculateMempoolTxCpfp } from './cpfp';
 import { getRecentFirstSeen } from '../utils/file-read';
 import stratumApi, { StratumJob } from './services/stratum';
@@ -162,7 +162,7 @@ class WebsocketHandler {
           }
 
           if (wantNow['want-tomahawk']) {
-            response['tomahawk'] = JSON.stringify(bitcoinApi.getHealthStatus());
+            response['tomahawk'] = JSON.stringify(namecoinApi.getHealthStatus());
           }
 
           if (parsedMessage && parsedMessage['track-tx']) {
@@ -184,7 +184,7 @@ class WebsocketHandler {
                     if (config.MEMPOOL.BACKEND === 'esplora') {
                       response['tx'] = JSON.stringify(tx);
                     } else {
-                      // tx.prevout is missing from transactions when in bitcoind mode
+                      // tx.prevout is missing from transactions when in namecoind mode
                       try {
                         const fullTx = await transactionUtils.$getMempoolTransactionExtended(tx.txid, true);
                         response['tx'] = JSON.stringify(fullTx);
@@ -762,7 +762,7 @@ class WebsocketHandler {
       }
 
       if (client['want-tomahawk']) {
-        response['tomahawk'] = getCachedResponse('tomahawk', bitcoinApi.getHealthStatus());
+        response['tomahawk'] = getCachedResponse('tomahawk', namecoinApi.getHealthStatus());
       }
 
       if (client['track-mempool-tx']) {
@@ -1116,8 +1116,8 @@ class WebsocketHandler {
     }
 
     if (memPool.limitGBT) {
-      const minFeeMempool = memPool.limitGBT ? await bitcoinSecondClient.getRawMemPool() : null;
-      const minFeeTip = memPool.limitGBT ? await bitcoinSecondClient.getBlockCount() : -1;
+      const minFeeMempool = memPool.limitGBT ? await namecoinSecondClient.getRawMemPool() : null;
+      const minFeeTip = memPool.limitGBT ? await namecoinSecondClient.getBlockCount() : -1;
       candidates = memPool.getNextCandidates(minFeeMempool, minFeeTip, transactions);
       transactionIds = Object.keys(candidates?.txs || {});
     } else {
@@ -1219,7 +1219,7 @@ class WebsocketHandler {
       }
 
       if (client['want-tomahawk']) {
-        response['tomahawk'] = getCachedResponse('tomahawk', bitcoinApi.getHealthStatus());
+        response['tomahawk'] = getCachedResponse('tomahawk', namecoinApi.getHealthStatus());
       }
 
       if (client['track-tx']) {

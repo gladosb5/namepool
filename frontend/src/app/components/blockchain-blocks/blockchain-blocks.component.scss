@@ -1,4 +1,4 @@
-.bitcoin-block {
+.namecoin-block {
   width: var(--block-size);
   height: var(--block-size);
 }
@@ -129,7 +129,7 @@
   pointer-events: all;
 }
 
-.bitcoin-block::after {
+.namecoin-block::after {
   content: '';
   width: var(--block-size);
   height: calc(0.192 * var(--block-size));
@@ -141,7 +141,7 @@
   transform-origin:top;
 }
 
-.bitcoin-block::before {
+.namecoin-block::before {
   content: '';
   width: calc(0.16 * var(--block-size));
   height: var(--block-size);
@@ -154,7 +154,7 @@
   transform-origin: top;
 }
 
-.bitcoin-block .stale-ghost {
+.namecoin-block .stale-ghost {
   position: absolute;
   --stale-index: 0;
   top: calc(-1 * ((var(--stale-index) * 0.144) + 0.24) * var(--block-size));
@@ -166,7 +166,7 @@
   cursor: pointer;
 }
 
-.bitcoin-block .stale-ghost::after {
+.namecoin-block .stale-ghost::after {
   content: '';
   width: var(--block-size);
   height: calc(0.096 * var(--block-size));
@@ -178,7 +178,7 @@
   transform-origin:top;
 }
 
-.bitcoin-block .stale-ghost::before {
+.namecoin-block .stale-ghost::before {
   content: '';
   width: calc(0.08 * var(--block-size));
   height: var(--block-size);
@@ -191,17 +191,17 @@
   transform-origin: top;
 }
 
-.bitcoin-block .stale-ghost:hover {
+.namecoin-block .stale-ghost:hover {
   opacity: 1;
 }
 
 
-.bitcoin-block.placeholder-block::after {
+.namecoin-block.placeholder-block::after {
   content: none;
   background: 0;
 }
 
-.bitcoin-block.placeholder-block::before {
+.namecoin-block.placeholder-block::before {
   content: none;
   background: 0;
 }
@@ -233,7 +233,7 @@
   opacity: 1;
 }
 
-.loading .bitcoin-block.mined-block {
+.loading .namecoin-block.mined-block {
   background: var(--secondary);
 }
 
@@ -275,7 +275,7 @@
 }
 
 .time-ltr {
-  .bitcoin-block {
+  .namecoin-block {
     transform: scaleX(-1);
   }
 }

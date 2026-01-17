@@ -29,8 +29,8 @@ if (parentPort) {
 }
 
 /*
-* Build projected mempool blocks using an approximation of the transaction selection algorithm from Bitcoin Core
-* (see BlockAssembler in https://github.com/bitcoin/bitcoin/blob/master/src/node/miner.cpp)
+* Build projected mempool blocks using an approximation of the transaction selection algorithm from Namecoin Core
+* (see BlockAssembler in https://github.com/namecoin/namecoin/blob/master/src/node/miner.cpp)
 */
 function makeBlockTemplates(mempool: Map<number, CompactThreadTransaction>)
   : { blocks: number[][], rates: Map<number, number>, clusters: Map<number, number[]> } {

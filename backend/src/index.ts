@@ -2,7 +2,9 @@ import express from 'express';
 import { Application, Request, Response, NextFunction } from 'express';
 import * as http from 'http';
 import * as WebSocket from 'ws';
-import bitcoinApi from './api/bitcoin/bitcoin-api-factory';
+import * as fs from 'fs';
+import * as path from 'path';
+import namecoinApi from './api/namecoin/namecoin-api-factory';
 import cluster from 'cluster';
 import DB from './database';
 import config from './config';
@@ -31,7 +33,7 @@ import statisticsRoutes from './api/statistics/statistics.routes';
 import pricesRoutes from './api/prices/prices.routes';
 import miningRoutes from './api/mining/mining-routes';
 import liquidRoutes from './api/liquid/liquid.routes';
-import bitcoinRoutes from './api/bitcoin/bitcoin.routes';
+import namecoinRoutes from './api/namecoin/namecoin.routes';
 import servicesRoutes from './api/services/services-routes';
 import fundingTxFetcher from './tasks/lightning/sync-tasks/funding-tx-fetcher';
 import forensicsService from './tasks/lightning/forensics.service';
@@ -42,8 +44,8 @@ import v8 from 'v8';
 import { formatBytes, getBytesUnit } from './utils/format';
 import redisCache from './api/redis-cache';
 import accelerationApi from './api/services/acceleration';
-import bitcoinCoreRoutes from './api/bitcoin/bitcoin-core.routes';
-import bitcoinSecondClient from './api/bitcoin/bitcoin-second-client';
+import namecoinCoreRoutes from './api/namecoin/namecoin-core.routes';
+import namecoinSecondClient from './api/namecoin/namecoin-second-client';
 import accelerationRoutes from './api/acceleration/acceleration.routes';
 import aboutRoutes from './api/about.routes';
 import mempoolBlocks from './api/mempool-blocks';
@@ -117,7 +119,7 @@ class Server {
     });
 
     if (config.MEMPOOL.BACKEND === 'esplora') {
-      bitcoinApi.startHealthChecks();
+      namecoinApi.startHealthChecks();
     }
 
     if (config.DATABASE.ENABLED) {
@@ -202,6 +204,7 @@ class Server {
     await chainTips.updateOrphanedBlocks();
 
     this.setUpHttpApiRoutes();
+    this.setUpFrontendRoutes();
 
     if (config.MEMPOOL.ENABLED) {
       this.runMainUpdateLoop();
@@ -247,9 +250,9 @@ class Server {
           logger.debug(msg);
         }
       }
-      const newMempool = await bitcoinApi.$getRawMempool();
-      const minFeeMempool = memPool.limitGBT ? await bitcoinSecondClient.getRawMemPool() : null;
-      const minFeeTip = memPool.limitGBT ? await bitcoinSecondClient.getBlockCount() : -1;
+      const newMempool = await namecoinApi.$getRawMempool();
+      const minFeeMempool = memPool.limitGBT ? await namecoinSecondClient.getRawMemPool() : null;
+      const minFeeTip = memPool.limitGBT ? await namecoinSecondClient.getBlockCount() : -1;
       const latestAccelerations = await accelerationApi.$updateAccelerations();
       const numHandledBlocks = await blocks.$updateBlocks();
       const pollRate = config.MEMPOOL.POLL_RATE_MS * (indexer.indexerIsRunning() ? 10 : 1);
@@ -343,9 +346,9 @@ class Server {
   }
 
   setUpHttpApiRoutes(): void {
-    bitcoinRoutes.initRoutes(this.app);
+    namecoinRoutes.initRoutes(this.app);
     if (config.MEMPOOL.OFFICIAL) {
-      bitcoinCoreRoutes.initRoutes(this.app);
+      namecoinCoreRoutes.initRoutes(this.app);
     }
     pricesRoutes.initRoutes(this.app);
     if (config.STATISTICS.ENABLED && config.DATABASE.ENABLED && config.MEMPOOL.ENABLED) {
@@ -371,6 +374,119 @@ class Server {
     if (!config.MEMPOOL.OFFICIAL) {
       aboutRoutes.initRoutes(this.app);
     }
+  }
+
+  setUpFrontendRoutes(): void {
+    const browserDistRoot = path.resolve(__dirname, '../../frontend/dist/mempool/browser');
+    if (!fs.existsSync(browserDistRoot) || !fs.statSync(browserDistRoot).isDirectory()) {
+      this.app.get('/', (req, res) => {
+        res
+          .status(200)
+          .type('text/plain')
+          .send('Namepool backend is running, but frontend assets were not found. Build the frontend or put it behind nginx to serve the UI.');
+      });
+      return;
+    }
+
+    const availableLocales = new Set(
+      fs.readdirSync(browserDistRoot, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => entry.name)
+        .filter((dir) => fs.existsSync(path.join(browserDistRoot, dir, 'index.html')))
+    );
+
+    const pickDefaultLocale = (): string | null => {
+      if (availableLocales.has('en-US')) {
+        return 'en-US';
+      }
+      const first = Array.from(availableLocales.values())[0];
+      return first ?? null;
+    };
+
+    const defaultLocale = pickDefaultLocale();
+    if (!defaultLocale) {
+      return;
+    }
+
+    const resourcesDir = path.join(browserDistRoot, 'resources');
+    if (fs.existsSync(resourcesDir) && fs.statSync(resourcesDir).isDirectory()) {
+      this.app.use('/resources', express.static(resourcesDir, { maxAge: '1h', immutable: false }));
+    }
+
+    const defaultLocaleDir = path.join(browserDistRoot, defaultLocale);
+    this.app.use(express.static(defaultLocaleDir, { maxAge: '1y', immutable: true, index: false }));
+
+    for (const locale of availableLocales) {
+      if (locale === defaultLocale || locale === 'resources') {
+        continue;
+      }
+      const localeDir = path.join(browserDistRoot, locale);
+      this.app.use(`/${locale}`, express.static(localeDir, { maxAge: '1y', immutable: true, index: false }));
+    }
+
+    const apiPrefix = config.MEMPOOL.API_URL_PREFIX || '/api/';
+    const isApiRoute = (reqPath: string): boolean => {
+      if (reqPath.startsWith(apiPrefix)) {
+        return true;
+      }
+      return reqPath.startsWith('/api/');
+    };
+
+    const isAssetRequest = (reqPath: string): boolean => {
+      if (reqPath.startsWith('/resources/')) {
+        return true;
+      }
+      const lastSegment = reqPath.split('/').pop() ?? '';
+      return lastSegment.includes('.');
+    };
+
+    const sendLocaleIndex = (res: Response, locale: string): void => {
+      res.sendFile(path.join(browserDistRoot, locale, 'index.html'));
+    };
+
+    this.app.get('/', (req, res, next) => {
+      if (isApiRoute(req.path)) {
+        return next();
+      }
+      return sendLocaleIndex(res, defaultLocale);
+    });
+
+    this.app.get('/:locale', (req, res, next) => {
+      const locale = req.params.locale;
+      if (!availableLocales.has(locale)) {
+        return next();
+      }
+      return res.redirect(302, `/${locale}/`);
+    });
+
+    this.app.get('/:locale/', (req, res, next) => {
+      const locale = req.params.locale;
+      if (!availableLocales.has(locale)) {
+        return next();
+      }
+      return sendLocaleIndex(res, locale);
+    });
+
+    this.app.get('*', (req, res, next) => {
+      if (req.method !== 'GET') {
+        return next();
+      }
+      if (isApiRoute(req.path) || isAssetRequest(req.path)) {
+        return next();
+      }
+
+      const acceptsHtml = (req.headers.accept ?? '').includes('text/html');
+      if (!acceptsHtml) {
+        return next();
+      }
+
+      const pathParts = req.path.split('/').filter(Boolean);
+      const firstSegment = pathParts[0];
+      const locale = firstSegment && availableLocales.has(firstSegment) ? firstSegment : defaultLocale;
+      return sendLocaleIndex(res, locale);
+    });
+
+    logger.notice(`Serving frontend from ${browserDistRoot}`);
   }
 
   healthCheck(): void {

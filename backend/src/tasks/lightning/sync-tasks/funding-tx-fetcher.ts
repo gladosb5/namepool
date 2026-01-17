@@ -1,5 +1,5 @@
 import { existsSync, promises } from 'fs';
-import bitcoinClient from '../../../api/bitcoin/bitcoin-client';
+import namecoinClient from '../../../api/namecoin/namecoin-client';
 import { Common } from '../../../api/common';
 import config from '../../../config';
 import logger from '../../../logger';
@@ -94,8 +94,8 @@ class FundingTxFetcher {
     let block = this.blocksCache[blockHeight];
     // Fetch it from core
     if (!block) {
-      const blockHash = await bitcoinClient.getBlockHash(parseInt(blockHeight, 10));
-      block = await bitcoinClient.getBlock(blockHash, 1);
+      const blockHash = await namecoinClient.getBlockHash(parseInt(blockHeight, 10));
+      block = await namecoinClient.getBlock(blockHash, 1);
     }
     this.blocksCache[block.height] = block;
 
@@ -111,11 +111,11 @@ class FundingTxFetcher {
       logger.debug(`Cannot cache ${channelId} funding tx. TX index ${txIdx} does not exist in block ${block.hash ?? block.id}`, logger.tags.ln);
       return null;
     }
-    const rawTx = await bitcoinClient.getRawTransaction(txid);
-    const tx = await bitcoinClient.decodeRawTransaction(rawTx);
+    const rawTx = await namecoinClient.getRawTransaction(txid);
+    const tx = await namecoinClient.decodeRawTransaction(rawTx);
 
     if (!tx || !tx.vout || tx.vout.length < parseInt(outputIdx, 10) + 1 || tx.vout[outputIdx].value === undefined) {
-      logger.err(`Cannot find blockchain funding tx for channel id ${channelId}. Possible reasons are: bitcoin backend timeout or the channel shortId is not valid`);
+      logger.err(`Cannot find blockchain funding tx for channel id ${channelId}. Possible reasons are: namecoin backend timeout or the channel shortId is not valid`);
       return null;
     }
 

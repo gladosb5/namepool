@@ -33,8 +33,8 @@ export class GroupPreviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.seoService.setTitle(`Mempool.Space Lightning Nodes`);
-    this.seoService.setDescription(`See all Lightning nodes run by mempool.space -- these are the nodes that provide the data on the mempool.space Lightning dashboard.`);
+    this.seoService.setTitle(`namepool Lightning Nodes`);
+    this.seoService.setDescription(`See all Lightning nodes run by namepool.`);
 
     this.nodes$ = this.activatedRoute.paramMap
       .pipe(
@@ -44,10 +44,10 @@ export class GroupPreviewComponent implements OnInit {
           this.ogSession = this.openGraphService.waitFor('ln-group-data-' + this.slug);
 
           if (this.slug === 'the-mempool-open-source-project') {
-            this.groupId = 'mempool.space';
+            this.groupId = 'namepool.bit';
             this.group = {
-              name: 'The Mempool Open Source Project',
-              description: 'These are the Lightning nodes operated by The Mempool Open Source Project that provide data for the mempool.space website. Connect to us!',
+              name: 'Namepool',
+              description: 'These are the Lightning nodes operated by Namepool. Connect to us!',
             };
           } else {
             this.group = {

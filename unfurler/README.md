@@ -1,6 +1,6 @@
-# Mempool Link Unfurler Service
+# Namepool Link Unfurler Service
 
-This is a standalone nodejs service which implements the [Open Graph protocol](https://ogp.me/) for Mempool instances. It performs two main tasks:
+This is a standalone nodejs service which implements the [Open Graph protocol](https://ogp.me/) for Namepool instances. It performs two main tasks:
 
 1. Serving Open Graph html meta tags to social media link crawler bots.
 2. Rendering link preview images for social media sharing.
@@ -25,23 +25,23 @@ For Linux, in addition to NodeJS/npm you'll need at least:
 * libpango1.0-dev
 * libasound-dev
 
-### 1. Clone Mempool Repository
+### 1. Clone Namepool Repository
 
-Get the latest Mempool code:
+Get the latest Namepool code:
 
 ```
-git clone https://github.com/mempool/mempool
-cd mempool
+git clone https://github.com/namepool/namepool
+cd namepool
 ```
 
 Check out the latest release:
 
 ```
-latestrelease=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+latestrelease=$(curl -s https://api.github.com/repos/namepool/namepool/releases/latest|grep tag_name|head -1|cut -d '\"' -f4)
 git checkout $latestrelease
 ```
 
-### 2. Prepare the Mempool Unfurler
+### 2. Prepare the Namepool Unfurler
 
 #### Install
 
@@ -72,8 +72,8 @@ Edit `config.json` as needed:
 |---|---|
 | SERVER.HOST | the host where **this** service will be served |
 | SERVER.HTTP_PORT | the port on which **this** service should run |
-| MEMPOOL.HTTP_HOST | the host where **the Mempool frontend** is being served |
-| MEMPOOL.HTTP_PORT | the port on which **the Mempool frontend** is running (or `null`) |
+| MEMPOOL.HTTP_HOST | the host where **the Namepool frontend** is being served |
+| MEMPOOL.HTTP_PORT | the port on which **the Namepool frontend** is running (or `null`) |
 | PUPPETEER.CLUSTER_SIZE | the maximum number of Chromium browser instances to run in parallel, for rendering link previews |
 | PUPPETEER.EXEC_PATH | (optional) an absolute path to the Chromium browser executable, e.g. `/usr/local/bin/chrome`. Only required when using a manual installation of Chromium |
 
@@ -83,7 +83,7 @@ Edit `config.json` as needed:
 npm run build
 ```
 
-### 3. Run the Mempool Unfurler
+### 3. Run the Namepool Unfurler
 
 ```
 npm run start
@@ -91,7 +91,7 @@ npm run start
 
 ### 4. Server configuration
 
-To enable social media link previews, the system serving the Mempool frontend should detect requests from social media crawler bots and proxy those requests to this service instead.
+To enable social media link previews, the system serving the Namepool frontend should detect requests from social media crawler bots and proxy those requests to this service instead.
 
 Precise implementation is left as an exercise to the reader, but the following snippet may be of some help for Nginx users:
 ```Nginx

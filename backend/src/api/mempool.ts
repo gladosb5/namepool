@@ -1,13 +1,13 @@
 import config from '../config';
-import bitcoinApi from './bitcoin/bitcoin-api-factory';
+import namecoinApi from './namecoin/namecoin-api-factory';
 import { MempoolTransactionExtended, TransactionExtended, VbytesPerSecond, GbtCandidates } from '../mempool.interfaces';
 import logger from '../logger';
 import { Common } from './common';
 import transactionUtils from './transaction-utils';
-import { IBitcoinApi } from './bitcoin/bitcoin-api.interface';
+import { INamecoinApi } from './namecoin/namecoin-api.interface';
 import loadingIndicators from './loading-indicators';
-import bitcoinClient from './bitcoin/bitcoin-client';
-import bitcoinSecondClient from './bitcoin/bitcoin-second-client';
+import namecoinClient from './namecoin/namecoin-client';
+import namecoinSecondClient from './namecoin/namecoin-second-client';
 import rbfCache from './rbf-cache';
 import { Acceleration } from './services/acceleration';
 import accelerationApi from './services/acceleration';
@@ -21,7 +21,7 @@ class Mempool {
   private mempoolCandidates: { [txid: string ]: boolean } = {};
   private spendMap = new Map<string, MempoolTransactionExtended>();
   private recentlyDeleted: MempoolTransactionExtended[][] = []; // buffer of transactions deleted in recent mempool updates
-  private mempoolInfo: IBitcoinApi.MempoolInfo;
+  private mempoolInfo: INamecoinApi.MempoolInfo;
   private mempoolChangedCallback: ((newMempool: {[txId: string]: MempoolTransactionExtended; }, newTransactions: MempoolTransactionExtended[],
     deletedTransactions: MempoolTransactionExtended[][], accelerationDelta: string[]) => void) | undefined;
   private $asyncMempoolChangedCallback: ((newMempool: {[txId: string]: MempoolTransactionExtended; }, mempoolSize: number, newTransactions: MempoolTransactionExtended[],
@@ -169,7 +169,7 @@ class Mempool {
     loadingIndicators.setProgress('mempool', count / expectedCount * 100);
     while (!done) {
       try {
-        const result = await bitcoinApi.$getAllMempoolTransactions(last_txid, config.ESPLORA.BATCH_QUERY_BASE_SIZE);
+        const result = await namecoinApi.$getAllMempoolTransactions(last_txid, config.ESPLORA.BATCH_QUERY_BASE_SIZE);
         if (result) {
           for (const tx of result) {
             const extendedTransaction = transactionUtils.extendMempoolTransaction(tx);
@@ -207,7 +207,7 @@ class Mempool {
     this.mempoolInfo = await this.$getMempoolInfo();
   }
 
-  public getMempoolInfo(): IBitcoinApi.MempoolInfo {
+  public getMempoolInfo(): INamecoinApi.MempoolInfo {
     return this.mempoolInfo;
   }
 
@@ -340,7 +340,7 @@ class Mempool {
       this.missingTxCount = 0;
     }
 
-    // Prevent mempool from clear on bitcoind restart by delaying the deletion
+    // Prevent mempool from clear on namecoind restart by delaying the deletion
     if (this.mempoolProtection === 0
       && currentMempoolSize > 20000
       && transactions.length / currentMempoolSize <= 0.80
@@ -567,8 +567,8 @@ class Mempool {
   private $getMempoolInfo() {
     if (config.MEMPOOL.USE_SECOND_NODE_FOR_MINFEE) {
       return Promise.all([
-        bitcoinClient.getMempoolInfo(),
-        bitcoinSecondClient.getMempoolInfo()
+        namecoinClient.getMempoolInfo(),
+        namecoinSecondClient.getMempoolInfo()
       ]).then(([mempoolInfo, secondMempoolInfo]) => {
         mempoolInfo.maxmempool = secondMempoolInfo.maxmempool;
         mempoolInfo.mempoolminfee = secondMempoolInfo.mempoolminfee;
@@ -576,7 +576,7 @@ class Mempool {
         return mempoolInfo;
       });
     }
-    return bitcoinClient.getMempoolInfo();
+    return namecoinClient.getMempoolInfo();
   }
 }
 

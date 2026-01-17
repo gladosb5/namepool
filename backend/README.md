@@ -1,10 +1,10 @@
-# Mempool Backend
+# Namepool Backend
 
 These instructions are mostly intended for developers. 
 
-If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, use-case, etc. We do our best here to provide a good starting point, but only proceed if you know what you're doing. Mempool only provides support for custom setups to project sponsors through [Mempool Enterprise®](https://mempool.space/enterprise).
+If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, use-case, etc. We do our best here to provide a good starting point, but only proceed if you know what you're doing. Namepool only provides support for custom setups to project sponsors through [Namepool Enterprise®](https://namepool.bit/enterprise).
 
-See other ways to set up Mempool on [the main README](/../../#installation-methods).
+See other ways to set up Namepool on [the main README](/../../#installation-methods).
 
 Jump to a section in this doc:
 - [Set Up the Backend](#setup)
@@ -12,42 +12,42 @@ Jump to a section in this doc:
 
 ## Setup
 
-### 1. Clone Mempool Repository
+### 1. Clone Namepool Repository
 
-Get the latest Mempool code:
+Get the latest Namepool code:
 
 ```
-git clone https://github.com/mempool/mempool
-cd mempool
+git clone https://github.com/namepool/namepool
+cd namepool
 ```
 
 Check out the latest release:
 
 ```
-latestrelease=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+latestrelease=$(curl -s https://api.github.com/repos/namepool/namepool/releases/latest|grep tag_name|head -1|cut -d '\"' -f4)
 git checkout $latestrelease
 ```
 
-### 2. Configure Bitcoin Core
+### 2. Configure Namecoin Core
 
-Turn on `txindex`, enable RPC, and set RPC credentials in `bitcoin.conf`:
+Turn on `txindex`, enable RPC, and set RPC credentials in `namecoin.conf`:
 
 ```
 txindex=1
 server=1
-rpcuser=mempool
-rpcpassword=mempool
+rpcuser=namepool
+rpcpassword=namepool
 ```
 
 ### 3. Configure Electrum Server
 
-[Pick an Electrum Server implementation](https://mempool.space/docs/faq#address-lookup-issues), configure it, and make sure it's synced.
+[Pick an Electrum Server implementation](https://namepool.bit/docs/faq#address-lookup-issues), configure it, and make sure it's synced.
 
-**This step is optional.** You can run Mempool without configuring an Electrum Server for it, but address lookups will be disabled.
+**This step is optional.** You can run Namepool without configuring an Electrum Server for it, but address lookups will be disabled.
 
 ### 4. Configure MariaDB
 
-_Mempool needs MariaDB v10.5 or later. If you already have MySQL installed, make sure to migrate any existing databases **before** installing MariaDB._
+_Namepool needs MariaDB v10.5 or later. If you already have MySQL installed, make sure to migrate any existing databases **before** installing MariaDB._
 
 Get MariaDB from your operating system's package manager:
 
@@ -73,7 +73,7 @@ MariaDB [(none)]> grant all privileges on mempool.* to 'mempool'@'%' identified 
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-### 5. Prepare Mempool Backend
+### 5. Prepare Namepool Backend
 
 #### Build
 
@@ -100,15 +100,19 @@ cp mempool-config.sample.json mempool-config.json
 Edit `mempool-config.json` as needed. 
 
 In particular, make sure:
-- the correct Bitcoin Core RPC credentials are specified in `CORE_RPC`
+- the correct Namecoin Core RPC credentials are specified in `CORE_RPC`
 - the correct `BACKEND` is specified in `MEMPOOL`:
   - "electrum" if you're using [romanz/electrs](https://github.com/romanz/electrs) or [cculianu/Fulcrum](https://github.com/cculianu/Fulcrum)
   - "esplora" if you're using [mempool/electrs](https://github.com/mempool/electrs)
   - "none" if you're not using any Electrum Server
 
-### 6. Run Mempool Backend
+Optional:
+- To fetch Namecoin (NMC) fiat prices from CoinMarketCap, set `COINMARKETCAP_API_KEY` in your environment.
+  - If `COINMARKETCAP_API_KEY` is not set, the backend falls back to CoinGecko for NMC prices.
 
-Run the Mempool backend:
+### 6. Run Namepool Backend
+
+Run the Namepool backend:
 
 ```
 npm run start
@@ -122,11 +126,11 @@ MEMPOOL_CONFIG_FILE=/path/to/mempool-config.json npm run start
 When it's running, you should see output like this:
 
 ```
-Mempool updated in 0.189 seconds
+Namepool updated in 0.189 seconds
 Updating mempool
-Mempool updated in 0.096 seconds
+Namepool updated in 0.096 seconds
 Updating mempool
-Mempool updated in 0.099 seconds
+Namepool updated in 0.099 seconds
 Updating mempool
 Calculated fee for transaction 1 / 10
 Calculated fee for transaction 2 / 10
@@ -138,18 +142,18 @@ Calculated fee for transaction 7 / 10
 Calculated fee for transaction 8 / 10
 Calculated fee for transaction 9 / 10
 Calculated fee for transaction 10 / 10
-Mempool updated in 0.243 seconds
+Namepool updated in 0.243 seconds
 Updating mempool
 ```
 
-### 7. Set Up Mempool Frontend
-With the backend configured and running, proceed to set up the [Mempool frontend](../frontend#manual-setup).
+### 7. Set Up Namepool Frontend
+With the backend configured and running, proceed to set up the [Namepool frontend](../frontend#manual-setup).
 
 ## Development Tips
 
 ### Set Up Backend Watchers
 
-The Mempool backend is static. TypeScript scripts are compiled into the `dist` folder and served through a Node.js web server. 
+The Namepool backend is static. TypeScript scripts are compiled into the `dist` folder and served through a Node.js web server. 
 
 As a result, for development purposes, you may find it helpful to set up backend watchers to avoid the manual shutdown/recompile/restart command-line cycle.
 
@@ -171,60 +175,60 @@ nodemon src/index.ts --ignore cache/
 
 Helpful link: https://gist.github.com/System-Glitch/cb4e87bf1ae3fec9925725bb3ebe223a
 
-Run bitcoind on regtest:
+Run namecoind on regtest:
    ```
-   bitcoind -regtest
+   namecoind -regtest
    ```
 
 Create a new wallet, if needed:
    ```
-   bitcoin-cli -regtest createwallet test
+   namecoin-cli -regtest createwallet test
    ```
 
 Load wallet (this command may take a while if you have a lot of UTXOs):
    ```
-   bitcoin-cli -regtest loadwallet test
+   namecoin-cli -regtest loadwallet test
    ```
 
 Get a new address:
    ```
-   address=$(bitcoin-cli -regtest getnewaddress)
+   address=$(namecoin-cli -regtest getnewaddress)
    ```
 
 Mine blocks to the previously generated address. You need at least 101 blocks before you can spend. This will take some time to execute (~1 min):
    ```
-   bitcoin-cli -regtest generatetoaddress 101 $address
+   namecoin-cli -regtest generatetoaddress 101 $address
    ```
 
 Send 0.1 BTC at 5 sat/vB to another address:
    ```
-   bitcoin-cli -named -regtest sendtoaddress address=$(bitcoin-cli -regtest getnewaddress) amount=0.1 fee_rate=5
+   namecoin-cli -named -regtest sendtoaddress address=$(namecoin-cli -regtest getnewaddress) amount=0.1 fee_rate=5
    ```
 
 See more example of `sendtoaddress`:
    ```
-   bitcoin-cli sendtoaddress # will print the help
+   namecoin-cli sendtoaddress # will print the help
    ```
 
 Mini script to generate random network activity (random TX count with random tx fee-rate). It's slow so don't expect to use this to test mempool spam, except if you let it run for a long time, or maybe with multiple regtest nodes connected to each other.
    ```
    #!/bin/bash
-   address=$(bitcoin-cli -regtest getnewaddress)
-   bitcoin-cli -regtest generatetoaddress 101 $address
+   address=$(namecoin-cli -regtest getnewaddress)
+   namecoin-cli -regtest generatetoaddress 101 $address
    for i in {1..1000000}
    do
       for y in $(seq 1 "$(jot -r 1 1 1000)")
       do
-         bitcoin-cli -regtest -named sendtoaddress address=$address amount=0.01 fee_rate=$(jot -r 1 1 100)
+         namecoin-cli -regtest -named sendtoaddress address=$address amount=0.01 fee_rate=$(jot -r 1 1 100)
       done
-      bitcoin-cli -regtest generatetoaddress 1 $address
+      namecoin-cli -regtest generatetoaddress 1 $address
       sleep 5
    done
    ```
 
 Generate block at regular interval (every 10 seconds in this example):
    ```
-   watch -n 10 "bitcoin-cli -regtest generatetoaddress 1 $address"
+   watch -n 10 "namecoin-cli -regtest generatetoaddress 1 $address"
    ```
 
 ### Mining pools update
@@ -253,4 +257,4 @@ Feb 13 14:55:27 [63246] WARN: <lightning> Indexed data for "hashrates" tables wi
 Feb 13 14:55:32 [63246] NOTICE: <lightning> Table hashrates has been truncated
 ```
 
-Reference: https://github.com/mempool/mempool/pull/1269
+Reference: https://github.com/namepool/namepool/pull/1269

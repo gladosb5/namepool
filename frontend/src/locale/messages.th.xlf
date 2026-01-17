@@ -285,8 +285,8 @@
         <note priority="1" from="description">about.enterprise-sponsor-button</note>
       </trans-unit>
       <trans-unit id="4b137ec8bf73a47063740b75c0c40d5fd3c48015" datatype="html">
-        <source>The Mempool Open Source Project</source>
-        <target>โปรเจค mempool</target>
+        <source>The Namepool Open Source Project</source>
+        <target>โปรเจค namepool</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">13</context>
@@ -294,8 +294,8 @@
         <note priority="1" from="description">about.about-the-project</note>
       </trans-unit>
       <trans-unit id="8a4411dcb4da0aa489ec367bf2a3ec289e07a86e" datatype="html">
-        <source>Our mempool and blockchain explorer for the Bitcoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
-        <target>ระบบ mempool และระบบสำรวจ blockchain สำหรับคอมมูนิตี้ Bitcoin โดยมุ่งเป้าไปที่ค่าธรรมเนียมการทำธุรกรรมต่างๆบนระบบและระบบนิเวศหลายชั้น อีกทั้งยังสามารถโฮสได้ด้วยตัวเองโดยปราศจากบุคคลที่สาม</target>
+        <source>Our namepool and blockchain explorer for the Namecoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
+        <target>ระบบ namepool และระบบสำรวจ blockchain สำหรับคอมมูนิตี้ Namecoin โดยมุ่งเป้าไปที่ค่าธรรมเนียมการทำธุรกรรมต่างๆบนระบบและระบบนิเวศหลายชั้น อีกทั้งยังสามารถโฮสได้ด้วยตัวเองโดยปราศจากบุคคลที่สาม</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">14</context>
@@ -420,8 +420,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.about" datatype="html">
-        <source>Learn more about The Mempool Open Source Project®: enterprise sponsors, individual sponsors, integrations, who contributes, FOSS licensing, and more.</source>
-        <target>เรียนรู้เพิ่มเติมเกี่ยวกับ Mempool Open Source Project®: ผู้สนับสนุนองค์กร ผู้สนับสนุนรายบุคคล การบูรณาการ ผู้สนับสนุน การออกใบอนุญาต FOSS และอื่นๆ</target>
+        <source>Learn more about The Namepool Open Source Project®: enterprise sponsors, individual sponsors, integrations, who contributes, FOSS licensing, and more.</source>
+        <target>เรียนรู้เพิ่มเติมเกี่ยวกับ Namepool Open Source Project®: ผู้สนับสนุนองค์กร ผู้สนับสนุนรายบุคคล การบูรณาการ ผู้สนับสนุน การออกใบอนุญาต FOSS และอื่นๆ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -787,12 +787,12 @@
         <note priority="1" from="description">accelerator.extra-fee-required</note>
       </trans-unit>
       <trans-unit id="9edc05b1dc104542555ead027be3e8417b5f97e9" datatype="html">
-        <source>Mempool Accelerator® fees</source>
+        <source>Namepool Accelerator® fees</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/accelerate-checkout/accelerate-checkout.component.html</context>
           <context context-type="linenumber">161</context>
         </context-group>
-        <note priority="1" from="description">accelerator.mempool-accelerator-fees</note>
+        <note priority="1" from="description">accelerator.namepool-accelerator-fees</note>
       </trans-unit>
       <trans-unit id="1ec82428244c76064090ea5a55827e3fada82306" datatype="html">
         <source>Accelerator Service Fee</source>
@@ -866,7 +866,7 @@
         <note priority="1" from="description">go-back</note>
       </trans-unit>
       <trans-unit id="7d89e94e98140d07d5c2bb12d6166b8b74506eb0" datatype="html">
-        <source>Accelerate your Bitcoin transaction?</source>
+        <source>Accelerate your Namecoin transaction?</source>
         <target>เร่งธุรกรรมของคุณหรือไม่</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/accelerate-checkout/accelerate-checkout.component.html</context>
@@ -922,7 +922,7 @@
         <note priority="1" from="description">accelerator.reducing-expected-confirmation-time</note>
       </trans-unit>
       <trans-unit id="b62e50ad8bdbb107a2ec978648faf36e9f91c3c1" datatype="html">
-        <source>Payment to mempool.space for acceleration of txid <x id="START_LINK" ctype="x-a" equiv-text="&lt;a [routerLink]=&quot;'/tx/' + tx.txid&quot; target=&quot;_blank&quot;&gt;"/><x id="INTERPOLATION" equiv-text="tr(0, 10) }}"/>..<x id="INTERPOLATION_1" equiv-text="{{ tx.txid.substr(-10) }}"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/span&gt;"/></source>
+        <source>Payment to namepool.bit for acceleration of txid <x id="START_LINK" ctype="x-a" equiv-text="&lt;a [routerLink]=&quot;'/tx/' + tx.txid&quot; target=&quot;_blank&quot;&gt;"/><x id="INTERPOLATION" equiv-text="tr(0, 10) }}"/>..<x id="INTERPOLATION_1" equiv-text="{{ tx.txid.substr(-10) }}"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/span&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/accelerate-checkout/accelerate-checkout.component.html</context>
           <context context-type="linenumber">370,371</context>
@@ -931,7 +931,7 @@
           <context context-type="sourcefile">src/app/components/accelerate-checkout/accelerate-checkout.component.html</context>
           <context context-type="linenumber">471</context>
         </context-group>
-        <note priority="1" from="description">accelerator.payment-to-mempool-space</note>
+        <note priority="1" from="description">accelerator.payment-to-namepool-space</note>
       </trans-unit>
       <trans-unit id="9ebf5e1f1759ac5a81805ee901d02d1c14cab033" datatype="html">
         <source>Your account will be debited no more than</source>
@@ -1182,7 +1182,7 @@
           <context context-type="linenumber">28</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.ts</context>
           <context context-type="linenumber">87</context>
         </context-group>
         <context-group purpose="location">
@@ -2239,7 +2239,7 @@
           <context context-type="linenumber">59</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
@@ -2314,8 +2314,8 @@
           <context context-type="linenumber">173</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.address" datatype="html">
-        <source>See mempool transactions, confirmed transactions, balance, and more for <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> address <x id="INTERPOLATION" equiv-text="this.addressString"/>.</source>
+      <trans-unit id="meta.description.namecoin.address" datatype="html">
+        <source>See namepool transactions, confirmed transactions, balance, and more for <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Namecoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> address <x id="INTERPOLATION" equiv-text="this.addressString"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/address/address-preview.component.ts</context>
           <context context-type="linenumber">74</context>
@@ -2376,8 +2376,8 @@
         <note priority="1" from="description">address.unspent-outputs</note>
       </trans-unit>
       <trans-unit id="0a4ec18d2eb002662ee1c390be17000eace08818" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="of {{ mempoolStats.tx_count + chainStats.tx_cou"/> of <x id="INTERPOLATION_1" equiv-text="{{ mempoolStats.tx_count + chainStats.tx_count | number }}"/> transaction</source>
-        <target><x id="INTERPOLATION" equiv-text="of {{ mempoolStats.tx_count + chainStats.tx_cou"/> จาก <x id="INTERPOLATION_1" equiv-text="{{ mempoolStats.tx_count + chainStats.tx_count | number }}"/> ธุรกรรม</target>
+        <source><x id="INTERPOLATION" equiv-text="of {{ namepoolStats.tx_count + chainStats.tx_cou"/> of <x id="INTERPOLATION_1" equiv-text="{{ namepoolStats.tx_count + chainStats.tx_count | number }}"/> transaction</source>
+        <target><x id="INTERPOLATION" equiv-text="of {{ namepoolStats.tx_count + chainStats.tx_cou"/> จาก <x id="INTERPOLATION_1" equiv-text="{{ namepoolStats.tx_count + chainStats.tx_count | number }}"/> ธุรกรรม</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/address/address.component.html</context>
           <context context-type="linenumber">129</context>
@@ -2385,8 +2385,8 @@
         <note priority="1" from="description">X of X Address Transaction</note>
       </trans-unit>
       <trans-unit id="b2e947b5b892e2d2c5d216b1a198b8bf40da45eb" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="of {{ mempoolStats.tx_count + chainStats.tx_count | numb"/> of <x id="INTERPOLATION_1" equiv-text="{{ mempoolStats.tx_count + chainStats.tx_count | number }}"/> transactions</source>
-        <target><x id="INTERPOLATION" equiv-text="of {{ mempoolStats.tx_count + chainStats.tx_count | numb"/> จาก <x id="INTERPOLATION_1" equiv-text="{{ mempoolStats.tx_count + chainStats.tx_count | number }}"/> ธุรกรรม</target>
+        <source><x id="INTERPOLATION" equiv-text="of {{ namepoolStats.tx_count + chainStats.tx_count | numb"/> of <x id="INTERPOLATION_1" equiv-text="{{ namepoolStats.tx_count + chainStats.tx_count | number }}"/> transactions</source>
+        <target><x id="INTERPOLATION" equiv-text="of {{ namepoolStats.tx_count + chainStats.tx_count | numb"/> จาก <x id="INTERPOLATION_1" equiv-text="{{ namepoolStats.tx_count + chainStats.tx_count | number }}"/> ธุรกรรม</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/address/address.component.html</context>
           <context context-type="linenumber">130</context>
@@ -2407,7 +2407,7 @@
         <note priority="1" from="description">address.error.loading-address-data</note>
       </trans-unit>
       <trans-unit id="9eb81e2576ffe4e8fb0a303e203040b6ab23cc22" datatype="html">
-        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="There are too many transactions on this address, more than your backend can handle. See more on &lt;"/>There are too many transactions on this address, more than your backend can handle. See more on <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;/docs/faq#address-lookup-issues&quot;&gt;"/>setting up a stronger backend<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Consider viewing this address on the official Mempool website instead: </source>
+        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="There are too many transactions on this address, more than your backend can handle. See more on &lt;"/>There are too many transactions on this address, more than your backend can handle. See more on <x id="START_LINK" ctype="x-a" equiv-text="&lt;a href=&quot;/docs/faq#address-lookup-issues&quot;&gt;"/>setting up a stronger backend<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/> Consider viewing this address on the official Namepool website instead: </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/address/address.component.html</context>
           <context context-type="linenumber">232,235</context>
@@ -2895,8 +2895,8 @@
         </context-group>
         <note priority="1" from="description">mining.avg-block-fee-1m</note>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.block-fee-rates" datatype="html">
-        <source>See Bitcoin feerates visualized over time, including minimum and maximum feerates per block along with feerates at various percentiles.</source>
+      <trans-unit id="meta.description.namecoin.graphs.block-fee-rates" datatype="html">
+        <source>See Namecoin feerates visualized over time, including minimum and maximum feerates per block along with feerates at various percentiles.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-fee-rates-graph/block-fee-rates-graph.component.ts</context>
           <context context-type="linenumber">73</context>
@@ -2919,8 +2919,8 @@
         </context-group>
         <note priority="1" from="description">mining.block-fees</note>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.block-fees" datatype="html">
-        <source>See the average mining fees earned per Bitcoin block visualized in BTC and USD over time.</source>
+      <trans-unit id="meta.description.namecoin.graphs.block-fees" datatype="html">
+        <source>See the average mining fees earned per Namecoin block visualized in BTC and USD over time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-fees-graph/block-fees-graph.component.ts</context>
           <context context-type="linenumber">70</context>
@@ -2978,8 +2978,8 @@
         </context-group>
         <note priority="1" from="description">mining.block-fees-subsidy-subsidy</note>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.block-fees-subsidy" datatype="html">
-        <source>See the mining fees earned per Bitcoin block compared to the Bitcoin block subsidy, visualized in BTC and USD over time.</source>
+      <trans-unit id="meta.description.namecoin.graphs.block-fees-subsidy" datatype="html">
+        <source>See the mining fees earned per Namecoin block compared to the Namecoin block subsidy, visualized in BTC and USD over time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-fees-subsidy-graph/block-fees-subsidy-graph.component.ts</context>
           <context context-type="linenumber">79</context>
@@ -3007,7 +3007,7 @@
           <context context-type="sourcefile">src/app/components/block-filters/block-filters.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
-        <note priority="1" from="description">Mempool Goggles™ tooltip</note>
+        <note priority="1" from="description">Namepool Goggles™ tooltip</note>
       </trans-unit>
       <trans-unit id="180092a6b8a6151a05f4a7552a2fb75fd159dfa8" datatype="html">
         <source>Match</source>
@@ -3020,7 +3020,7 @@
           <context context-type="sourcefile">src/app/components/block-overview-tooltip/block-overview-tooltip.component.html</context>
           <context context-type="linenumber">70</context>
         </context-group>
-        <note priority="1" from="description">mempool-goggles.match</note>
+        <note priority="1" from="description">namepool-goggles.match</note>
       </trans-unit>
       <trans-unit id="16d449549ab7bc61caf3d636372a4a56b5870383" datatype="html">
         <source>Any</source>
@@ -3029,7 +3029,7 @@
           <context context-type="sourcefile">src/app/components/block-filters/block-filters.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
-        <note priority="1" from="description">mempool-goggles.any</note>
+        <note priority="1" from="description">namepool-goggles.any</note>
       </trans-unit>
       <trans-unit id="360b9f5c32209001518dbd1dc512f25291473b79" datatype="html">
         <source>Tint</source>
@@ -3037,7 +3037,7 @@
           <context context-type="sourcefile">src/app/components/block-filters/block-filters.component.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
-        <note priority="1" from="description">mempool-goggles.tint</note>
+        <note priority="1" from="description">namepool-goggles.tint</note>
       </trans-unit>
       <trans-unit id="4cfabb48965febabe67eb491a3b7e58555d3d52a" datatype="html">
         <source>Classic</source>
@@ -3050,7 +3050,7 @@
           <context context-type="sourcefile">src/app/components/theme-selector/theme-selector.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
-        <note priority="1" from="description">mempool-goggles.classic</note>
+        <note priority="1" from="description">namepool-goggles.classic</note>
       </trans-unit>
       <trans-unit id="2e6be334a2152f179a557167f98ce4459ff9a2f9" datatype="html">
         <source>Age</source>
@@ -3059,7 +3059,7 @@
           <context context-type="sourcefile">src/app/components/block-filters/block-filters.component.html</context>
           <context context-type="linenumber">35</context>
         </context-group>
-        <note priority="1" from="description">mempool-goggles.age</note>
+        <note priority="1" from="description">namepool-goggles.age</note>
       </trans-unit>
       <trans-unit id="b1fa5b210c9670d49a6506f046d4a0c2797fd402" datatype="html">
         <source>Block Health</source>
@@ -3078,8 +3078,8 @@
         </context-group>
         <note priority="1" from="description">mining.blocks-health</note>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.block-health" datatype="html">
-        <source>See Bitcoin block health visualized over time. Block health is a measure of how many expected transactions were included in an actual mined block. Expected transactions are determined using Mempool's re-implementation of Bitcoin Core's transaction selection algorithm.</source>
+      <trans-unit id="meta.description.namecoin.graphs.block-health" datatype="html">
+        <source>See Namecoin block health visualized over time. Block health is a measure of how many expected transactions were included in an actual mined block. Expected transactions are determined using Namepool's re-implementation of Namecoin Core's transaction selection algorithm.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-health-graph/block-health-graph.component.ts</context>
           <context context-type="linenumber">64</context>
@@ -3391,8 +3391,8 @@
         </context-group>
         <note priority="1" from="description">mining.block-rewards</note>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.block-rewards" datatype="html">
-        <source>See Bitcoin block rewards in BTC and USD visualized over time. Block rewards are the total funds miners earn from the block subsidy and fees.</source>
+      <trans-unit id="meta.description.namecoin.graphs.block-rewards" datatype="html">
+        <source>See Namecoin block rewards in BTC and USD visualized over time. Block rewards are the total funds miners earn from the block subsidy and fees.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-rewards-graph/block-rewards-graph.component.ts</context>
           <context context-type="linenumber">68</context>
@@ -3415,8 +3415,8 @@
         </context-group>
         <note priority="1" from="description">mining.block-sizes-weights</note>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.block-sizes" datatype="html">
-        <source>See Bitcoin block sizes (MB) and block weights (weight units) visualized over time.</source>
+      <trans-unit id="meta.description.namecoin.graphs.block-sizes" datatype="html">
+        <source>See Namecoin block sizes (MB) and block weights (weight units) visualized over time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-sizes-weights-graph/block-sizes-weights-graph.component.ts</context>
           <context context-type="linenumber">65</context>
@@ -3450,11 +3450,11 @@
           <context context-type="linenumber">156</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-graph/mempool-graph.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-graph/namepool-graph.component.ts</context>
           <context context-type="linenumber">331</context>
         </context-group>
         <context-group purpose="location">
@@ -3561,8 +3561,8 @@
           <context context-type="linenumber">264</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.block" datatype="html">
-        <source>See size, weight, fee range, included transactions, audit (expected v actual), and more for Bitcoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> block <x id="BLOCK_HEIGHT" equiv-text="block.height"/> (<x id="BLOCK_ID" equiv-text="block.id"/>).</source>
+      <trans-unit id="meta.description.namecoin.block" datatype="html">
+        <source>See size, weight, fee range, included transactions, audit (expected v actual), and more for Namecoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> block <x id="BLOCK_HEIGHT" equiv-text="block.height"/> (<x id="BLOCK_ID" equiv-text="block.id"/>).</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-view/block-view.component.ts</context>
           <context context-type="linenumber">114</context>
@@ -3637,7 +3637,7 @@
           <context context-type="linenumber">136</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
         <note priority="1" from="description">block.median-fee</note>
@@ -3670,7 +3670,7 @@
           <context context-type="linenumber">454</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="description">Total fees in a block</note>
@@ -3709,7 +3709,7 @@
           <context context-type="linenumber">55</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="description">shared.transaction-count.singular</note>
@@ -3730,7 +3730,7 @@
           <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="description">shared.transaction-count.plural</note>
@@ -3866,10 +3866,10 @@
           <context context-type="linenumber">132</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <note priority="1" from="description">mempool-block.fee-span</note>
+        <note priority="1" from="description">namepool-block.fee-span</note>
       </trans-unit>
       <trans-unit id="855f852e5642a1279605465df0cbbe78c2622648" datatype="html">
         <source>Based on average native segwit transaction of 140 vBytes</source>
@@ -3895,7 +3895,7 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="description">Transaction fee tooltip</note>
@@ -4316,8 +4316,8 @@
           <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.blocks" datatype="html">
-        <source>See the most recent Bitcoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> blocks along with basic stats such as block height, block reward, block size, and more.</source>
+      <trans-unit id="meta.description.namecoin.blocks" datatype="html">
+        <source>See the most recent Namecoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> blocks along with basic stats such as block height, block reward, block size, and more.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/blocks-list/blocks-list.component.ts</context>
           <context context-type="linenumber">75</context>
@@ -4450,7 +4450,7 @@
           <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">275</context>
         </context-group>
-        <note priority="1" from="description">Minimum mempool fee</note>
+        <note priority="1" from="description">Minimum namepool fee</note>
         <note priority="1" from="meaning">dashboard.minimum-fee</note>
       </trans-unit>
       <trans-unit id="4c3955cfe5955657297481efaf3ada8c55c75b2c" datatype="html">
@@ -4741,7 +4741,7 @@
           <context context-type="linenumber">26,27</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-blocks/mempool-blocks.component.html</context>
+          <context context-type="sourcefile">src/app/components/namepool-blocks/namepool-blocks.component.html</context>
           <context context-type="linenumber">45,46</context>
         </context-group>
         <context-group purpose="location">
@@ -5015,8 +5015,8 @@
         <note priority="1" from="description">fees-box.no-priority</note>
       </trans-unit>
       <trans-unit id="49bba8e970aa3b1bec6fcff7228ef95ceb335f59" datatype="html">
-        <source>Usually places your transaction in between the second and third mempool blocks</source>
-        <target>โดยปกติจะวางธุรกรรมของคุณระหว่างบล็อก mempool ที่สองและสาม</target>
+        <source>Usually places your transaction in between the second and third namepool blocks</source>
+        <target>โดยปกติจะวางธุรกรรมของคุณระหว่างบล็อก namepool ที่สองและสาม</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/fees-box/fees-box.component.html</context>
           <context context-type="linenumber">8</context>
@@ -5037,8 +5037,8 @@
         <note priority="1" from="description">fees-box.low-priority</note>
       </trans-unit>
       <trans-unit id="eeeeabc97373285d75acf0f013f68434a6f1935b" datatype="html">
-        <source>Usually places your transaction in between the first and second mempool blocks</source>
-        <target>โดยปกติจะวางธุรกรรมของคุณระหว่างบล็อก mempool ที่หนึ่งและที่สอง</target>
+        <source>Usually places your transaction in between the first and second namepool blocks</source>
+        <target>โดยปกติจะวางธุรกรรมของคุณระหว่างบล็อก namepool ที่หนึ่งและที่สอง</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/fees-box/fees-box.component.html</context>
           <context context-type="linenumber">9</context>
@@ -5059,8 +5059,8 @@
         <note priority="1" from="description">fees-box.medium-priority</note>
       </trans-unit>
       <trans-unit id="a5a4d2c76b74faddf1aab8dc6e092cddee5a6142" datatype="html">
-        <source>Places your transaction in the first mempool block</source>
-        <target>วางธุรกรรมของคุณในบล็อกแรกของ mempool</target>
+        <source>Places your transaction in the first namepool block</source>
+        <target>วางธุรกรรมของคุณในบล็อกแรกของ namepool</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/fees-box/fees-box.component.html</context>
           <context context-type="linenumber">10</context>
@@ -5097,14 +5097,14 @@
         <note priority="1" from="meaning">shared.weight-per-second</note>
       </trans-unit>
       <trans-unit id="6f7832e2e8db3c4b16c41681ba334a2ab9726cc3" datatype="html">
-        <source>Mempool size</source>
-        <target>ขนาด mempool</target>
+        <source>Namepool size</source>
+        <target>ขนาด namepool</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/footer/footer.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
-        <note priority="1" from="description">Mempool size</note>
-        <note priority="1" from="meaning">dashboard.mempool-size</note>
+        <note priority="1" from="description">Namepool size</note>
+        <note priority="1" from="meaning">dashboard.namepool-size</note>
       </trans-unit>
       <trans-unit id="c95f8a34509967d6cbcf118a9637b23a83633449" datatype="html">
         <source>Mining</source>
@@ -5310,8 +5310,8 @@
         </context-group>
         <note priority="1" from="description">mining.hashrate</note>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.hashrate" datatype="html">
-        <source>See hashrate and difficulty for the Bitcoin<x id="PH" equiv-text="seoDescriptionNetwork(this.network)"/> network visualized over time.</source>
+      <trans-unit id="meta.description.namecoin.graphs.hashrate" datatype="html">
+        <source>See hashrate and difficulty for the Namecoin<x id="PH" equiv-text="seoDescriptionNetwork(this.network)"/> network visualized over time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/hashrate-chart/hashrate-chart.component.ts</context>
           <context context-type="linenumber">78</context>
@@ -5337,8 +5337,8 @@
           <context context-type="linenumber">74</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.descriptions.bitcoin.graphs.hashrate-pools" datatype="html">
-        <source>See Bitcoin mining pool dominance visualized over time: see how top mining pools' share of total hashrate has fluctuated over time.</source>
+      <trans-unit id="meta.descriptions.namecoin.graphs.hashrate-pools" datatype="html">
+        <source>See Namecoin mining pool dominance visualized over time: see how top mining pools' share of total hashrate has fluctuated over time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/hashrates-chart-pools/hashrate-chart-pools.component.ts</context>
           <context context-type="linenumber">75</context>
@@ -5631,7 +5631,7 @@
           <context context-type="sourcefile">src/app/components/liquid-reserves-audit/recent-pegs-list/recent-pegs-list.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
-        <note priority="1" from="description">liquid.bitcoin-address</note>
+        <note priority="1" from="description">liquid.namecoin-address</note>
       </trans-unit>
       <trans-unit id="2e37a2401f3cb55f2b0c108f77c28bb9738f09e0" datatype="html">
         <source>Peg out in progress...</source>
@@ -5756,26 +5756,26 @@
         </context-group>
         <note priority="1" from="description">shared.as-of-block</note>
       </trans-unit>
-      <trans-unit id="meta.description.mempool-block" datatype="html">
-        <source>See stats for <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> transactions in the mempool: fee range, aggregate size, and more. Mempool blocks are updated in real-time as the network receives new transactions.</source>
+      <trans-unit id="meta.description.namepool-block" datatype="html">
+        <source>See stats for <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Namecoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> transactions in the namepool: fee range, aggregate size, and more. Namepool blocks are updated in real-time as the network receives new transactions.</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.ts</context>
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="mempool-block.stack.of.blocks" datatype="html">
-        <source>Stack of <x id="INTERPOLATION" equiv-text="blocksInBlock"/> mempool blocks</source>
-        <target>ชั้นของ <x id="INTERPOLATION" equiv-text="blocksInBlock"/> บล็อก mempool</target>
+      <trans-unit id="namepool-block.stack.of.blocks" datatype="html">
+        <source>Stack of <x id="INTERPOLATION" equiv-text="blocksInBlock"/> namepool blocks</source>
+        <target>ชั้นของ <x id="INTERPOLATION" equiv-text="blocksInBlock"/> บล็อก namepool</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.ts</context>
           <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="mempool-block.block.no" datatype="html">
-        <source>Mempool block <x id="INTERPOLATION" equiv-text="this.mempoolBlockIndex + 1"/></source>
-        <target>บล็อก mempool <x id="INTERPOLATION" equiv-text="this.mempoolBlockIndex + 1"/></target>
+      <trans-unit id="namepool-block.block.no" datatype="html">
+        <source>Namepool block <x id="INTERPOLATION" equiv-text="this.namepoolBlockIndex + 1"/></source>
+        <target>บล็อก namepool <x id="INTERPOLATION" equiv-text="this.namepoolBlockIndex + 1"/></target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-block/mempool-block.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-block/namepool-block.component.ts</context>
           <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
@@ -5783,7 +5783,7 @@
         <source>Count</source>
         <target>นับ</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-graph/mempool-graph.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-graph/namepool-graph.component.ts</context>
           <context context-type="linenumber">329</context>
         </context-group>
         <context-group purpose="location">
@@ -5795,7 +5795,7 @@
         <source>Range</source>
         <target>ระยะ</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-graph/mempool-graph.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-graph/namepool-graph.component.ts</context>
           <context context-type="linenumber">330</context>
         </context-group>
       </trans-unit>
@@ -5803,7 +5803,7 @@
         <source>Sum</source>
         <target>ผลรวม</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/mempool-graph/mempool-graph.component.ts</context>
+          <context context-type="sourcefile">src/app/components/namepool-graph/namepool-graph.component.ts</context>
           <context context-type="linenumber">332</context>
         </context-group>
       </trans-unit>
@@ -5864,7 +5864,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.mining.dashboard" datatype="html">
-        <source>Get real-time Bitcoin mining stats like hashrate, difficulty adjustment, block rewards, pool dominance, and more.</source>
+        <source>Get real-time Namecoin mining stats like hashrate, difficulty adjustment, block rewards, pool dominance, and more.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/mining-dashboard/mining-dashboard.component.ts</context>
           <context context-type="linenumber">30</context>
@@ -6099,8 +6099,8 @@
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.pool-ranking" datatype="html">
-        <source>See the top Bitcoin mining pools ranked by number of blocks mined, over your desired timeframe.</source>
+      <trans-unit id="meta.description.namecoin.graphs.pool-ranking" datatype="html">
+        <source>See the top Namecoin mining pools ranked by number of blocks mined, over your desired timeframe.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/pool-ranking/pool-ranking.component.ts</context>
           <context context-type="linenumber">60</context>
@@ -6530,7 +6530,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.push-tx" datatype="html">
-        <source>Broadcast a transaction to the <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> network using the transaction's hash.</source>
+        <source>Broadcast a transaction to the <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Namecoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> network using the transaction's hash.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/push-transaction/push-transaction.component.ts</context>
           <context context-type="linenumber">58</context>
@@ -6550,8 +6550,8 @@
         <note priority="1" from="description">page.rbf-replacements</note>
       </trans-unit>
       <trans-unit id="c88914ee712e3ab5ad5f88de8a6ed12050919ccb" datatype="html">
-        <source>There are no replacements in the mempool yet!</source>
-        <target>ยังไม่มีการแทนที่ใน mempool ในขณะนี้</target>
+        <source>There are no replacements in the namepool yet!</source>
+        <target>ยังไม่มีการแทนที่ใน namepool ในขณะนี้</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/rbf-list/rbf-list.component.html</context>
           <context context-type="linenumber">34</context>
@@ -6559,7 +6559,7 @@
         <note priority="1" from="description">rbf.no-replacements-yet</note>
       </trans-unit>
       <trans-unit id="meta.description.rbf-list" datatype="html">
-        <source>See the most recent RBF replacements on the Bitcoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> network, updated in real-time.</source>
+        <source>See the most recent RBF replacements on the Namecoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> network, updated in real-time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/rbf-list/rbf-list.component.ts</context>
           <context context-type="linenumber">62</context>
@@ -6705,8 +6705,8 @@
         <note priority="1" from="meaning">shared.sat-vbyte</note>
       </trans-unit>
       <trans-unit id="7deec1c1520f06170e1f8e8ddfbe4532312f638f" datatype="html">
-        <source>Explore the full Bitcoin ecosystem</source>
-        <target>สำรวจระบบ Bitcoin แบบเต็มรูปแบบ</target>
+        <source>Explore the full Namecoin ecosystem</source>
+        <target>สำรวจระบบ Namecoin แบบเต็มรูปแบบ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-form.component.html</context>
           <context context-type="linenumber">4</context>
@@ -6737,7 +6737,7 @@
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
-        <note priority="1" from="description">search.bitcoin-block-height</note>
+        <note priority="1" from="description">search.namecoin-block-height</note>
       </trans-unit>
       <trans-unit id="c6a48e5ee096fba914fb4927d16a5d2e0941e0fe" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ networkName }}"/> Transaction</source>
@@ -6746,7 +6746,7 @@
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">21</context>
         </context-group>
-        <note priority="1" from="description">search.bitcoin-transaction</note>
+        <note priority="1" from="description">search.namecoin-transaction</note>
       </trans-unit>
       <trans-unit id="1f8b2a9743e513d1e645f6986bae2130e914c34b" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ networkName }}"/> Address</source>
@@ -6759,7 +6759,7 @@
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">80</context>
         </context-group>
-        <note priority="1" from="description">search.bitcoin-address</note>
+        <note priority="1" from="description">search.namecoin-address</note>
       </trans-unit>
       <trans-unit id="ba18d02396f5998bb46cd5d771de107bfab6e177" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ networkName }}"/> Block</source>
@@ -6768,7 +6768,7 @@
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
-        <note priority="1" from="description">search.bitcoin-block</note>
+        <note priority="1" from="description">search.namecoin-block</note>
       </trans-unit>
       <trans-unit id="1221b439226cb36736030a9398c7c3a07d61bdb4" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ networkName }}"/> Addresses</source>
@@ -6777,7 +6777,7 @@
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">39</context>
         </context-group>
-        <note priority="1" from="description">search.bitcoin-addresses</note>
+        <note priority="1" from="description">search.namecoin-addresses</note>
       </trans-unit>
       <trans-unit id="fe5317c6c60dd7e0e86f04d22f566f67cf04d404" datatype="html">
         <source>Mining Pools</source>
@@ -6900,7 +6900,7 @@
         <note priority="1" from="description">simpleproof.verified</note>
       </trans-unit>
       <trans-unit id="75c20c8a9cd9723d45bee0230dd582d7c2e4ecbc" datatype="html">
-        <source>Mempool by vBytes (sat/vByte)</source>
+        <source>Namepool by vBytes (sat/vByte)</source>
         <target>ขนาดหน่วยความจำ vBytes (sat/vByte)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.html</context>
@@ -6909,8 +6909,8 @@
         <note priority="1" from="description">statistics.memory-by-vBytes</note>
       </trans-unit>
       <trans-unit id="d0e134a0886ae71207e912575d226525062b62f1" datatype="html">
-        <source>Clock (Mempool)</source>
-        <target>นาฬิกา (Mempool)</target>
+        <source>Clock (Namepool)</source>
+        <target>นาฬิกา (Namepool)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.html</context>
           <context context-type="linenumber">17</context>
@@ -6919,7 +6919,7 @@
           <context context-type="sourcefile">src/app/shared/components/global-footer/global-footer.component.html</context>
           <context context-type="linenumber">106</context>
         </context-group>
-        <note priority="1" from="description">footer.clock-mempool</note>
+        <note priority="1" from="description">footer.clock-namepool</note>
       </trans-unit>
       <trans-unit id="5ca707824ab93066c7d9b44e1b8bf216725c2c22" datatype="html">
         <source>Filter</source>
@@ -6964,8 +6964,8 @@
           <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.graphs.mempool" datatype="html">
-        <source>See mempool size (in MvB) and transactions per second (in vB/s) visualized over time.</source>
+      <trans-unit id="meta.description.namecoin.graphs.namepool" datatype="html">
+        <source>See namepool size (in MvB) and transactions per second (in vB/s) visualized over time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.ts</context>
           <context context-type="linenumber">66</context>
@@ -7109,7 +7109,7 @@
         <note priority="1" from="description">tracker.explain.accelerated</note>
       </trans-unit>
       <trans-unit id="52a68ca949dfcdeaaea81bec4d597256b8ad42b5" datatype="html">
-        <source>Waiting for your transaction to appear in the mempool</source>
+        <source>Waiting for your transaction to appear in the namepool</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/tracker/tracker.component.html</context>
           <context context-type="linenumber">154</context>
@@ -7117,7 +7117,7 @@
         <note priority="1" from="description">tracker.explain.waiting</note>
       </trans-unit>
       <trans-unit id="5ad21d21f3e26ddfe0abeed499db5d5c0bd0e325" datatype="html">
-        <source>Your transaction is in the mempool, but it will not be confirmed for some time.</source>
+        <source>Your transaction is in the namepool, but it will not be confirmed for some time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/tracker/tracker.component.html</context>
           <context context-type="linenumber">160</context>
@@ -7125,7 +7125,7 @@
         <note priority="1" from="description">tracker.explain.pending</note>
       </trans-unit>
       <trans-unit id="809118722b27889f5424609d1779f356bcef2cc2" datatype="html">
-        <source>Your transaction is near the top of the mempool, and is expected to confirm soon.</source>
+        <source>Your transaction is near the top of the namepool, and is expected to confirm soon.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/tracker/tracker.component.html</context>
           <context context-type="linenumber">166</context>
@@ -7194,7 +7194,7 @@
           <context context-type="linenumber">580</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.transaction" datatype="html">
+      <trans-unit id="meta.description.namecoin.transaction" datatype="html">
         <source>Get real-time status, addresses, fees, script info, and more for <x id="PH" equiv-text="network"/><x id="PH_1" equiv-text="seoDescription"/> transaction with txid <x id="PH_2" equiv-text="this.txId"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/tracker/tracker.component.ts</context>
@@ -7300,39 +7300,39 @@
         <note priority="1" from="meaning">tx-features.tag.expected</note>
       </trans-unit>
       <trans-unit id="2533fb35288295dac23fe0bdfcc2685b025a9f2e" datatype="html">
-        <source>This transaction was seen in the mempool prior to mining</source>
+        <source>This transaction was seen in the namepool prior to mining</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction-details/transaction-details.component.html</context>
           <context context-type="linenumber">131</context>
         </context-group>
-        <note priority="1" from="description">Seen in mempool tooltip</note>
+        <note priority="1" from="description">Seen in namepool tooltip</note>
       </trans-unit>
       <trans-unit id="08c516e1fe345b4ae1fcae5fd4e5a0cd22e646dd" datatype="html">
-        <source>Seen in Mempool</source>
-        <target>พบใน Mempool</target>
+        <source>Seen in Namepool</source>
+        <target>พบใน Namepool</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction-details/transaction-details.component.html</context>
           <context context-type="linenumber">131</context>
         </context-group>
-        <note priority="1" from="description">Seen in Mempool</note>
+        <note priority="1" from="description">Seen in Namepool</note>
         <note priority="1" from="meaning">tx-features.tag.seen</note>
       </trans-unit>
       <trans-unit id="5f79b588d43d16312a9a2e6df1e76922ffe3c45d" datatype="html">
-        <source>This transaction was missing from our mempool prior to mining</source>
+        <source>This transaction was missing from our namepool prior to mining</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction-details/transaction-details.component.html</context>
           <context context-type="linenumber">133</context>
         </context-group>
-        <note priority="1" from="description">Not seen in mempool tooltip</note>
+        <note priority="1" from="description">Not seen in namepool tooltip</note>
       </trans-unit>
       <trans-unit id="53d5fe49e4a07a663eb2f26ceeb76afceef86334" datatype="html">
-        <source>Not seen in Mempool</source>
-        <target>ไม่พบใน Mempool</target>
+        <source>Not seen in Namepool</source>
+        <target>ไม่พบใน Namepool</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction-details/transaction-details.component.html</context>
           <context context-type="linenumber">133</context>
         </context-group>
-        <note priority="1" from="description">Not seen in Mempool</note>
+        <note priority="1" from="description">Not seen in Namepool</note>
         <note priority="1" from="meaning">tx-features.tag.not-seen</note>
       </trans-unit>
       <trans-unit id="500acb5f67d1f175e1d5dd666c7b15c66611e411" datatype="html">
@@ -7352,12 +7352,12 @@
         <note priority="1" from="description">Prioritized transaction tooltip</note>
       </trans-unit>
       <trans-unit id="7ef1a8a56ad5696e527a8da06a13661f883ad6b2" datatype="html">
-        <source>This transaction conflicted with another version in our mempool</source>
+        <source>This transaction conflicted with another version in our namepool</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction-details/transaction-details.component.html</context>
           <context context-type="linenumber">142</context>
         </context-group>
-        <note priority="1" from="description">Conflict in mempool tooltip</note>
+        <note priority="1" from="description">Conflict in namepool tooltip</note>
       </trans-unit>
       <trans-unit id="1658bcbcb0ca91ce8303e9907b31c524eeb136c7" datatype="html">
         <source>This transaction cannot be accelerated</source>
@@ -7365,7 +7365,7 @@
           <context context-type="sourcefile">src/app/components/transaction/transaction-details/transaction-details.component.html</context>
           <context context-type="linenumber">173</context>
         </context-group>
-        <note priority="1" from="description">Mempool Accelerator® tooltip</note>
+        <note priority="1" from="description">Namepool Accelerator® tooltip</note>
       </trans-unit>
       <trans-unit id="d7f92e6fe26fba6fff568cbdae5db4a5c8c6a55c" datatype="html">
         <source>Preview Transaction</source>
@@ -7427,7 +7427,7 @@
         <note priority="1" from="meaning">shared.preview-coinbase</note>
       </trans-unit>
       <trans-unit id="c280048575ce581e2dd031ffac4a723cf76e8249" datatype="html">
-        <source> This transaction is stored locally in your browser. Broadcast it to add it to the mempool. </source>
+        <source> This transaction is stored locally in your browser. Broadcast it to add it to the namepool. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction-raw.component.html</context>
           <context context-type="linenumber">50,52</context>
@@ -7610,7 +7610,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.preview-tx" datatype="html">
-        <source>Preview a transaction to the Bitcoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> network using the transaction's raw hex data.</source>
+        <source>Preview a transaction to the Namecoin<x id="PH" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> network using the transaction's raw hex data.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction-raw.component.ts</context>
           <context context-type="linenumber">90</context>
@@ -7655,8 +7655,8 @@
         <note priority="1" from="description">transaction.error.transaction-not-found</note>
       </trans-unit>
       <trans-unit id="66b65556acb90d8764fe166a260af0309671698c" datatype="html">
-        <source>Waiting for it to appear in the mempool...</source>
-        <target>กำลังรอให้ปรากฏใน mempool...</target>
+        <source>Waiting for it to appear in the namepool...</source>
+        <target>กำลังรอให้ปรากฏใน namepool...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction.component.html</context>
           <context context-type="linenumber">351</context>
@@ -8123,8 +8123,8 @@
           <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.bitcoin.wallet" datatype="html">
-        <source>See mempool transactions, confirmed transactions, balance, and more for <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Bitcoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> wallet <x id="INTERPOLATION" equiv-text="walletName"/>.</source>
+      <trans-unit id="meta.description.namecoin.wallet" datatype="html">
+        <source>See namepool transactions, confirmed transactions, balance, and more for <x id="PH" equiv-text="this.stateService.network==='liquid'||this.stateService.network==='liquidtestnet'?'Liquid':'Namecoin'"/><x id="PH_1" equiv-text="seoDescriptionNetwork(this.stateService.network)"/> wallet <x id="INTERPOLATION" equiv-text="walletName"/>.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/wallet/wallet-preview.component.ts</context>
           <context context-type="linenumber">150</context>
@@ -8200,7 +8200,7 @@
         <note priority="1" from="description">lightning.indexing-in-progress</note>
       </trans-unit>
       <trans-unit id="999bb1a0150c2815a6b4dd64a1850e763603e525" datatype="html">
-        <source><x id="START_PARAGRAPH" ctype="x-p" equiv-text="For any such requ"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space mer"/>mempool.space merely provides data about the Bitcoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, wallet issues, etc.<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="For any such requ"/>For any such requests, you need to get in touch with the entity that helped make the transaction (wallet software, exchange company, etc).<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/></source>
+        <source><x id="START_PARAGRAPH" ctype="x-p" equiv-text="For any such requ"/><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="namepool.bit mer"/>namepool.bit merely provides data about the Namecoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, wallet issues, etc.<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/><x id="START_PARAGRAPH" ctype="x-p" equiv-text="For any such requ"/>For any such requests, you need to get in touch with the entity that helped make the transaction (wallet software, exchange company, etc).<x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&lt;/p&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">15,16</context>
@@ -8298,7 +8298,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.docs.faq" datatype="html">
-        <source>Get answers to common questions like: What is a mempool? Why isn't my transaction confirming? How can I run my own instance of The Mempool Open Source Project? And more.</source>
+        <source>Get answers to common questions like: What is a namepool? Why isn't my transaction confirming? How can I run my own instance of The Namepool Open Source Project? And more.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/docs/docs.component.ts</context>
           <context context-type="linenumber">47</context>
@@ -8319,8 +8319,8 @@
           <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.docs.rest-bitcoin" datatype="html">
-        <source>Documentation for the mempool.space REST API service: get info on addresses, transactions, blocks, fees, mining, the Lightning network, and more.</source>
+      <trans-unit id="meta.description.docs.rest-namecoin" datatype="html">
+        <source>Documentation for the namepool.bit REST API service: get info on addresses, transactions, blocks, fees, mining, the Lightning network, and more.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/docs/docs.component.ts</context>
           <context context-type="linenumber">55</context>
@@ -8335,14 +8335,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.docs.websocket-liquid" datatype="html">
-        <source>Documentation for the liquid.network WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.</source>
+        <source>Documentation for the liquid.network WebSocket API service: get real-time info on blocks, namepools, transactions, addresses, and more.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/docs/docs.component.ts</context>
           <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="meta.description.docs.websocket-bitcoin" datatype="html">
-        <source>Documentation for the mempool.space WebSocket API service: get real-time info on blocks, mempools, transactions, addresses, and more.</source>
+      <trans-unit id="meta.description.docs.websocket-namecoin" datatype="html">
+        <source>Documentation for the namepool.bit WebSocket API service: get real-time info on blocks, namepools, transactions, addresses, and more.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/docs/docs.component.ts</context>
           <context context-type="linenumber">63</context>
@@ -9933,7 +9933,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.lightning.nodes-isp" datatype="html">
-        <source>Browse all Bitcoin Lightning nodes using the <x id="PH" equiv-text="response.isp"/> [AS<x id="PH_1" equiv-text="this.route.snapshot.params.isp"/>] ISP and see aggregate stats like total number of nodes, total capacity, and more for the ISP.</source>
+        <source>Browse all Namecoin Lightning nodes using the <x id="PH" equiv-text="response.isp"/> [AS<x id="PH_1" equiv-text="this.route.snapshot.params.isp"/>] ISP and see aggregate stats like total number of nodes, total capacity, and more for the ISP.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/nodes-per-isp/nodes-per-isp-preview.component.ts</context>
           <context context-type="linenumber">47</context>
@@ -10033,7 +10033,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="meta.description.lightning.stats-chart" datatype="html">
-        <source>See the capacity of the Lightning network visualized over time in terms of the number of open channels and total bitcoin capacity.</source>
+        <source>See the capacity of the Lightning network visualized over time in terms of the number of open channels and total namecoin capacity.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/statistics-chart/lightning-statistics-chart.component.ts</context>
           <context context-type="linenumber">71</context>
@@ -10527,13 +10527,13 @@
         <note priority="1" from="description">footer.learn</note>
       </trans-unit>
       <trans-unit id="14f76d294f3ae892e8033d60bb960701cafca66f" datatype="html">
-        <source>What is a mempool?</source>
+        <source>What is a namepool?</source>
         <target>อะไรคือ mempoo?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/global-footer/global-footer.component.html</context>
           <context context-type="linenumber">85</context>
         </context-group>
-        <note priority="1" from="description">faq.what-is-a-mempool</note>
+        <note priority="1" from="description">faq.what-is-a-namepool</note>
       </trans-unit>
       <trans-unit id="8ac787087e3eec254d15a4e16492f8877107087b" datatype="html">
         <source>What is a block explorer?</source>
@@ -10545,13 +10545,13 @@
         <note priority="1" from="description">faq.what-is-a-block-exlorer</note>
       </trans-unit>
       <trans-unit id="0ab3729578bb613995fc5c90c4d7aa45588dd2a1" datatype="html">
-        <source>What is a mempool explorer?</source>
-        <target>อะไรคือเครื่องมือสำรวจ mempool?</target>
+        <source>What is a namepool explorer?</source>
+        <target>อะไรคือเครื่องมือสำรวจ namepool?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/global-footer/global-footer.component.html</context>
           <context context-type="linenumber">87</context>
         </context-group>
-        <note priority="1" from="description">faq.what-is-a-mempool-exlorer</note>
+        <note priority="1" from="description">faq.what-is-a-namepool-exlorer</note>
       </trans-unit>
       <trans-unit id="8fe988a9cb02c11f99631ca85721d34d67fc32ff" datatype="html">
         <source>Why isn't my transaction confirming?</source>
@@ -10578,7 +10578,7 @@
           <context context-type="sourcefile">src/app/shared/components/global-footer/global-footer.component.html</context>
           <context context-type="linenumber">91</context>
         </context-group>
-        <note priority="1" from="description">mempool-research</note>
+        <note priority="1" from="description">namepool-research</note>
       </trans-unit>
       <trans-unit id="7a1c82a943fc99d3080aeffeeb7d21f0726ad8cc" datatype="html">
         <source>Networks</source>
@@ -10713,7 +10713,7 @@
       <trans-unit id="ba7f0c6fdfa0ab7afc59e9384bca0265d23fb018" datatype="html">
         <source>Your balance is too low.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>Please <x id="START_LINK" ctype="x-a" equiv-text="&lt;a class=&quot;top-up-link&quot; href=&quot;/services/accelerator&quot;&gt;"/>top up your account<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>.</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/mempool-error/mempool-error.component.html</context>
+          <context context-type="sourcefile">src/app/shared/components/namepool-error/namepool-error.component.html</context>
           <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="description">accelerator.low-balance</note>

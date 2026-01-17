@@ -1,7 +1,7 @@
 <div *ngIf="stateService.env.MINING_DASHBOARD || stateService.env.LIGHTNING || stateService.env.ACCELERATOR" class="mb-3 d-flex menu" [style]="{'flex-wrap': flexWrap ? 'wrap' : ''}">
 
   <a routerLinkActive="active" class="btn btn-primary w-33"
-    [routerLink]="['/graphs/mempool' | relativeUrl]">Mempool</a>
+    [routerLink]="['/graphs/namepool' | relativeUrl]">Namepool</a>
 
   <div ngbDropdown class="w-33" *ngIf="stateService.env.MINING_DASHBOARD">
     <button class="btn btn-primary w-100" id="dropdownBasic1" ngbDropdownToggle i18n="mining">Mining</button>

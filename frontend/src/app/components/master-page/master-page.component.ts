@@ -25,6 +25,8 @@ export class MasterPageComponent implements OnInit, OnDestroy {
   isMobile = window.innerWidth <= 767.98;
   officialMempoolSpace = this.stateService.env.OFFICIAL_MEMPOOL_SPACE;
   officialMempoolSpaceBuild = this.stateService.isMempoolSpaceBuild;
+  officialNamepoolSpace = this.officialMempoolSpace;
+  officialNamepoolSpaceBuild = this.stateService.isNamepoolSpaceBuild;
   urlLanguage: string;
   subdomain = '';
   networkPaths: { [network: string]: string };

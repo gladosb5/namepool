@@ -106,7 +106,7 @@ export class NodeChannels implements OnChanges {
               }
               let capacity = '';
               if (value.data.value > 100000000) {
-                capacity = formatNumber(Math.round(value.data.value / 100000000), this.locale, '1.2-2') + ' BTC';
+                capacity = formatNumber(Math.round(value.data.value / 100000000), this.locale, '1.2-2') + ' NMC';
               } else {
                 capacity = <string>this.amountShortenerPipe.transform(value.data.value, 2) + ' sats';
               }

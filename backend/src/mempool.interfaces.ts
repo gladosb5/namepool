@@ -1,4 +1,4 @@
-import { IEsploraApi } from './api/bitcoin/esplora-api.interface';
+import { IEsploraApi } from './api/namecoin/esplora-api.interface';
 import { OrphanedBlock } from './api/chain-tips';
 import { HeapNode } from './utils/pairing-heap';
 

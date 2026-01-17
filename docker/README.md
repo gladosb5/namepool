@@ -2,20 +2,18 @@
 
 This directory contains the Dockerfiles used to build and release the official images, as well as a `docker-compose.yml` to configure environment variables and other settings.
 
-If you are looking to use these Docker images to deploy your own instance of Mempool, note that they only containerize Mempool's frontend and backend. You will still need to deploy and configure Bitcoin Core and an Electrum Server separately, along with any other utilities specific to your use case (e.g., a reverse proxy, etc). Such configuration is mostly beyond the scope of the Mempool project, so please only proceed if you know what you're doing.
-
-See a video guide of this installation method by k3tan [on BitcoinTV.com](https://bitcointv.com/w/8fpAx6rf5CQ16mMhospwjg).
+If you are looking to use these Docker images to deploy your own instance of Namepool, note that they only containerize Namepool's frontend and backend. You will still need to deploy and configure Namecoin Core and an Electrum Server separately, along with any other utilities specific to your use case (e.g., a reverse proxy, etc). Such configuration is mostly beyond the scope of the Namepool project, so please only proceed if you know what you're doing.
 
 Jump to a section in this doc:
-- [Configure with Bitcoin Core Only](#configure-with-bitcoin-core-only)
-- [Configure with Bitcoin Core + Electrum Server](#configure-with-bitcoin-core--electrum-server)
+- [Configure with Namecoin Core Only](#configure-with-namecoin-core-only)
+- [Configure with Namecoin Core + Electrum Server](#configure-with-namecoin-core--electrum-server)
 - [Further Configuration](#further-configuration)
 
-## Configure with Bitcoin Core Only
+## Configure with Namecoin Core Only
 
-_Note: address lookups require an Electrum Server and will not work with this configuration. [Add an Electrum Server](#configure-with-bitcoin-core--electrum-server) to your backend for full functionality._
+_Note: address lookups require an Electrum Server and will not work with this configuration. [Add an Electrum Server](#configure-with-namecoin-core--electrum-server) to your backend for full functionality._
 
-The default Docker configuration assumes you have the following configuration in your `bitcoin.conf` file:
+The default Docker configuration assumes you have the following configuration in your `namecoin.conf` file:
 
 ```ini
 txindex=1
@@ -37,9 +35,9 @@ If you want to use different credentials, specify them in the `docker-compose.ym
       CORE_RPC_TIMEOUT: "60000"
 ```
 
-The IP address in the example above refers to Docker's default gateway IP address so that the container can hit the `bitcoind` instance running on the host machine. If your setup is different, update it accordingly.
+The IP address in the example above refers to Docker's default gateway IP address so that the container can hit the `namecoind` instance running on the host machine. If your setup is different, update it accordingly.
 
-Make sure `bitcoind` is running and synced.
+Make sure `namecoind` is running and synced.
 
 Now, run:
 
@@ -47,13 +45,13 @@ Now, run:
 docker-compose up
 ```
 
-Your Mempool instance should be running at http://localhost. The graphs will be populated as new transactions are detected.
+Your Namepool instance should be running at http://localhost. The graphs will be populated as new transactions are detected.
 
-## Configure with Bitcoin Core + Electrum Server
+## Configure with Namecoin Core + Electrum Server
 
-First, configure `bitcoind` as specified above, and make sure your Electrum Server is running and synced. See [this FAQ](https://mempool.space/docs/faq#address-lookup-issues) if you need help picking an Electrum Server implementation.
+First, configure `namecoind` as specified above, and make sure your Electrum Server is running and synced. See [this FAQ](https://namepool.bit/docs/faq#address-lookup-issues) if you need help picking an Electrum Server implementation.
 
-Then, set the following variables in `docker-compose.yml` so Mempool can connect to your Electrum Server:
+Then, set the following variables in `docker-compose.yml` so Namepool can connect to your Electrum Server:
 
 ```yaml
   api:
@@ -71,7 +69,7 @@ Eligible values for `MEMPOOL_BACKEND`:
 
 Of course, if your Docker host IP address is different, update accordingly.
 
-With `bitcoind` and Electrum Server set up, run Mempool with:
+With `namecoind` and Electrum Server set up, run Namepool with:
 
 ```bash
 docker-compose up
@@ -80,6 +78,10 @@ docker-compose up
 ## Further Configuration
 
 Optionally, you can override any other backend settings from `mempool-config.json`.
+
+### CoinMarketCap price feed (optional)
+
+If you have a CoinMarketCap API key and want Namepool to use CoinMarketCap for Namecoin (NMC) fiat pricing, set `COINMARKETCAP_API_KEY` for the `api` service (for example via a `.env` file that `docker-compose` loads automatically).
 
 Below we list all settings from `mempool-config.json` and the corresponding overrides you can make in the `api` > `environment` section of `docker-compose.yml`. 
 

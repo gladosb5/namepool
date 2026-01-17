@@ -216,19 +216,19 @@ export class ServicesApiServices {
       product: txid,
       amount: sats,
     };
-    return this.httpClient.post<any>(`${this.stateService.env.SERVICES_API}/payments/bitcoin`, params);
+    return this.httpClient.post<any>(`${this.stateService.env.SERVICES_API}/payments/namecoin`, params);
   }
 
   retrieveInvoice$(invoiceId: string): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.stateService.env.SERVICES_API}/payments/bitcoin/invoice?id=${invoiceId}`);
+    return this.httpClient.get<any[]>(`${this.stateService.env.SERVICES_API}/payments/namecoin/invoice?id=${invoiceId}`);
   }
 
   getPaymentStatus$(orderId: string): Observable<any> {
-    return this.httpClient.get<any>(`${this.stateService.env.SERVICES_API}/payments/bitcoin/check?order_id=${orderId}`, { observe: 'response' });
+    return this.httpClient.get<any>(`${this.stateService.env.SERVICES_API}/payments/namecoin/check?order_id=${orderId}`, { observe: 'response' });
   }
 
   getSimpleProofs$(key: string): Observable<Record<string, SimpleProof>> {
-    // Need to use relative path here to avoid CORS errors, since this won't be used from mempool.space website
+    // Need to use relative path here to avoid CORS errors, since this won't be used from namepool.bit website
     const pathname = new URL(this.stateService.env.SERVICES_API + '/sp/verified').pathname;
     return this.httpClient.get<Record<string, SimpleProof>>(`${pathname}/${key}`);
   }

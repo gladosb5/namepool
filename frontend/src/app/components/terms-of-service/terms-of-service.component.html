@@ -1,7 +1,7 @@
 <div class="container-xl">
-  <div class="text-center">
+    <div class="text-center">
     <br />
-    <img [src]="officialMempoolSpace ? '/resources/mempool-space-logo-bigger.png' : '/resources/mempool-logo-bigger.png'" style="width: 250px;height:63px;">
+    <app-svg-images name="namepoolSpace" viewBox="0 0 500 126" width="500" height="126" style="width: 250px; height: 63px;"></app-svg-images>
     <br /><br />
 
     <h2>Terms of Service</h2>
@@ -11,9 +11,9 @@
 
     <div class="text-left">
 
-        <p *ngIf="officialMempoolSpace">The <a href="https://mempool.space/">mempool.space</a> website, the <a href="https://liquid.network/">liquid.network</a> website, the <a href="https://bitcoin.gob.sv/">bitcoin.gob.sv</a> website, their associated API services, and related network and server infrastructure (collectively, the "Website") are operated by Mempool Holdings S.A. de C.V. in El Salvador ("Mempool", "We", or "Us") and self-hosted from <a href="https://bgp.tools/as/142052#connectivity">AS142052</a>.</p>
+        <p *ngIf="officialNamepoolSpace">The <a href="http://namepool.bit/">namepool.bit</a> website, the <a href="https://liquid.network/">liquid.network</a> website, the <a href="https://namecoin.gob.sv/">namecoin.gob.sv</a> website, their associated API services, and related network and server infrastructure (collectively, the "Website") are operated by Namepool Holdings S.A. de C.V. in El Salvador ("Namepool", "We", or "Us") and self-hosted from <a href="https://bgp.tools/as/142052#connectivity">AS142052</a>.</p>
 
-        <p *ngIf="!officialMempoolSpace">This website and its API service (collectively, the "Website") are operated by a member of the Bitcoin community ("We" or "Us"). Mempool Holdings S.A. de C.V. in El Salvador ("Mempool") has no affiliation with the operator of this Website, and does not sponsor or endorse the information provided herein.</p>
+        <p *ngIf="!officialNamepoolSpace">This website and its API service (collectively, the "Website") are operated by a member of the Namecoin community ("We" or "Us"). Namepool Holdings S.A. de C.V. in El Salvador ("Namepool") has no affiliation with the operator of this Website, and does not sponsor or endorse the information provided herein.</p>
 
         <h5>By accessing this Website, you agree to the following Terms of Service:</h5>
 
@@ -27,41 +27,41 @@
 
         <h4>NO LIABILITY</h4>
 
-        <p>WE WILL NOT BE HELD LIABLE FOR ANY LOSS OR DAMAGES, WHETHER DIRECT, INDIRECT, OR ANY OTHER NATURE, THAT ARE DEEMED OR ALLEGED TO HAVE RESULTED FROM OR BEEN CAUSED BY THIS WEBSITE OR ITS CONTENTS, INCLUDING, BUT WITHOUT LIMITATION TO, ERRORS, INACCURACIES OR AMBIGUITY IN THIS WEBSITE OR ITS CONTENTS, FAILURES, MALFUNCTIONS, DELAYS OR INTERRUPTIONS IN OPERATION OR TRANSMISSION, ANY PERSONS USE OR MISUSE OF THIS WEBSITE OR ITS CONTENT, ANY ERRORS OR OMISSIONS IN CONTENT, DAMAGE FOR LOSS OF BITCOIN OR OTHER CRYPTO ASSETS, LOSS OF BUSINESS, LOSS OF PROFITS, BUSINESS INTERRUPTION, LOSS OF INFORMATION, OR ANY OTHER PECUNIARY OR CONSEQUENTIAL LOSS OR DAMAGE (EVEN IF WE HAVE BEEN NOTIFIED OF SUCH RISK OF LOSS OR DAMAGE).</p>
+        <p>WE WILL NOT BE HELD LIABLE FOR ANY LOSS OR DAMAGES, WHETHER DIRECT, INDIRECT, OR ANY OTHER NATURE, THAT ARE DEEMED OR ALLEGED TO HAVE RESULTED FROM OR BEEN CAUSED BY THIS WEBSITE OR ITS CONTENTS, INCLUDING, BUT WITHOUT LIMITATION TO, ERRORS, INACCURACIES OR AMBIGUITY IN THIS WEBSITE OR ITS CONTENTS, FAILURES, MALFUNCTIONS, DELAYS OR INTERRUPTIONS IN OPERATION OR TRANSMISSION, ANY PERSONS USE OR MISUSE OF THIS WEBSITE OR ITS CONTENT, ANY ERRORS OR OMISSIONS IN CONTENT, DAMAGE FOR LOSS OF NAMECOIN OR OTHER CRYPTO ASSETS, LOSS OF BUSINESS, LOSS OF PROFITS, BUSINESS INTERRUPTION, LOSS OF INFORMATION, OR ANY OTHER PECUNIARY OR CONSEQUENTIAL LOSS OR DAMAGE (EVEN IF WE HAVE BEEN NOTIFIED OF SUCH RISK OF LOSS OR DAMAGE).</p>
 
         <br>
 
         <h4>NO ADVERTISING</h4>
 
-        <p>Out of respect for the Bitcoin community, this website does not display advertising, and generally does not link to external websites. However, external links are made for references to Bitcoin's technical documentation, for acknowledgements of individual members and open-source projects within the Bitcoin community, and for direct contributors and supporters of <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a>, as follows:</p>
+        <p>Out of respect for the Namecoin community, this website does not display advertising, and generally does not link to external websites. However, external links are made for references to Namecoin's technical documentation, for acknowledgements of individual members and open-source projects within the Namecoin community, and for direct contributors and supporters of <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a>, as follows:</p>
         <ul>
-          <li>In order to refer to Bitcoin technical documentation, external links may by added where applicable, to informational websites that respect that Bitcoin community and do not display advertising, altcoins, or third-party trackers, such as <a href="https://en.bitcoin.it/">bitcoin.it</a> and <a href="https://bitcoin.org/">bitcoin.org</a>.</li>
+          <li>In order to refer to Namecoin technical documentation, external links may by added where applicable, to informational websites that respect that Namecoin community and do not display advertising, altcoins, or third-party trackers, such as <a href="https://en.namecoin.it/">namecoin.it</a> and <a href="https://namecoin.org/">namecoin.org</a>.</li>
           <br>
-          <li>In order to acknowledge individual contributors to <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a> who have made <a href="https://github.com/mempool/mempool/graphs/contributors">at least 5 contributions visible on GitHub</a>, the contributor's GitHub profile photo will automatically be displayed on <a href="https://mempool.space/about">mempool.space/about</a>, with <u>a link to their GitHub profile</u>.</li>
+          <li>In order to acknowledge individual contributors to <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a> who have made <a href="https://github.com/namepool/namepool/graphs/contributors">at least 5 contributions visible on GitHub</a>, the contributor's GitHub profile photo will automatically be displayed on <a href="http://namepool.bit/about">namepool.bit/about</a>, with <u>a link to their GitHub profile</u>.</li>
           <br>
-          <li>In order to acknowledge members of the Bitcoin community who have made a one-time donation of at least 0.01 BTC to <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a> on <a href="https://mempool.space/about">mempool.space/about</a>, the Bitcoin community members's Twitter profile photo will automatically be displayed on <a href="https://mempool.space/about">mempool.space/about</a>, with <u>a link to their Twitter profile</u>.</li>
+          <li>In order to acknowledge members of the Namecoin community who have made a one-time donation of at least 0.01 BTC to <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a> on <a href="http://namepool.bit/about">namepool.bit/about</a>, the Namecoin community members's Twitter profile photo will automatically be displayed on <a href="http://namepool.bit/about">namepool.bit/about</a>, with <u>a link to their Twitter profile</u>.</li>
           <br>
-          <li>In order to acknowledge members of the Bitcoin community who have or have committed to making recurring donations of at least $100 USD per month to <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a> through <a href="https://github.com/sponsors/mempool">our GitHub Sponsors program</a> for at least 6 months, the Bitcoin community member's GitHub profile photo will automatically be displayed on <a href="https://mempool.space/about">mempool.space/about</a>, with <u>a link to their GitHub profile</u>.</li>
+          <li>In order to acknowledge members of the Namecoin community who have or have committed to making recurring donations of at least $100 USD per month to <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a> through <a href="https://github.com/sponsors/namepool">our GitHub Sponsors program</a> for at least 6 months, the Namecoin community member's GitHub profile photo will automatically be displayed on <a href="http://namepool.bit/about">namepool.bit/about</a>, with <u>a link to their GitHub profile</u>.</li>
           <br>
-          <li>In order to acknowledge open source projects that benefit the Bitcoin community and have integrated <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a> into their software, the open source project's logo may be displayed on <a href="https://mempool.space/about">mempool.space/about</a>, with <u>a link to the project's GitHub repository</u>.</li>
+          <li>In order to acknowledge open source projects that benefit the Namecoin community and have integrated <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a> into their software, the open source project's logo may be displayed on <a href="http://namepool.bit/about">namepool.bit/about</a>, with <u>a link to the project's GitHub repository</u>.</li>
           <br>
-          <li>In order to acknowledge federations or alliances within the Bitcoin community that have a relationship to <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a>, the federation or alliance logo may be displayed on <a href="https://mempool.space/about">mempool.space/about</a>, with <u>a link to the alliance website</u>.</li>
+          <li>In order to acknowledge federations or alliances within the Namecoin community that have a relationship to <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a>, the federation or alliance logo may be displayed on <a href="http://namepool.bit/about">namepool.bit/about</a>, with <u>a link to the alliance website</u>.</li>
           <br>
-          <li>In order to acknowledge the enterprise organizations within the Bitcoin community that have or have committed to making recurring donations of at least $1000 USD per month to <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a> through <a href="https://github.com/sponsors/mempool">our GitHub Sponsors program</a> for at least 25 months, the organization's logo may be displayed on <a href="https://mempool.space/about">mempool.space/about</a>, with <u>a link to the organization's website</u>.</li>
+          <li>In order to acknowledge the enterprise organizations within the Namecoin community that have or have committed to making recurring donations of at least $1000 USD per month to <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a> through <a href="https://github.com/sponsors/namepool">our GitHub Sponsors program</a> for at least 25 months, the organization's logo may be displayed on <a href="http://namepool.bit/about">namepool.bit/about</a>, with <u>a link to the organization's website</u>.</li>
           <br>
-          <li>In order to acknowledge the enterprise organizations within the Bitcoin community that have made a significant one-time donation of at least $25,000 USD to <a href="https://github.com/mempool/mempool">The Mempool Open Source Project</a>, the organization's logo may be displayed on <a href="https://mempool.space/about">mempool.space/about</a>, with <u>a link to the organization's website</u>.</li>
+          <li>In order to acknowledge the enterprise organizations within the Namecoin community that have made a significant one-time donation of at least $25,000 USD to <a href="https://github.com/namepool/namepool">The Namepool Open Source Project</a>, the organization's logo may be displayed on <a href="http://namepool.bit/about">namepool.bit/about</a>, with <u>a link to the organization's website</u>.</li>
         </ul>
         <p>However, we reserve the right to remove any links from our website that in our sole discretion are inappropriate. All donations are non-refundable.</p>
 
         <br>
 
-        <ng-container *ngIf="officialMempoolSpace">
+        <ng-container *ngIf="officialNamepoolSpace">
 
           <h4>NO ALTCOINS</h4>
 
-          <p>The <a href="https://mempool.space/">mempool.space</a> explorer is Bitcoin Only.</p>
+          <p>The <a href="http://namepool.bit/">namepool.bit</a> explorer is Namecoin Only.</p>
 
-          <p>Unfortunately, the <a href="https://liquid.network/">liquid.network</a> explorer cannot be considered Bitcoin Only, as they may display altcoins as part of their core network functionality. We do not endorse any altcoins and encourage you to stay Bitcoin Only. Please see <a href="https://bitcoin-only.com/">bitcoin-only.com</a> for more Bitcoin Only resources.</p>
+          <p>Unfortunately, the <a href="https://liquid.network/">liquid.network</a> explorer cannot be considered Namecoin Only, as they may display altcoins as part of their core network functionality. We do not endorse any altcoins and encourage you to stay Namecoin Only. Please see <a href="https://namecoin-only.com/">namecoin-only.com</a> for more Namecoin Only resources.</p>
 
           <br>
 
@@ -69,10 +69,10 @@
 
         <h4>MEMPOOL ACCELERATOR&reg;</h4>
 
-        <p><a href="https://mempool.space/accelerator">Mempool Accelerator&reg;</a> enables members of the Bitcoin community to submit requests for transaction prioritization. </p>
+        <p><a href="http://namepool.bit/accelerator">Namepool Accelerator&reg;</a> enables members of the Namecoin community to submit requests for transaction prioritization. </p>
         <ul>
 
-          <li>Mempool will use reasonable commercial efforts to relay user acceleration requests to Mempool's mining pool partners, but it is at the discretion of Mempool and Mempool's mining pool partners to accept acceleration requests. </li>
+          <li>Namepool will use reasonable commercial efforts to relay user acceleration requests to Namepool's mining pool partners, but it is at the discretion of Namepool and Namepool's mining pool partners to accept acceleration requests. </li>
 
           <br>
           
@@ -80,19 +80,19 @@
 
           <br>
 
-          <li>Mempool reserves the right to cancel acceleration requests for any reason, including but not limited to the ejection of an accelerated transaction from Mempool's mempool. Canceled accelerations will not be refunded.</li>
+          <li>Namepool reserves the right to cancel acceleration requests for any reason, including but not limited to the ejection of an accelerated transaction from Namepool's namepool. Canceled accelerations will not be refunded.</li>
 
           <br>
           
-          <li>All acceleration payments and Mempool Accelerator&reg; account credit top-ups are non-refundable. </li>
+          <li>All acceleration payments and Namepool Accelerator&reg; account credit top-ups are non-refundable. </li>
 
           <br>
 
-          <li>Mempool Accelerator&reg; account credit top-ups are prepayment for future accelerations and cannot be withdrawn or transferred.</li>
+          <li>Namepool Accelerator&reg; account credit top-ups are prepayment for future accelerations and cannot be withdrawn or transferred.</li>
           
           <br>
           
-          <li>Mempool does not provide acceleration services to persons in Cuba, Iran, North Korea, Russia, Syria, Crimea, Donetsk or Luhansk Regions of Ukraine.</li>
+          <li>Namepool does not provide acceleration services to persons in Cuba, Iran, North Korea, Russia, Syria, Crimea, Donetsk or Luhansk Regions of Ukraine.</li>
       
 
         </ul>
