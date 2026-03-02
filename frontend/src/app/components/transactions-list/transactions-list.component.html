@@ -13,7 +13,10 @@
     </div>
   </div>
 
-  <div class="header-bg box" [attr.data-cy]="'tx-' + i">
+  <div class="header-bg box"
+       [attr.data-cy]="'tx-' + i"
+       [ngClass]="{'name-domain-tx': tx['_nameOpType']}"
+       [attr.title]="tx['_nameOpTooltip'] || null">
 
     <div *ngIf="errorUnblinded" class="error-unblinded">{{ errorUnblinded }}</div>
     @if (similarityMatches.get(tx.txid)?.size) {

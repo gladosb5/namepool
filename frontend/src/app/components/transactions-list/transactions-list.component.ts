@@ -250,6 +250,8 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
         tx['@vinLimit'] = true;
         tx['_showSignatures'] = false;
         tx['_interestingSignatures'] = false;
+        tx['_nameOpType'] = null;
+        tx['_nameOpTooltip'] = null;
 
         if (this.addresses?.length) {
           const addressIn = tx.vout.map(v => {
@@ -307,6 +309,10 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
 
         // Check for ord data fingerprints in inputs and outputs
         if (this.stateService.network !== 'liquid' && this.stateService.network !== 'liquidtestnet') {
+          const nameOpType = this.detectNameOperation(tx);
+          tx['_nameOpType'] = nameOpType;
+          tx['_nameOpTooltip'] = this.getNameOperationTooltip(nameOpType);
+
           for (let i = 0; i < tx.vout.length; i++) {
             if (tx.vout[i]?.scriptpubkey?.startsWith('6a5d')) {
               tx.vout[i].isRunestone = true;
@@ -696,6 +702,57 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
       default:
         return false;
     }
+  }
+
+  private detectNameOperation(tx: Transaction): 'register' | 'renew' | 'preregister' | null {
+    let detected: 'register' | 'renew' | 'preregister' | null = null;
+
+    for (const vout of tx.vout || []) {
+      const scriptAsm = vout?.scriptpubkey_asm || '';
+      const operation = this.detectNameOperationFromAsm(scriptAsm);
+      if (operation === 'register') {
+        return operation;
+      }
+      if (operation === 'renew') {
+        detected = 'renew';
+      } else if (operation === 'preregister' && !detected) {
+        detected = 'preregister';
+      }
+    }
+
+    return detected;
+  }
+
+  private detectNameOperationFromAsm(scriptAsm: string): 'register' | 'renew' | 'preregister' | null {
+    const asm = (scriptAsm || '').trim();
+    if (!asm.length) {
+      return null;
+    }
+
+    if (/^OP_PUSHNUM_2\b[\s\S]*\bOP_2DROP\b\s+\bOP_2DROP\b/.test(asm)) {
+      return 'register';
+    }
+    if (/^OP_PUSHNUM_3\b[\s\S]*\bOP_2DROP\b\s+\bOP_DROP\b/.test(asm)) {
+      return 'renew';
+    }
+    if (/^OP_PUSHNUM_1\b[\s\S]*\bOP_2DROP\b/.test(asm)) {
+      return 'preregister';
+    }
+
+    return null;
+  }
+
+  private getNameOperationTooltip(operation: 'register' | 'renew' | 'preregister' | null): string | null {
+    if (operation === 'register') {
+      return 'Pays for a Namecoin domain registration (name_firstupdate).';
+    }
+    if (operation === 'renew') {
+      return 'Pays for a Namecoin domain renewal or update (name_update).';
+    }
+    if (operation === 'preregister') {
+      return 'Pays for a Namecoin domain pre-registration (name_new).';
+    }
+    return null;
   }
 
   ngOnDestroy(): void {
