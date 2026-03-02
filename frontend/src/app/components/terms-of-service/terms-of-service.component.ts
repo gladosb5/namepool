@@ -1,0 +1,26 @@
+import { Component } from '@angular/core';
+import { Env, StateService } from '@app/services/state.service';
+import { SeoService } from '@app/services/seo.service';
+import { OpenGraphService } from '@app/services/opengraph.service';
+
+@Component({
+  selector: 'app-terms-of-service',
+  templateUrl: './terms-of-service.component.html',
+  standalone: false,
+})
+export class TermsOfServiceComponent {
+  officialMempoolSpace = this.stateService.env.OFFICIAL_MEMPOOL_SPACE;
+  officialNamepoolSpace = this.officialMempoolSpace;
+
+  constructor(
+    private stateService: StateService,
+    private seoService: SeoService,
+    private ogService: OpenGraphService,
+  ) { }
+
+  ngOnInit(): void {
+    this.seoService.setTitle('Terms of Service');
+    this.seoService.setDescription('Out of respect for the Namecoin community, the namepool.bit website is Namecoin Only and does not display any advertising.');
+    this.ogService.setManualOgImage('tos.jpg');
+  }
+}

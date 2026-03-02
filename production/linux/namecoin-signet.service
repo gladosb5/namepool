@@ -1,0 +1,22 @@
+[Unit]
+Description=Namecoind-signet
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/namecoind -conf=namecoin.conf -daemon -signet -printtoconsole -pid=/namecoin/namecoind-signet.pid
+ExecStop=/usr/local/bin/namecoin-cli -signet stop
+
+Type=forking
+PIDFile=/namecoin/namecoind-signet.pid
+Restart=on-failure
+
+User=namecoin
+Group=namecoin
+
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target

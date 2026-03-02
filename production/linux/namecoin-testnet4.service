@@ -1,0 +1,22 @@
+[Unit]
+Description=Namecoind-testnet4
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/namecoind -conf=namecoin.conf -daemon -testnet4 -printtoconsole -pid=/namecoin/namecoind-testnet4.pid
+ExecStop=/usr/local/bin/namecoin-cli -testnet4 stop
+
+Type=forking
+PIDFile=/namecoin/namecoind-testnet4.pid
+Restart=on-failure
+
+User=namecoin
+Group=namecoin
+
+PrivateTmp=true
+ProtectSystem=full
+NoNewPrivileges=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+# start test network daemons on boot
+@reboot sleep 10 ; /usr/local/bin/namecoind -testnet >/dev/null 2>&1
+@reboot sleep 20 ; /usr/local/bin/namecoind -testnet4 >/dev/null 2>&1
+@reboot sleep 30 ; /usr/local/bin/namecoind -signet >/dev/null 2>&1
+
+# start electrs on boot
+@reboot sleep 40 ; screen -dmS mainnet /namecoin/electrs/start mainnet
+@reboot sleep 50 ; screen -dmS testnet /namecoin/electrs/start testnet
+@reboot sleep 60 ; screen -dmS testnet4 /namecoin/electrs/start testnet4
+@reboot sleep 70 ; screen -dmS signet /namecoin/electrs/start signet
+
+# daily update of popular-scripts
+30 03 * * * $HOME/electrs/start testnet4 popular-scripts >/dev/null 2>&1
+31 03 * * * $HOME/electrs/start testnet popular-scripts >/dev/null 2>&1
+32 03 * * * $HOME/electrs/start signet popular-scripts >/dev/null 2>&1
+33 03 * * * $HOME/electrs/start mainnet popular-scripts >/dev/null 2>&1

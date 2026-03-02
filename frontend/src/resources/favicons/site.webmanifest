@@ -1,0 +1,14 @@
+{
+    "name": "namepool",
+    "short_name": "namepool",
+    "icons": [
+        {
+            "src": "/resources/namecoin-logo.png",
+            "sizes": "1200x1200",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "display": "standalone"
+}

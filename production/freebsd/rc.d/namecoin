@@ -1,0 +1,181 @@
+#!/bin/sh
+# PROVIDE: namecoin
+# REQUIRE: LOGIN cleanvar
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf to enable :
+# namecoin_enable (bool):	Set to "NO" by default.
+#				Set it to "YES" to enable namecoin
+# namecoin_user (str)		Set to "namecoin" by default.
+# namecoin_group (str)		Set to "namecoin" by default.
+# namecoin_conf (str)		Set to "/namecoin/namecoin.conf" by default.
+# namecoin_data_dir (str)	Set to "/namecoin" by default.
+# namecoin_syslog_facility(str)	Set to "local0" by default.
+# namecoin_syslog_priority(str)	Set to "info" by default.
+# namecoinlimits_enable (bool)	Set to "NO" by default.
+#				Set it to "YES" to enable namecoinlimits
+# namecoinlimits_args		Set to "-e -U ${namecoin_user}" by default
+
+
+. /etc/rc.subr
+
+name="namecoin"
+rcvar=namecoin_enable
+
+start_precmd="namecoin_precmd"
+start_cmd="namecoin_start"
+restart_precmd="namecoin_checkconfig"
+reload_precmd="namecoin_checkconfig"
+configtest_cmd="namecoin_checkconfig"
+status_cmd="namecoin_status"
+stop_cmd="namecoin_stop"
+stop_postcmd="namecoin_wait"
+command="/usr/local/bin/namecoind"
+daemon_command="/usr/sbin/daemon"
+extra_commands="configtest"
+pidfile="/namecoin/namecoind.pid"
+
+: ${namecoin_enable:="NO"}
+: ${namecoinlimits_enable:="NO"}
+
+load_rc_config ${name}
+
+: ${namecoin_user:="namecoin"}
+: ${namecoin_group:="namecoin"}
+: ${namecoin_data_dir:="/namecoin"}
+: ${namecoin_config_file:="/namecoin/namecoin.conf"}
+: ${namecoin_syslog_facility:="local0"}
+: ${namecoin_syslog_priority:="info"}
+: ${namecoin_syslog_tag:="namecoin"}
+: ${namecoin_kill_after:="600"}
+: ${namecoinlimits_args:="-e -U ${namecoin_user}"}
+
+# set up dependant variables
+procname="${command}"
+required_files="${namecoin_config_file}"
+pidfile="${namecoin_data_dir}/namecoind.pid"
+
+namecoin_checkconfig()
+{
+  echo "Performing sanity check on namecoin configuration:"
+  if [ ! -d "${namecoin_data_dir}" ]
+  then
+    echo "Missing data directory: ${namecoin_data_dir}"
+    exit 1
+  fi
+  touch "${namecoin_data_dir}/debug.log"
+  chmod 644 "${namecoin_data_dir}/debug.log"
+  chown -R "${namecoin_user}:${namecoin_group}" "${namecoin_data_dir}"
+
+  if [ ! -f "${namecoin_config_file}" ]
+  then
+    echo "Missing configuration file: ${namecoin_config_file}"
+    exit 1
+  fi
+  if [ ! -x "${command}" ]
+  then
+    echo "Missing executable: ${command}"
+    exit 1
+  fi
+  return 0
+}
+
+namecoin_cleanup()
+{
+  rm -f "${pidfile}"
+}
+
+namecoin_precmd()
+{
+  namecoin_checkconfig
+
+  pid=$(check_pidfile "${pidfile}" "${procname}")
+  if [ -z "${pid}" ]
+  then
+    echo "Namecoind is not running"
+    rm -f "${pidfile}"
+  fi
+
+  if checkyesno namecoinlimits_enable
+  then
+    eval $(/usr/bin/limits ${namecoinlimits_args}) 2>/dev/null
+  else
+    return 0
+  fi
+}
+
+namecoin_status()
+{
+  local pid
+  pid=$(check_pidfile "${pidfile}" "${procname}")
+  if [ -z "${pid}" ]
+  then
+    echo "Namecoind is not running"
+    return 1
+  else
+    echo "Namecoind running, pid: ${pid}"
+  fi
+}
+
+namecoin_start()
+{
+  echo "Starting namecoin:"
+  cd "${namecoin_data_dir}" || return 1
+  ${daemon_command} \
+    -u "${namecoin_user}" \
+    -l "${namecoin_syslog_facility}" \
+    -s "${namecoin_syslog_priority}" \
+    -T "${namecoin_syslog_tag}" \
+    ${command} \
+    -printtoconsole=1 \
+    -conf="${namecoin_config_file}" \
+    -datadir="${namecoin_data_dir}"
+}
+
+namecoin_stop()
+{
+  echo "Stopping namecoin:"
+  pid=$(check_pidfile "${pidfile}" "${procname}")
+  if [ -z "${pid}" ]
+  then
+    echo "Namecoind is not running"
+    return 1
+  else
+    kill ${pid}
+  fi
+}
+
+namecoin_wait()
+{
+  local n="${namecoin_kill_after}"
+  echo "Waiting for namecoin shutdown:"
+  while :
+  do
+    printf '.'
+    pid=$(check_pidfile "${pidfile}" "${procname}")
+    if [ -z "${pid}" ]
+    then
+      printf '\n'
+      break
+    fi
+    sleep 1
+    n=$((${n} - 1))
+    if [ ${n} -eq 0 -a -f "${pidfile}" ]
+    then
+      printf "\nForce shutdown"
+      kill -9 $(cat "${pidfile}")
+      for n in 1 2 3
+      do
+        printf '.'
+        sleep 1
+      done
+      printf '\n'
+      break
+    fi
+  done
+  rm -f "${pidfile}"
+  echo "Shutdown complete"
+}
+
+run_rc_command "$1"
