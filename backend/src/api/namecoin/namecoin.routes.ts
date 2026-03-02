@@ -149,6 +149,23 @@ function isNameNotFoundError(error: unknown): boolean {
   return message.includes('name not found') || message.includes('name does not exist');
 }
 
+function formatErrorDetails(error: unknown): string {
+  if (error instanceof Error) {
+    const code = (error as { code?: number | string }).code;
+    return code !== undefined
+      ? `${error.message} (code: ${code})`
+      : error.message;
+  }
+  if (typeof error === 'string') {
+    return error;
+  }
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+}
+
 class NamecoinRoutes {
   public initRoutes(app: Application) {
     app
@@ -1111,7 +1128,9 @@ class NamecoinRoutes {
         handleError(req, res, 404, 'Name not found');
         return;
       }
-      handleError(req, res, 500, 'Failed to get name');
+      const details = formatErrorDetails(e);
+      logger.err(`getName failed for ${normalizedName}: ${details}`, 'NamecoinRoutes');
+      handleError(req, res, 500, `Failed to get name. Details: ${details}`);
     }
   }
 
@@ -1189,7 +1208,9 @@ class NamecoinRoutes {
         items: mappedEntries.slice(0, count),
       });
     } catch (e) {
-      handleError(req, res, 500, 'Failed to list names');
+      const details = formatErrorDetails(e);
+      logger.err(`getNames failed (query=${queryName ?? 'null'}, prefix=${normalizedPrefix}, start=${normalizedStart}, count=${count}): ${details}`, 'NamecoinRoutes');
+      handleError(req, res, 500, `Failed to list names. Details: ${details}`);
     }
   }
 

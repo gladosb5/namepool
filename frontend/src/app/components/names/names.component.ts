@@ -4,6 +4,7 @@ import { ApiService } from '@app/services/api.service';
 import { OpenGraphService } from '@app/services/opengraph.service';
 import { SeoService } from '@app/services/seo.service';
 import { NameRecord } from '@interfaces/node-api.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, of } from 'rxjs';
 import { catchError, distinctUntilChanged, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pipe';
@@ -58,10 +59,12 @@ export class NamesComponent implements OnInit, OnDestroy {
           count: this.maxRows,
         }).pipe(
           map((response) => response.items || []),
-          catchError(() => {
+          catchError((httpError: HttpErrorResponse) => {
+            const details = this.extractErrorDetails(httpError);
+            const statusText = httpError?.status ? `HTTP ${httpError.status}` : 'HTTP error';
             this.error = query
-              ? $localize`:@@names.search-error:Failed to load names for this search.`
-              : $localize`:@@names.list-error:Failed to load names list.`;
+              ? `Failed to load names for this search (${statusText}). ${details}`
+              : `Failed to load names list (${statusText}). ${details}`;
             return of([] as NameRecord[]);
           })
         )),
@@ -83,6 +86,35 @@ export class NamesComponent implements OnInit, OnDestroy {
 
   clearSearch(): void {
     this.submitSearch('');
+  }
+
+  private extractErrorDetails(error: HttpErrorResponse): string {
+    if (!error) {
+      return 'No error details were provided.';
+    }
+
+    const body = error.error;
+    if (typeof body === 'string' && body.trim().length > 0) {
+      return body;
+    }
+
+    if (body && typeof body === 'object') {
+      const message = (body as { error?: unknown }).error;
+      if (typeof message === 'string' && message.trim().length > 0) {
+        return message;
+      }
+      try {
+        return JSON.stringify(body);
+      } catch {
+        return 'Server returned a non-serializable error payload.';
+      }
+    }
+
+    if (error.message) {
+      return error.message;
+    }
+
+    return 'No error details were provided.';
   }
 
   ngOnDestroy(): void {
