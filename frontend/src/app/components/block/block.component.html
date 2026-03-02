@@ -439,11 +439,16 @@
     <div class="clearfix"></div>
     <br>
   </ng-template>
-  <ng-template [ngIf]="error">
-    <app-http-error [error]="error">
+<ng-template [ngIf]="error">
+  <app-http-error [error]="error">
+    <ng-container *ngIf="blockHash === '-1'; else defaultBlockError">
+      <span>-1 Unknown error: hmm i wonder if you can time travel to the block heights</span>
+    </ng-container>
+    <ng-template #defaultBlockError>
       <span i18n="block.error.loading-block-data">Error loading block data.</span>
-    </app-http-error>
-  </ng-template>
+    </ng-template>
+  </app-http-error>
+</ng-template>
 
 </div>
 
