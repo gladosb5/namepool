@@ -75,6 +75,27 @@ export interface AddressInformation {
   unconfidential?: string;         //  (string) Elements only
 }
 
+export interface NameRecord {
+  name: string;
+  displayName: string;
+  value: string | null;
+  txid: string | null;
+  vout: number | null;
+  address: string | null;
+  registeredHeight: number | null;
+  expiresIn: number | null;
+  expiresAt: number | null;
+  expired: boolean;
+}
+
+export interface NamesResponse {
+  query: string | null;
+  prefix: string;
+  start: string;
+  count: number;
+  items: NameRecord[];
+}
+
 export interface LiquidPegs {
   amount: string;
   date: string;

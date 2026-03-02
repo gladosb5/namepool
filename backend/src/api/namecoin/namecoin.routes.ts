@@ -28,6 +28,118 @@ const TXID_REGEX = /^[a-f0-9]{64}$/i;
 const BLOCK_HASH_REGEX = /^[a-f0-9]{64}$/i;
 const ADDRESS_REGEX = /^[a-z0-9]{2,120}$/i;
 const SCRIPT_HASH_REGEX = /^([a-f0-9]{2})+$/i;
+const NAME_SCAN_COUNT_DEFAULT = 25;
+const NAME_SCAN_COUNT_MAX = 200;
+const NAME_IDENTIFIER_MAX_LENGTH = 255;
+const NAME_NAMESPACE_REGEX = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const NAME_LABEL_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
+
+interface NamecoinRpcNameEntry {
+  name: string;
+  value?: string;
+  txid?: string;
+  vout?: number;
+  address?: string;
+  height?: number;
+  expires_in?: number;
+  expired?: boolean;
+}
+
+interface NamecoinNameEntry {
+  name: string;
+  displayName: string;
+  value: string | null;
+  txid: string | null;
+  vout: number | null;
+  address: string | null;
+  registeredHeight: number | null;
+  expiresIn: number | null;
+  expiresAt: number | null;
+  expired: boolean;
+}
+
+function normalizeNameIdentifier(rawName: string): string | null {
+  let decodedName: string;
+  try {
+    decodedName = decodeURIComponent(rawName).trim().toLowerCase();
+  } catch {
+    return null;
+  }
+
+  if (!decodedName || decodedName.length > NAME_IDENTIFIER_MAX_LENGTH) {
+    return null;
+  }
+
+  if (decodedName.endsWith('.bit')) {
+    const label = decodedName.slice(0, -4);
+    if (!NAME_LABEL_REGEX.test(label)) {
+      return null;
+    }
+    return `d/${label}`;
+  }
+
+  if (decodedName.includes('/')) {
+    const parts = decodedName.split('/');
+    if (parts.length !== 2) {
+      return null;
+    }
+    const [namespace, key] = parts;
+    if (!NAME_NAMESPACE_REGEX.test(namespace)) {
+      return null;
+    }
+    if (key.length > 0 && !NAME_LABEL_REGEX.test(key)) {
+      return null;
+    }
+    return `${namespace}/${key}`;
+  }
+
+  if (!NAME_LABEL_REGEX.test(decodedName)) {
+    return null;
+  }
+
+  return `d/${decodedName}`;
+}
+
+function mapNameEntry(entry: NamecoinRpcNameEntry, tipHeight: number): NamecoinNameEntry | null {
+  if (!entry || typeof entry.name !== 'string') {
+    return null;
+  }
+
+  const normalizedName = entry.name.toLowerCase();
+  const displayName = normalizedName.startsWith('d/') ? `${normalizedName.slice(2)}.bit` : normalizedName;
+  const expiresIn = typeof entry.expires_in === 'number' ? entry.expires_in : null;
+  const expiresAt = expiresIn !== null ? tipHeight + expiresIn : null;
+
+  return {
+    name: normalizedName,
+    displayName,
+    value: typeof entry.value === 'string' ? entry.value : null,
+    txid: typeof entry.txid === 'string' ? entry.txid : null,
+    vout: typeof entry.vout === 'number' ? entry.vout : null,
+    address: typeof entry.address === 'string' ? entry.address : null,
+    registeredHeight: typeof entry.height === 'number' ? entry.height : null,
+    expiresIn,
+    expiresAt,
+    expired: entry.expired === true || (expiresIn !== null && expiresIn <= 0),
+  };
+}
+
+function parseScanCount(rawCount: unknown): number | null {
+  if (rawCount === undefined) {
+    return NAME_SCAN_COUNT_DEFAULT;
+  }
+
+  if (typeof rawCount !== 'string') {
+    return null;
+  }
+
+  const parsed = parseInt(rawCount, 10);
+  if (Number.isNaN(parsed) || parsed < 1) {
+    return null;
+  }
+
+  return Math.min(parsed, NAME_SCAN_COUNT_MAX);
+}
 
 class NamecoinRoutes {
   public initRoutes(app: Application) {
@@ -41,6 +153,8 @@ class NamecoinRoutes {
       .get(config.MEMPOOL.API_URL_PREFIX + 'backend-info', this.getBackendInfo)
       .get(config.MEMPOOL.API_URL_PREFIX + 'init-data', this.getInitData)
       .get(config.MEMPOOL.API_URL_PREFIX + 'validate-address/:address', this.validateAddress)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'name', this.getName)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'names', this.getNames)
       .get(config.MEMPOOL.API_URL_PREFIX + 'tx/:txId/rbf', this.getRbfHistory)
       .get(config.MEMPOOL.API_URL_PREFIX + 'tx/:txId/cached', this.getCachedTx)
       .get(config.MEMPOOL.API_URL_PREFIX + 'replacements', this.getRbfReplacements)
@@ -956,6 +1070,94 @@ class NamecoinRoutes {
       res.json(result);
     } catch (e) {
       handleError(req, res, 500, 'Failed to validate address');
+    }
+  }
+
+  private async getName(req: Request, res: Response): Promise<void> {
+    if (typeof req.query.name !== 'string') {
+      handleError(req, res, 400, 'Name query parameter is required');
+      return;
+    }
+
+    const normalizedName = normalizeNameIdentifier(req.query.name);
+    if (!normalizedName) {
+      handleError(req, res, 400, 'Invalid name format');
+      return;
+    }
+
+    try {
+      const [nameResult, tipHeight] = await Promise.all([
+        namecoinClient.cmd('name_show', normalizedName) as Promise<NamecoinRpcNameEntry>,
+        namecoinApi.$getBlockHeightTip(),
+      ]);
+
+      const mappedEntry = mapNameEntry(nameResult, tipHeight);
+      if (!mappedEntry) {
+        handleError(req, res, 404, 'Name not found');
+        return;
+      }
+
+      res.json(mappedEntry);
+    } catch (e) {
+      if (e instanceof Error && (e.message.toLowerCase().includes('name not found') || e.message.toLowerCase().includes('name does not exist'))) {
+        handleError(req, res, 404, 'Name not found');
+        return;
+      }
+      handleError(req, res, 500, 'Failed to get name');
+    }
+  }
+
+  private async getNames(req: Request, res: Response): Promise<void> {
+    const count = parseScanCount(req.query.count);
+    if (!count) {
+      handleError(req, res, 400, 'Invalid count parameter');
+      return;
+    }
+
+    let queryName: string | null = null;
+    if (typeof req.query.query === 'string' && req.query.query.trim().length > 0) {
+      queryName = normalizeNameIdentifier(req.query.query);
+      if (!queryName) {
+        handleError(req, res, 400, 'Invalid query parameter');
+        return;
+      }
+    }
+
+    const prefixInput = queryName ?? (typeof req.query.prefix === 'string' ? req.query.prefix : 'd/');
+    const normalizedPrefix = normalizeNameIdentifier(prefixInput);
+    if (!normalizedPrefix) {
+      handleError(req, res, 400, 'Invalid prefix parameter');
+      return;
+    }
+
+    const startInput = typeof req.query.start === 'string' ? req.query.start : normalizedPrefix;
+    const normalizedStart = normalizeNameIdentifier(startInput);
+    if (!normalizedStart) {
+      handleError(req, res, 400, 'Invalid start parameter');
+      return;
+    }
+
+    try {
+      const [nameResults, tipHeight] = await Promise.all([
+        namecoinClient.cmd('name_scan', normalizedStart, NAME_SCAN_COUNT_MAX) as Promise<NamecoinRpcNameEntry[]>,
+        namecoinApi.$getBlockHeightTip(),
+      ]);
+
+      const mappedEntries = (Array.isArray(nameResults) ? nameResults : [])
+        .filter((entry) => typeof entry?.name === 'string' && entry.name.toLowerCase().startsWith(normalizedPrefix))
+        .slice(0, count)
+        .map((entry) => mapNameEntry(entry, tipHeight))
+        .filter((entry): entry is NamecoinNameEntry => entry !== null);
+
+      res.json({
+        query: queryName,
+        prefix: normalizedPrefix,
+        start: normalizedStart,
+        count,
+        items: mappedEntries,
+      });
+    } catch (e) {
+      handleError(req, res, 500, 'Failed to list names');
     }
   }
 

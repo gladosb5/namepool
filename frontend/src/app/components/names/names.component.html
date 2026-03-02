@@ -1,0 +1,55 @@
+<div class="container-xl names-page">
+  <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+    <div>
+      <h1 class="mb-1" i18n="names.heading">Namecoin Domain Names</h1>
+      <p class="text-muted mb-0" i18n="names.subheading">Registration and expiration data for Namecoin names</p>
+    </div>
+    <form class="form-inline" (submit)="$event.preventDefault(); submitSearch(searchInput.value)">
+      <input #searchInput class="form-control mr-2" type="text" [value]="query" placeholder="Search name (example.bit or d/example)" i18n-placeholder="names.search-placeholder" maxlength="255">
+      <button class="btn btn-primary" type="submit" i18n="names.search-button">Search</button>
+      <button *ngIf="currentQuery" class="btn btn-link" type="button" (click)="clearSearch()" i18n="names.clear-button">Clear</button>
+    </form>
+  </div>
+
+  <div class="alert alert-info" *ngIf="!isLoading && !error && names.length === 0" i18n="names.no-results">
+    No names found for this query.
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+
+  <div class="table-responsive" *ngIf="!isLoading && names.length">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th i18n="names.table.name">Name</th>
+          <th i18n="names.table.registered">Registered Height</th>
+          <th i18n="names.table.expires">Expires Height</th>
+          <th i18n="names.table.address">Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let name of names">
+          <td>
+            <div class="name-display">{{ name.displayName }}</div>
+            <div class="name-raw">{{ name.name }}</div>
+          </td>
+          <td>
+            <a *ngIf="name.registeredHeight !== null" [routerLink]="['/block' | relativeUrl, name.registeredHeight]">{{ name.registeredHeight }}</a>
+            <span *ngIf="name.registeredHeight === null">-</span>
+          </td>
+          <td>
+            <a *ngIf="name.expiresAt !== null" [routerLink]="['/block' | relativeUrl, name.expiresAt]">{{ name.expiresAt }}</a>
+            <span *ngIf="name.expiresAt === null">-</span>
+          </td>
+          <td>
+            <a *ngIf="name.address" [routerLink]="['/address' | relativeUrl, name.address]">{{ name.address }}</a>
+            <span *ngIf="!name.address">-</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="text-muted" i18n="names.results-limit">Showing up to the first 100 matching names.</p>
+  </div>
+
+  <div *ngIf="isLoading" class="text-muted" i18n="names.loading">Loading names...</div>
+</div>

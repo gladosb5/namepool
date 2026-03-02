@@ -226,7 +226,7 @@ export function handleDemoRedirect(route: ActivatedRoute, router: Router) {
   route.queryParams
     .subscribe(params => {
       if (params.next) {
-        const path = ['/', '/acceleration', '/mining', '/lightning'];
+        const path = ['/', '/mining', '/lightning'];
         const index = path.indexOf(params.next);
         if (index >= 0) {
           const nextPath = path[(index + 1) % path.length];

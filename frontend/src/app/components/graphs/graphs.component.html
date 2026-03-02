@@ -1,4 +1,4 @@
-<div *ngIf="stateService.env.MINING_DASHBOARD || stateService.env.LIGHTNING || stateService.env.ACCELERATOR" class="mb-3 d-flex menu" [style]="{'flex-wrap': flexWrap ? 'wrap' : ''}">
+<div *ngIf="stateService.env.MINING_DASHBOARD || stateService.env.LIGHTNING" class="mb-3 d-flex menu" [style]="{'flex-wrap': flexWrap ? 'wrap' : ''}">
 
   <a routerLinkActive="active" class="btn btn-primary w-33"
     [routerLink]="['/graphs/namepool' | relativeUrl]">Namepool</a>
@@ -45,13 +45,6 @@
     </div>
   </div>
 
-  <div ngbDropdown class="w-33" *ngIf="stateService.env.ACCELERATOR && isMainnet">
-    <button class="btn btn-primary w-100" id="dropdownBasic1" ngbDropdownToggle i18n="accelerator.accelerations">Accelerations</button>
-    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-      <a class="dropdown-item" routerLinkActive="active" [routerLink]="['/graphs/acceleration/fees' | relativeUrl]"
-        i18n="accelerator.acceleration-fees">Acceleration Fees</a>
-    </div>
-  </div>
 </div>
 
 <router-outlet></router-outlet>

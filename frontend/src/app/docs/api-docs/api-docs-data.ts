@@ -12658,7 +12658,7 @@ export const faqData = [
     category: "advanced",
     showConditions: namecoinNetworks,
     fragment: "how-do-mempool-goggles-work",
-    title: "How do Namepool Goggles™ work?",
+    title: "How do Namepool Blocks™ work?",
   },
   {
     type: "endpoint",

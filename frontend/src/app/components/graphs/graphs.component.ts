@@ -12,7 +12,6 @@ import { handleDemoRedirect } from '@app/shared/common.utils';
 })
 export class GraphsComponent implements OnInit {
   flexWrap = false;
-  isMainnet = this.stateService.isMainnet();
 
   constructor(
     public stateService: StateService,
@@ -24,7 +23,7 @@ export class GraphsComponent implements OnInit {
   ngOnInit(): void {
     this.websocketService.want(['blocks']);
 
-    if (this.stateService.env.ACCELERATOR === true && (this.stateService.env.MINING_DASHBOARD === true || this.stateService.env.LIGHTNING === true)) {
+    if (this.stateService.env.MINING_DASHBOARD === true && this.stateService.env.LIGHTNING === true) {
       this.flexWrap = true;
     }
 

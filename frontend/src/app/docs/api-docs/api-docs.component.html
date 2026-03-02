@@ -219,7 +219,7 @@
 </ng-template>
 
 <ng-template type="how-to-get-transaction-confirmed-quickly">
-  <p>To get your transaction confirmed quicker, you will need to increase its effective feerate.</p><p>If your transaction was created with RBF enabled, your stuck transaction can simply be replaced with a new one that has a higher fee. Otherwise, if you control any of the stuck transaction's outputs, you can use CPFP to increase your stuck transaction's effective feerate.</p><p>If you are not sure how to do RBF or CPFP, work with the tool you used to make the transaction (wallet software, exchange company, etc).</p><p>Another option to get your transaction confirmed more quickly is <a [href]="[ isNamepoolSpaceBuild ? '/accelerator' : 'http://namepool.bit/accelerator']" [target]="isNamepoolSpaceBuild ? '' : 'blank'">Namepool Accelerator®</a>.</p>
+  <p>To get your transaction confirmed quicker, you will need to increase its effective feerate.</p><p>If your transaction was created with RBF enabled, your stuck transaction can simply be replaced with a new one that has a higher fee. Otherwise, if you control any of the stuck transaction's outputs, you can use CPFP to increase your stuck transaction's effective feerate.</p><p>If you are not sure how to do RBF or CPFP, work with the tool you used to make the transaction (wallet software, exchange company, etc).</p>
 </ng-template>
 
 <ng-template type="how-prevent-stuck-transaction">
@@ -263,7 +263,7 @@
 </ng-template>
 
 <ng-template type="why-empty-blocks">
-  <p>When a new block is found, mining pools often send miners new block templates prior to fully validating the new block, often before they've even received the new block. During this time, it is not possible to select transactions for the next block as a pool isn't sure which transactions conflict with transactions already mined.</p><p>While empty blocks do not add additional transactions to the blockchain, they do contribute to the overall security of transactions already in the chain.</p>
+  <p>Namecoin is inactive, that's why.</p>
 </ng-template>
 
 <ng-template type="why-block-timestamps-dont-always-increase">
@@ -315,8 +315,8 @@
 </ng-template>
 
 <ng-template type="how-do-namepool-goggles-work">
-  <p>Namepool Goggles&trade; are a set of filters that can be applied to the <a [routerLink]="['/namepool-block/0' | relativeUrl]">namepool block visualizations</a> to highlight different types of transactions.</p>
-  <p>There are currently 25 different Namepool Goggles&trade; filters, grouped into six categories:</p>
+  <p>Namepool Blocks&trade; are a set of filters that can be applied to the <a [routerLink]="['/namepool-block/0' | relativeUrl]">namepool block visualizations</a> to highlight different types of transactions.</p>
+  <p>There are currently 25 different Namepool Blocks&trade; filters, grouped into six categories:</p>
   <dl>
     <dt>Features</dt>
     <dd>

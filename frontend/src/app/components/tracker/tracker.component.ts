@@ -120,7 +120,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
 
   hasEffectiveFeeRate: boolean;
   accelerateCtaType: 'alert' | 'button' = 'button';
-  acceleratorAvailable: boolean = this.stateService.env.ACCELERATOR && this.stateService.network === '';
+  acceleratorAvailable: boolean = false;
   eligibleForAcceleration: boolean = false;
   accelerationFlowCompleted = false;
   paymentReceiptUrl: string | null = null;
@@ -153,7 +153,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.onResize();
 
-    this.acceleratorAvailable = this.stateService.env.OFFICIAL_MEMPOOL_SPACE && this.stateService.env.ACCELERATOR && this.stateService.network === '';
+    this.acceleratorAvailable = false;
 
     this.miningService.getMiningStats('1w').subscribe(stats => {
       this.miningStats = stats;
@@ -169,7 +169,7 @@ export class TrackerComponent implements OnInit, OnDestroy {
     this.stateService.networkChanged$.subscribe(
       (network) => {
         this.network = network;
-        this.acceleratorAvailable = this.stateService.env.OFFICIAL_MEMPOOL_SPACE && this.stateService.env.ACCELERATOR && this.stateService.network === '';
+        this.acceleratorAvailable = false;
       }
     );
 
