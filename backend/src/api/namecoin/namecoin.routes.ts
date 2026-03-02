@@ -29,7 +29,7 @@ const BLOCK_HASH_REGEX = /^[a-f0-9]{64}$/i;
 const ADDRESS_REGEX = /^[a-z0-9]{2,120}$/i;
 const SCRIPT_HASH_REGEX = /^([a-f0-9]{2})+$/i;
 const NAME_SCAN_COUNT_DEFAULT = 25;
-const NAME_SCAN_COUNT_MAX = 200;
+const NAME_SCAN_COUNT_MAX = 100;
 const NAME_IDENTIFIER_MAX_LENGTH = 255;
 const NAME_NAMESPACE_REGEX = /^[a-z0-9][a-z0-9-]{0,62}$/;
 const NAME_LABEL_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
@@ -139,6 +139,14 @@ function parseScanCount(rawCount: unknown): number | null {
   }
 
   return Math.min(parsed, NAME_SCAN_COUNT_MAX);
+}
+
+function isNameNotFoundError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+  const message = error.message.toLowerCase();
+  return message.includes('name not found') || message.includes('name does not exist');
 }
 
 class NamecoinRoutes {
@@ -1099,7 +1107,7 @@ class NamecoinRoutes {
 
       res.json(mappedEntry);
     } catch (e) {
-      if (e instanceof Error && (e.message.toLowerCase().includes('name not found') || e.message.toLowerCase().includes('name does not exist'))) {
+      if (isNameNotFoundError(e)) {
         handleError(req, res, 404, 'Name not found');
         return;
       }
@@ -1138,23 +1146,47 @@ class NamecoinRoutes {
     }
 
     try {
-      const [nameResults, tipHeight] = await Promise.all([
-        namecoinClient.cmd('name_scan', normalizedStart, NAME_SCAN_COUNT_MAX) as Promise<NamecoinRpcNameEntry[]>,
+      const exactNamePromise: Promise<NamecoinRpcNameEntry | null> = queryName
+        ? (namecoinClient.cmd('name_show', queryName)
+            .then((entry) => entry as NamecoinRpcNameEntry)
+            .catch((error) => {
+              if (!isNameNotFoundError(error)) {
+                logger.debug(`name_show fallback failed in getNames: ${(error instanceof Error) ? error.message : error}`);
+              }
+              return null;
+            }))
+        : Promise.resolve(null);
+
+      const scanPromise = (namecoinClient.cmd('name_scan', normalizedStart, count) as Promise<NamecoinRpcNameEntry[]>)
+        .catch((error) => {
+          logger.debug(`name_scan failed in getNames: ${(error instanceof Error) ? error.message : error}`);
+          return [] as NamecoinRpcNameEntry[];
+        });
+
+      const [nameResults, tipHeight, exactNameResult] = await Promise.all([
+        scanPromise,
         namecoinApi.$getBlockHeightTip(),
+        exactNamePromise,
       ]);
 
       const mappedEntries = (Array.isArray(nameResults) ? nameResults : [])
         .filter((entry) => typeof entry?.name === 'string' && entry.name.toLowerCase().startsWith(normalizedPrefix))
-        .slice(0, count)
         .map((entry) => mapNameEntry(entry, tipHeight))
         .filter((entry): entry is NamecoinNameEntry => entry !== null);
+
+      if (exactNameResult) {
+        const exactEntry = mapNameEntry(exactNameResult, tipHeight);
+        if (exactEntry && !mappedEntries.some((entry) => entry.name === exactEntry.name)) {
+          mappedEntries.unshift(exactEntry);
+        }
+      }
 
       res.json({
         query: queryName,
         prefix: normalizedPrefix,
         start: normalizedStart,
         count,
-        items: mappedEntries,
+        items: mappedEntries.slice(0, count),
       });
     } catch (e) {
       handleError(req, res, 500, 'Failed to list names');

@@ -105,6 +105,11 @@
           <div class="svg-wrapper"><app-svg-images name="nav-chart-area" width="21.59" height="100%"></app-svg-images></div>
         </a>
       </li>
+      <li class="nav-item" routerLinkActive="active" id="btn-names">
+        <a class="nav-link" [routerLink]="['/names' | relativeUrl]" (click)="collapse()">
+          <div class="svg-wrapper"><app-svg-images name="nav-database" width="21.59" height="100%"></app-svg-images></div>
+        </a>
+      </li>
       <li class="nav-item" routerLinkActive="active" id="btn-faucet" *ngIf="stateService.isNamepoolSpaceBuild && stateService.env.OFFICIAL_MEMPOOL_SPACE && stateService.network === 'testnet4'">
         <a class="nav-link" [routerLink]="['/faucet' | relativeUrl]" (click)="collapse()">
           <div class="svg-wrapper"><app-svg-images name="nav-faucet-drip" width="21.59" height="100%"></app-svg-images></div>
