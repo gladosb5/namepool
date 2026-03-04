@@ -48,19 +48,21 @@ jobs:
           sudo apt-get install --yes sshpass
 
           export SSHPASS="${DEPLOY_PASS}"
-          sshpass -e ssh \
+
+          # Feed DEPLOY_PASS to sudo (-S reads from stdin),
+          # while sshpass uses SSHPASS for the SSH login password.
+          printf '%s\n' "${DEPLOY_PASS}" | sshpass -e ssh \
             -o StrictHostKeyChecking=accept-new \
             -p 22 \
             gladosb5@namepool \
-            "sudo -S bash -s" <<EOF
-          ${DEPLOY_PASS}
+            "sudo -S env BACKEND_CHANGED='${BACKEND_CHANGED}' bash -s" <<'EOF'
           set -euo pipefail
-          
+
           cd /root/namepool/mempool
           git fetch origin main
           git checkout main
           git pull --ff-only origin main
-          
+
           if [ "${BACKEND_CHANGED}" = "true" ]; then
             echo "Backend changes detected. Rebuilding and restarting backend."
             cd backend
