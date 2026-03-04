@@ -318,6 +318,21 @@
   }
 }
 
+.name-ops-box {
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+
+.name-ops-title {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.name-raw {
+  margin-left: 6px;
+  color: var(--transparent-fg);
+}
+
 .duplicate-tx-alert {
   display: flex;
   align-items: center;

@@ -75,6 +75,31 @@
       (accelerateClicked)="onAccelerateClicked()"
       (toggleCpfp$)="this.showCpfpDetails = !this.showCpfpDetails"
     ></app-transaction-details>
+
+    <div class="box name-ops-box" *ngIf="tx && nameOperations.length">
+      <h3 class="name-ops-title">Name Operations</h3>
+      <table class="table table-borderless table-striped mb-0">
+        <tbody>
+          <tr *ngFor="let op of nameOperations">
+            <td class="td-width">{{ nameOperationLabel(op.type) }}</td>
+            <td>
+              <ng-container *ngIf="op.displayName || op.name; else noDomain">
+                <a
+                  [routerLink]="['/names' | relativeUrl]"
+                  [queryParams]="{ q: op.name || op.displayName }"
+                >
+                  {{ op.displayName || op.name }}
+                </a>
+                <span class="name-raw" *ngIf="op.name && op.displayName && op.name !== op.displayName">({{ op.name }})</span>
+              </ng-container>
+              <ng-template #noDomain>
+                <span class="text-muted">No domain revealed yet</span>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   }
 
   <ng-template [ngIf]="!isLoadingTx && !error">

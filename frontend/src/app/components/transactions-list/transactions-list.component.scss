@@ -235,12 +235,35 @@ td.amount.large {
 
 .tx-page-container {
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: row;
 	align-items: baseline;
 	white-space: nowrap;
 	padding: 10px;
 	margin-bottom: 10px;
 	margin-top: 10px;
+}
+
+.name-op-summary {
+  width: 100%;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .badge {
+    top: 0;
+    font-size: 11px;
+  }
+
+  a {
+    color: var(--primary);
+  }
+
+  .domain-muted {
+    color: var(--transparent-fg);
+    font-size: 12px;
+  }
 }
 
 .header-bg.box.name-domain-tx {

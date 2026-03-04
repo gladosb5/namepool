@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { CpfpInfo, OptimizedMempoolStats, AddressInformation, LiquidPegs, ITranslators, PoolStat, BlockExtended, TransactionStripped, RewardStats, AuditScore, BlockSizesAndWeights,
-  RbfTree, BlockAudit, CurrentPegs, AuditStatus, FederationAddress, FederationUtxo, RecentPeg, PegsVolume, AccelerationInfo, TestMempoolAcceptResult, WalletAddress, Treasury, SubmitPackageResult, ChainTip, StaleTip, NameRecord, NamesResponse } from '@interfaces/node-api.interface';
+  RbfTree, BlockAudit, CurrentPegs, AuditStatus, FederationAddress, FederationUtxo, RecentPeg, PegsVolume, AccelerationInfo, TestMempoolAcceptResult, WalletAddress, Treasury, SubmitPackageResult, ChainTip, StaleTip, NameRecord, NamesResponse, NameAliveStatus } from '@interfaces/node-api.interface';
 import { BehaviorSubject, Observable, catchError, filter, map, of, shareReplay, take, tap } from 'rxjs';
 import { StateService } from '@app/services/state.service';
 import { Transaction } from '@interfaces/electrs.interface';
@@ -159,6 +159,11 @@ export class ApiService {
   getName$(name: string): Observable<NameRecord> {
     const params = new HttpParams().set('name', name);
     return this.httpClient.get<NameRecord>(this.apiBaseUrl + this.apiBasePath + '/api/v1/name', { params });
+  }
+
+  getNameAlive$(name: string): Observable<NameAliveStatus> {
+    const params = new HttpParams().set('name', name);
+    return this.httpClient.get<NameAliveStatus>(this.apiBaseUrl + this.apiBasePath + '/api/v1/name/alive', { params });
   }
 
   listNames$(options: { query?: string; prefix?: string; start?: string; count?: number } = {}): Observable<NamesResponse> {

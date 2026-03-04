@@ -38,11 +38,23 @@ import { ZONE_SERVICE } from '@app/injection-tokens';
 import { MiningService, MiningStats } from '@app/services/mining.service';
 import { ETA, EtaService } from '@app/services/eta.service';
 
+const NAME_IDENTIFIER_MAX_LENGTH = 255;
+const NAME_NAMESPACE_REGEX = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const NAME_LABEL_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
+const HEX_TOKEN_REGEX = /^[a-f0-9]+$/i;
+
 export interface Pool {
   id: number;
   name: string;
   slug: string;
   minerNames: string[] | null;
+}
+
+interface NameOperationDetails {
+  type: 'register' | 'renew' | 'preregister';
+  name?: string | null;
+  displayName?: string | null;
+  vout?: number;
 }
 
 export interface TxAuditStatus {
@@ -166,6 +178,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   auditEnabled: boolean = this.stateService.env.AUDIT && this.stateService.env.BASE_MODULE === 'mempool' && this.stateService.env.MINING_DASHBOARD === true;
   isMempoolSpaceBuild = this.stateService.isMempoolSpaceBuild;
   isNamepoolSpaceBuild = this.stateService.isNamepoolSpaceBuild;
+  nameOperations: NameOperationDetails[] = [];
 
   graphContainer: ElementRef;
   @ViewChild('graphContainer')
@@ -332,6 +345,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       if (!this.tx) {
         this.tx = tx;
         this.setFeatures();
+        this.nameOperations = this.extractNameOperations(tx);
         this.isCached = true;
         if (tx.fee === undefined) {
           this.tx.fee = 0;
@@ -659,6 +673,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.tx = tx;
           this.setFeatures();
+          this.nameOperations = this.extractNameOperations(tx);
           this.isCached = false;
           if (tx.fee === undefined) {
             this.tx.fee = 0;
@@ -1047,6 +1062,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     this.rbfInfo = null;
     this.rbfReplaces = [];
     this.filters = [];
+    this.nameOperations = [];
     this.showCpfpDetails = false;
     this.showAccelerationDetails = false;
     this.accelerationFlowCompleted = false;
@@ -1087,6 +1103,143 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setFlowEnabled() {
     this.flowEnabled = (this.overrideFlowPreference != null ? this.overrideFlowPreference : !this.hideFlow);
+  }
+
+  private extractNameOperations(tx: Transaction): NameOperationDetails[] {
+    if (!tx?.vout?.length) {
+      return [];
+    }
+
+    const operations = new Map<string, NameOperationDetails>();
+    tx.vout.forEach((vout, index) => {
+      const parsed = this.detectNameOperationFromAsm(vout?.scriptpubkey_asm || '', index);
+      if (!parsed) {
+        return;
+      }
+      const key = `${parsed.type}:${parsed.name || parsed.vout || index}`;
+      if (!operations.has(key)) {
+        operations.set(key, parsed);
+      }
+    });
+
+    return Array.from(operations.values());
+  }
+
+  private detectNameOperationFromAsm(scriptAsm: string, vout: number): NameOperationDetails | null {
+    const asm = (scriptAsm || '').trim();
+    if (!asm.length) {
+      return null;
+    }
+
+    const tokens = asm.split(/\s+/);
+    const operationCode = tokens[0];
+    const isRegister = (operationCode === 'OP_PUSHNUM_2' || operationCode === 'OP_2') && asm.includes('OP_2DROP OP_2DROP');
+    const isRenew = (operationCode === 'OP_PUSHNUM_3' || operationCode === 'OP_3') && asm.includes('OP_2DROP OP_DROP');
+    const isPreregister = (operationCode === 'OP_PUSHNUM_1' || operationCode === 'OP_1') && asm.includes('OP_2DROP');
+
+    if (!isRegister && !isRenew && !isPreregister) {
+      return null;
+    }
+
+    const result: NameOperationDetails = {
+      type: isRegister ? 'register' : (isRenew ? 'renew' : 'preregister'),
+      vout,
+    };
+
+    if (isRegister || isRenew) {
+      const nameHex = this.extractFirstPushData(tokens);
+      const normalizedName = this.normalizeNameFromHex(nameHex);
+      if (normalizedName) {
+        result.name = normalizedName;
+        result.displayName = normalizedName.startsWith('d/') ? `${normalizedName.slice(2)}.bit` : normalizedName;
+      }
+    }
+
+    return result;
+  }
+
+  private extractFirstPushData(tokens: string[]): string | null {
+    for (let i = 1; i < tokens.length - 1; i++) {
+      const token = tokens[i];
+      if (!token) {
+        continue;
+      }
+
+      if (/^OP_PUSHBYTES_[0-9]+$/.test(token) || /^OP_PUSHDATA[124]$/.test(token)) {
+        const value = tokens[i + 1];
+        if (value && HEX_TOKEN_REGEX.test(value)) {
+          return value;
+        }
+      }
+    }
+    return null;
+  }
+
+  private normalizeNameFromHex(nameHex: string | null): string | null {
+    if (!nameHex || !HEX_TOKEN_REGEX.test(nameHex) || (nameHex.length % 2 !== 0)) {
+      return null;
+    }
+
+    try {
+      const decoded = this.hex2ascii(nameHex).replace(/\0/g, '');
+      return this.normalizeNameIdentifier(decoded);
+    } catch {
+      return null;
+    }
+  }
+
+  private hex2ascii(hex: string): string {
+    let result = '';
+    for (let i = 0; i < hex.length; i += 2) {
+      result += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    }
+    return result;
+  }
+
+  private normalizeNameIdentifier(rawName: string): string | null {
+    const decodedName = (rawName || '').trim().toLowerCase();
+    if (!decodedName || decodedName.length > NAME_IDENTIFIER_MAX_LENGTH) {
+      return null;
+    }
+
+    if (decodedName.endsWith('.bit')) {
+      const label = decodedName.slice(0, -4);
+      if (!NAME_LABEL_REGEX.test(label)) {
+        return null;
+      }
+      return `d/${label}`;
+    }
+
+    if (decodedName.includes('/')) {
+      const parts = decodedName.split('/');
+      if (parts.length !== 2) {
+        return null;
+      }
+      const [namespace, key] = parts;
+      if (!NAME_NAMESPACE_REGEX.test(namespace)) {
+        return null;
+      }
+      if (key.length > 0 && !NAME_LABEL_REGEX.test(key)) {
+        return null;
+      }
+      return `${namespace}/${key}`;
+    }
+
+    if (!NAME_LABEL_REGEX.test(decodedName)) {
+      return null;
+    }
+
+    return `d/${decodedName}`;
+  }
+
+  nameOperationLabel(type: NameOperationDetails['type']): string {
+    if (type === 'register') {
+      return 'Registration (name_firstupdate)';
+    }
+    if (type === 'renew') {
+      return 'Renewal / update (name_update)';
+    }
+    return 'Pre-registration (name_new)';
   }
 
   expandGraph() {

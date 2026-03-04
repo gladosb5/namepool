@@ -19,6 +19,17 @@ import { processInputSignatures, Sighash, SigInfo, SighashLabels, parseTaproot }
 import { ActivatedRoute } from '@angular/router';
 import { SighashFlag } from '@app/shared/transaction.utils';
 
+const NAME_IDENTIFIER_MAX_LENGTH = 255;
+const NAME_NAMESPACE_REGEX = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const NAME_LABEL_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
+const HEX_TOKEN_REGEX = /^[a-f0-9]+$/i;
+
+type NameOperationDetails = {
+  type: 'register' | 'renew' | 'preregister';
+  name?: string | null;
+  displayName?: string | null;
+};
+
 @Component({
   selector: 'app-transactions-list',
   templateUrl: './transactions-list.component.html',
@@ -252,6 +263,8 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
         tx['_interestingSignatures'] = false;
         tx['_nameOpType'] = null;
         tx['_nameOpTooltip'] = null;
+        tx['_nameOpDisplayName'] = null;
+        tx['_nameOpAction'] = null;
 
         if (this.addresses?.length) {
           const addressIn = tx.vout.map(v => {
@@ -309,9 +322,11 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
 
         // Check for ord data fingerprints in inputs and outputs
         if (this.stateService.network !== 'liquid' && this.stateService.network !== 'liquidtestnet') {
-          const nameOpType = this.detectNameOperation(tx);
-          tx['_nameOpType'] = nameOpType;
-          tx['_nameOpTooltip'] = this.getNameOperationTooltip(nameOpType);
+          const nameOp = this.detectNameOperation(tx);
+          tx['_nameOpType'] = nameOp?.type || null;
+          tx['_nameOpTooltip'] = this.getNameOperationTooltip(nameOp);
+          tx['_nameOpDisplayName'] = nameOp?.displayName || nameOp?.name || null;
+          tx['_nameOpAction'] = this.getNameOperationActionLabel(nameOp?.type || null);
 
           for (let i = 0; i < tx.vout.length; i++) {
             if (tx.vout[i]?.scriptpubkey?.startsWith('6a5d')) {
@@ -704,53 +719,157 @@ export class TransactionsListComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private detectNameOperation(tx: Transaction): 'register' | 'renew' | 'preregister' | null {
-    let detected: 'register' | 'renew' | 'preregister' | null = null;
+  private detectNameOperation(tx: Transaction): NameOperationDetails | null {
+    let detected: NameOperationDetails | null = null;
 
     for (const vout of tx.vout || []) {
       const scriptAsm = vout?.scriptpubkey_asm || '';
       const operation = this.detectNameOperationFromAsm(scriptAsm);
-      if (operation === 'register') {
+      if (operation?.type === 'register') {
         return operation;
       }
-      if (operation === 'renew') {
-        detected = 'renew';
-      } else if (operation === 'preregister' && !detected) {
-        detected = 'preregister';
+      if (operation?.type === 'renew') {
+        detected = operation;
+      } else if (operation && !detected) {
+        detected = operation;
       }
     }
 
     return detected;
   }
 
-  private detectNameOperationFromAsm(scriptAsm: string): 'register' | 'renew' | 'preregister' | null {
+  private detectNameOperationFromAsm(scriptAsm: string): NameOperationDetails | null {
     const asm = (scriptAsm || '').trim();
     if (!asm.length) {
       return null;
     }
 
-    if (/^OP_PUSHNUM_2\b[\s\S]*\bOP_2DROP\b\s+\bOP_2DROP\b/.test(asm)) {
-      return 'register';
-    }
-    if (/^OP_PUSHNUM_3\b[\s\S]*\bOP_2DROP\b\s+\bOP_DROP\b/.test(asm)) {
-      return 'renew';
-    }
-    if (/^OP_PUSHNUM_1\b[\s\S]*\bOP_2DROP\b/.test(asm)) {
-      return 'preregister';
+    const tokens = asm.split(/\s+/);
+    const operationCode = tokens[0];
+    const isRegister = (operationCode === 'OP_PUSHNUM_2' || operationCode === 'OP_2') && asm.includes('OP_2DROP OP_2DROP');
+    const isRenew = (operationCode === 'OP_PUSHNUM_3' || operationCode === 'OP_3') && asm.includes('OP_2DROP OP_DROP');
+    const isPreregister = (operationCode === 'OP_PUSHNUM_1' || operationCode === 'OP_1') && asm.includes('OP_2DROP');
+
+    if (!isRegister && !isRenew && !isPreregister) {
+      return null;
     }
 
+    const result: NameOperationDetails = {
+      type: isRegister ? 'register' : (isRenew ? 'renew' : 'preregister'),
+    };
+
+    if (isRegister || isRenew) {
+      const nameHex = this.extractFirstPushData(tokens);
+      const normalizedName = this.normalizeNameFromHex(nameHex);
+      if (normalizedName) {
+        result.name = normalizedName;
+        result.displayName = normalizedName.startsWith('d/') ? `${normalizedName.slice(2)}.bit` : normalizedName;
+      }
+    }
+
+    return result;
+  }
+
+  private extractFirstPushData(tokens: string[]): string | null {
+    for (let i = 1; i < tokens.length - 1; i++) {
+      const token = tokens[i];
+      if (!token) {
+        continue;
+      }
+
+      if (/^OP_PUSHBYTES_[0-9]+$/.test(token) || /^OP_PUSHDATA[124]$/.test(token)) {
+        const value = tokens[i + 1];
+        if (value && HEX_TOKEN_REGEX.test(value)) {
+          return value;
+        }
+      }
+    }
     return null;
   }
 
-  private getNameOperationTooltip(operation: 'register' | 'renew' | 'preregister' | null): string | null {
+  private hex2ascii(hex: string): string {
+    let result = '';
+    for (let i = 0; i < hex.length; i += 2) {
+      result += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    }
+    return result;
+  }
+
+  private normalizeNameFromHex(nameHex: string | null): string | null {
+    if (!nameHex || !HEX_TOKEN_REGEX.test(nameHex) || (nameHex.length % 2 !== 0)) {
+      return null;
+    }
+
+    try {
+      const decoded = this.hex2ascii(nameHex).replace(/\0/g, '');
+      return this.normalizeNameIdentifier(decoded);
+    } catch {
+      return null;
+    }
+  }
+
+  private normalizeNameIdentifier(rawName: string): string | null {
+    const decodedName = (rawName || '').trim().toLowerCase();
+    if (!decodedName || decodedName.length > NAME_IDENTIFIER_MAX_LENGTH) {
+      return null;
+    }
+
+    if (decodedName.endsWith('.bit')) {
+      const label = decodedName.slice(0, -4);
+      if (!NAME_LABEL_REGEX.test(label)) {
+        return null;
+      }
+      return `d/${label}`;
+    }
+
+    if (decodedName.includes('/')) {
+      const parts = decodedName.split('/');
+      if (parts.length !== 2) {
+        return null;
+      }
+      const [namespace, key] = parts;
+      if (!NAME_NAMESPACE_REGEX.test(namespace)) {
+        return null;
+      }
+      if (key.length > 0 && !NAME_LABEL_REGEX.test(key)) {
+        return null;
+      }
+      return `${namespace}/${key}`;
+    }
+
+    if (!NAME_LABEL_REGEX.test(decodedName)) {
+      return null;
+    }
+
+    return `d/${decodedName}`;
+  }
+
+  private getNameOperationTooltip(operation: NameOperationDetails | null): string | null {
+    if (operation?.type === 'register') {
+      return operation.displayName
+        ? `Pays for a Namecoin domain registration (${operation.displayName}, name_firstupdate).`
+        : 'Pays for a Namecoin domain registration (name_firstupdate).';
+    }
+    if (operation?.type === 'renew') {
+      return operation.displayName
+        ? `Pays for a Namecoin domain renewal or update (${operation.displayName}, name_update).`
+        : 'Pays for a Namecoin domain renewal or update (name_update).';
+    }
+    if (operation?.type === 'preregister') {
+      return 'Pays for a Namecoin domain pre-registration (name_new).';
+    }
+    return null;
+  }
+
+  private getNameOperationActionLabel(operation: NameOperationDetails['type'] | null): string | null {
     if (operation === 'register') {
-      return 'Pays for a Namecoin domain registration (name_firstupdate).';
+      return 'Registration';
     }
     if (operation === 'renew') {
-      return 'Pays for a Namecoin domain renewal or update (name_update).';
+      return 'Renewal / update';
     }
     if (operation === 'preregister') {
-      return 'Pays for a Namecoin domain pre-registration (name_new).';
+      return 'Pre-registration';
     }
     return null;
   }

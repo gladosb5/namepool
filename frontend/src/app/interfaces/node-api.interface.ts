@@ -88,11 +88,22 @@ export interface NameRecord {
   expired: boolean;
 }
 
+export interface NameAliveStatus {
+  name: string;
+  displayName: string;
+  url: string | null;
+  alive: boolean;
+  checkedAt: number;
+  statusCode: number | null;
+  error: string | null;
+}
+
 export interface NamesResponse {
   query: string | null;
   prefix: string;
   start: string;
   count: number;
+  totalDomainNames?: number;
   items: NameRecord[];
 }
 
@@ -262,6 +273,16 @@ export interface BlockAudit extends BlockExtended {
   transactions: TransactionStripped[],
 }
 
+export interface NameOperationMetadata {
+  type: 'register' | 'renew' | 'preregister';
+  name?: string | null;
+  displayName?: string | null;
+  address?: string | null;
+  registeredHeight?: number | null;
+  expiresAt?: number | null;
+  blockHeight?: number | null;
+}
+
 export interface TransactionStripped {
   txid: string;
   fee: number;
@@ -271,6 +292,7 @@ export interface TransactionStripped {
   acc?: boolean;
   flags?: number | null;
   time?: number;
+  nameOp?: NameOperationMetadata;
   status?: 'found' | 'missing' | 'sigop' | 'fresh' | 'freshcpfp' | 'added' | 'added_prioritized' | 'prioritized' | 'added_deprioritized' | 'deprioritized' | 'censored' | 'selected' | 'rbf' | 'accelerated' | 'matched' | 'unmatched';
   context?: 'projected' | 'actual' | 'stale' | 'canonical';
 }

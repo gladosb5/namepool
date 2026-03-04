@@ -944,6 +944,13 @@ export class BlockComponent implements OnInit, OnDestroy {
     }
   }
 
+  isFutureBlockRequest(): boolean {
+    if (!this.blockHash || !/^[0-9]+$/.test(this.blockHash) || this.latestBlock?.height == null) {
+      return false;
+    }
+    return parseInt(this.blockHash, 10) > this.latestBlock.height;
+  }
+
   setAuditAvailable(available: boolean): void {
     this.auditAvailable = available;
     this.showAudit = this.auditAvailable && this.auditModeEnabled && this.auditSupported;

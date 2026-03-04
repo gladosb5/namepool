@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '@app/services/api.service';
 import { OpenGraphService } from '@app/services/opengraph.service';
 import { SeoService } from '@app/services/seo.service';
-import { NameRecord } from '@interfaces/node-api.interface';
+import { NameAliveStatus, NameRecord, NamesResponse } from '@interfaces/node-api.interface';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subject, of } from 'rxjs';
-import { catchError, distinctUntilChanged, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Subject, from, of } from 'rxjs';
+import { catchError, distinctUntilChanged, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pipe';
 
 @Component({
@@ -18,12 +18,17 @@ import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pip
 })
 export class NamesComponent implements OnInit, OnDestroy {
   readonly maxRows = 100;
+  readonly aliveProbeTimeoutMs = 4000;
+  readonly domainLabelRegex = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
 
   names: NameRecord[] = [];
+  totalDomainNames: number | null = null;
+  nameAliveStatus: { [name: string]: NameAliveStatus | undefined } = {};
   query = '';
   currentQuery = '';
   isLoading = true;
   error: string | null = null;
+  aliveCheckRequestId = 0;
 
   private destroy$ = new Subject<void>();
 
@@ -51,6 +56,8 @@ export class NamesComponent implements OnInit, OnDestroy {
           this.query = query;
           this.isLoading = true;
           this.error = null;
+          this.totalDomainNames = null;
+          this.nameAliveStatus = {};
           this.cd.markForCheck();
         }),
         switchMap((query) => this.apiService.listNames$({
@@ -58,21 +65,30 @@ export class NamesComponent implements OnInit, OnDestroy {
           prefix: query ? undefined : 'd/',
           count: this.maxRows,
         }).pipe(
-          map((response) => response.items || []),
+          map((response) => response),
           catchError((httpError: HttpErrorResponse) => {
             const details = this.extractErrorDetails(httpError);
             const statusText = httpError?.status ? `HTTP ${httpError.status}` : 'HTTP error';
             this.error = query
               ? `Failed to load names for this search (${statusText}). ${details}`
               : `Failed to load names list (${statusText}). ${details}`;
-            return of([] as NameRecord[]);
+            return of({
+              query: query || null,
+              prefix: 'd/',
+              start: 'd/',
+              count: this.maxRows,
+              totalDomainNames: null,
+              items: [],
+            } as NamesResponse);
           })
         )),
         takeUntil(this.destroy$),
       )
-      .subscribe((items) => {
-        this.names = items;
+      .subscribe((response) => {
+        this.totalDomainNames = response?.totalDomainNames ?? null;
+        this.names = response?.items || [];
         this.isLoading = false;
+        this.loadNameAliveStatuses(this.names);
         this.cd.markForCheck();
       });
   }
@@ -86,6 +102,193 @@ export class NamesComponent implements OnInit, OnDestroy {
 
   clearSearch(): void {
     this.submitSearch('');
+  }
+
+  private loadNameAliveStatuses(items: NameRecord[]): void {
+    const requestId = ++this.aliveCheckRequestId;
+    const supportedNames = (items || []).filter((item) => item?.name?.startsWith('d/'));
+
+    this.nameAliveStatus = {};
+    for (const item of supportedNames) {
+      this.nameAliveStatus[item.name] = undefined;
+    }
+    this.cd.markForCheck();
+
+    from(supportedNames)
+      .pipe(
+        mergeMap((item) =>
+          from(this.checkNameAliveClient(item)).pipe(
+            tap((status) => {
+              if (requestId !== this.aliveCheckRequestId) {
+                return;
+              }
+              this.nameAliveStatus[item.name] = status;
+              this.cd.markForCheck();
+            }),
+            catchError((error) => of({
+              name: item.name,
+              displayName: item.displayName || item.name,
+              url: null,
+              alive: false,
+              checkedAt: Math.floor(Date.now() / 1000),
+              statusCode: null,
+              error: this.formatProbeError(error),
+            } as NameAliveStatus)),
+          ),
+          4,
+        ),
+        takeUntil(this.destroy$),
+      )
+      .subscribe();
+  }
+
+  private async checkNameAliveClient(item: NameRecord): Promise<NameAliveStatus> {
+    const checkedAt = Math.floor(Date.now() / 1000);
+    const displayDomain = this.getDisplayDomain(item);
+
+    if (!displayDomain) {
+      return {
+        name: item.name,
+        displayName: item.displayName || item.name,
+        url: null,
+        alive: false,
+        checkedAt,
+        statusCode: null,
+        error: 'Invalid Namecoin domain format.',
+      };
+    }
+
+    const protocolCandidates = this.getProtocolCandidates();
+    let lastError = 'No response from domain.';
+    let lastUrl: string | null = null;
+
+    for (const protocol of protocolCandidates) {
+      const url = `${protocol}://${displayDomain}`;
+      lastUrl = url;
+      const result = await this.probeUrl(url);
+      if (result.alive) {
+        return {
+          name: item.name,
+          displayName: displayDomain,
+          url,
+          alive: true,
+          checkedAt,
+          statusCode: null,
+          error: null,
+        };
+      }
+      if (result.error) {
+        lastError = result.error;
+      }
+    }
+
+    return {
+      name: item.name,
+      displayName: displayDomain,
+      url: lastUrl,
+      alive: false,
+      checkedAt,
+      statusCode: null,
+      error: lastError,
+    };
+  }
+
+  private async probeUrl(url: string): Promise<{ alive: boolean; error?: string }> {
+    if (typeof fetch !== 'function') {
+      return {
+        alive: false,
+        error: 'Browser does not support client-side domain probing.',
+      };
+    }
+
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timer = setTimeout(() => controller?.abort(), this.aliveProbeTimeoutMs);
+
+    try {
+      await fetch(url, {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'no-store',
+        redirect: 'follow',
+        credentials: 'omit',
+        signal: controller?.signal,
+      });
+      return { alive: true };
+    } catch (error) {
+      return {
+        alive: false,
+        error: this.formatProbeError(error),
+      };
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  private getDisplayDomain(item: NameRecord): string | null {
+    const display = (item.displayName || '').trim().toLowerCase();
+    if (display.endsWith('.bit')) {
+      const label = display.slice(0, -4);
+      if (this.domainLabelRegex.test(label)) {
+        return `${label}.bit`;
+      }
+    }
+
+    if (!item?.name?.startsWith('d/')) {
+      return null;
+    }
+
+    const label = item.name.slice(2).trim().toLowerCase();
+    if (!this.domainLabelRegex.test(label)) {
+      return null;
+    }
+    return `${label}.bit`;
+  }
+
+  private getProtocolCandidates(): string[] {
+    return ['http'];
+  }
+
+  private formatProbeError(error: unknown): string {
+    if (error && typeof error === 'object' && 'name' in error && (error as { name?: string }).name === 'AbortError') {
+      return `Timed out after ${this.aliveProbeTimeoutMs}ms.`;
+    }
+
+    if (error instanceof Error) {
+      if (error.message?.includes('Failed to fetch')) {
+        return 'Network/DNS/TLS failure, blocked mixed content, or CORS-restricted response.';
+      }
+      return error.message;
+    }
+
+    try {
+      return JSON.stringify(error);
+    } catch {
+      return 'Unknown client probe error.';
+    }
+  }
+
+  getNameAliveState(name: NameRecord): 'checking' | 'alive' | 'offline' | 'na' {
+    if (!name?.name?.startsWith('d/')) {
+      return 'na';
+    }
+
+    const status = this.nameAliveStatus[name.name];
+    if (status === undefined) {
+      return 'checking';
+    }
+    return status?.alive ? 'alive' : 'offline';
+  }
+
+  getNameAliveTooltip(name: NameRecord): string {
+    const status = this.nameAliveStatus[name.name];
+    if (!status) {
+      return '';
+    }
+    if (status.alive && status.url) {
+      const code = status.statusCode ? ` (HTTP ${status.statusCode})` : '';
+      return `Alive via ${status.url}${code}`;
+    }
+    return status.error || 'No response';
   }
 
   private extractErrorDetails(error: HttpErrorResponse): string {

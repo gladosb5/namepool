@@ -3,6 +3,7 @@
     <div>
       <h1 class="mb-1" i18n="names.heading">Namecoin Domain Names</h1>
       <p class="text-muted mb-0" i18n="names.subheading">Registration and expiration data for Namecoin names</p>
+      <p class="text-muted mb-0" *ngIf="totalDomainNames !== null">Total domains: {{ totalDomainNames | number }}</p>
     </div>
     <form class="form-inline" (submit)="$event.preventDefault(); submitSearch(searchInput.value)">
       <input #searchInput class="form-control mr-2" type="text" [value]="query" placeholder="Search name (example.bit or d/example)" i18n-placeholder="names.search-placeholder" maxlength="255">
@@ -25,6 +26,7 @@
           <th i18n="names.table.registered">Registered Height</th>
           <th i18n="names.table.expires">Expires Height</th>
           <th i18n="names.table.address">Address</th>
+          <th i18n="names.table.alive">Alive</th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +46,12 @@
           <td>
             <a *ngIf="name.address" [routerLink]="['/address' | relativeUrl, name.address]">{{ name.address }}</a>
             <span *ngIf="!name.address">-</span>
+          </td>
+          <td>
+            <span *ngIf="getNameAliveState(name) === 'checking'" class="badge badge-secondary">Checking...</span>
+            <span *ngIf="getNameAliveState(name) === 'alive'" class="badge badge-success" [attr.title]="getNameAliveTooltip(name)">Alive</span>
+            <span *ngIf="getNameAliveState(name) === 'offline'" class="badge badge-danger" [attr.title]="getNameAliveTooltip(name)">Offline</span>
+            <span *ngIf="getNameAliveState(name) === 'na'" class="text-muted">N/A</span>
           </td>
         </tr>
       </tbody>

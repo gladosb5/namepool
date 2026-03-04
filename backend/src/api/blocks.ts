@@ -2,7 +2,7 @@ import config from '../config';
 import namecoinApi, { namecoinCoreApi } from './namecoin/namecoin-api-factory';
 import logger from '../logger';
 import memPool from './mempool';
-import { BlockExtended, BlockExtension, BlockSummary, PoolTag, TransactionExtended, TransactionMinerInfo, CpfpSummary, MempoolTransactionExtended, TransactionClassified, BlockAudit, TransactionAudit } from '../mempool.interfaces';
+import { BlockExtended, BlockExtension, BlockSummary, PoolTag, TransactionExtended, TransactionMinerInfo, CpfpSummary, MempoolTransactionExtended, TransactionClassified, BlockAudit, TransactionAudit, NameOperationMetadata } from '../mempool.interfaces';
 import { Common } from './common';
 import diskCache from './disk-cache';
 import transactionUtils from './transaction-utils';
@@ -35,6 +35,12 @@ import mempool from './mempool';
 import CpfpRepository from '../repositories/CpfpRepository';
 import { parseDATUMTemplateCreator } from '../utils/namecoin-script';
 import database from '../database';
+
+const NAME_OPERATION_SUMMARY_VERSION = 3;
+const NAME_IDENTIFIER_MAX_LENGTH = 255;
+const NAME_NAMESPACE_REGEX = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const NAME_LABEL_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
+const HEX_TOKEN_REGEX = /^[a-f0-9]+$/i;
 
 class Blocks {
   private blocks: BlockExtended[] = [];
@@ -229,6 +235,200 @@ class Blocks {
       id: hash,
       transactions: Common.classifyTransactions(transactions, height),
     };
+  }
+
+  private async enrichTransactionsWithNameOperations(
+    transactions: TransactionClassified[],
+    sourceTransactions: TransactionExtended[],
+    blockHeight: number,
+  ): Promise<TransactionClassified[]> {
+    if (!transactions?.length || !sourceTransactions?.length) {
+      return transactions;
+    }
+
+    const nameOpsByTxid = new Map<string, NameOperationMetadata>();
+    const namesToLookup = new Set<string>();
+
+    for (const tx of sourceTransactions) {
+      const nameOp = this.detectNameOperation(tx, blockHeight);
+      if (!nameOp) {
+        continue;
+      }
+      nameOpsByTxid.set(tx.txid, nameOp);
+      if (nameOp.name && (nameOp.type === 'register' || nameOp.type === 'renew')) {
+        namesToLookup.add(nameOp.name);
+      }
+    }
+
+    if (!nameOpsByTxid.size) {
+      return transactions;
+    }
+
+    const nameDetails = new Map<string, {
+      address: string | null;
+      registeredHeight: number | null;
+      expiresAt: number | null;
+    }>();
+
+    if (namesToLookup.size > 0) {
+      let tipHeight: number | null = null;
+      try {
+        tipHeight = await namecoinApi.$getBlockHeightTip();
+      } catch (e) {
+        logger.debug(`Failed to fetch Namecoin tip height for name metadata: ${e instanceof Error ? e.message : e}`);
+      }
+
+      for (const name of namesToLookup) {
+        try {
+          const entry = await Promise.resolve(namecoinClient.cmd('name_show', name) as Promise<any>);
+          const expiresIn = typeof entry?.expires_in === 'number' ? entry.expires_in : null;
+          nameDetails.set(name, {
+            address: typeof entry?.address === 'string' ? entry.address : null,
+            registeredHeight: typeof entry?.height === 'number' ? entry.height : null,
+            expiresAt: expiresIn !== null && tipHeight !== null ? tipHeight + expiresIn : null,
+          });
+        } catch (e) {
+          logger.debug(`Failed to fetch name_show for ${name}: ${e instanceof Error ? e.message : e}`);
+        }
+      }
+    }
+
+    return transactions.map((tx) => {
+      const nameOp = nameOpsByTxid.get(tx.txid);
+      if (!nameOp) {
+        return tx;
+      }
+
+      const details = nameOp.name ? nameDetails.get(nameOp.name) : null;
+      return {
+        ...tx,
+        nameOp: {
+          ...nameOp,
+          blockHeight: nameOp.blockHeight ?? blockHeight ?? null,
+          address: details?.address ?? nameOp.address ?? null,
+          registeredHeight: details?.registeredHeight ?? nameOp.registeredHeight ?? null,
+          expiresAt: details?.expiresAt ?? nameOp.expiresAt ?? null,
+        },
+      };
+    });
+  }
+
+  private detectNameOperation(tx: TransactionExtended, blockHeight: number): NameOperationMetadata | null {
+    let detected: NameOperationMetadata | null = null;
+    for (const vout of tx.vout || []) {
+      const operation = this.detectNameOperationFromAsm(vout?.scriptpubkey_asm || '', blockHeight);
+      if (!operation) {
+        continue;
+      }
+      if (operation.type === 'register') {
+        return operation;
+      }
+      if (operation.type === 'renew') {
+        detected = operation;
+      } else if (!detected) {
+        detected = operation;
+      }
+    }
+    return detected;
+  }
+
+  private detectNameOperationFromAsm(scriptAsm: string, blockHeight: number): NameOperationMetadata | null {
+    const asm = (scriptAsm || '').trim();
+    if (!asm) {
+      return null;
+    }
+
+    const tokens = asm.split(/\s+/);
+    const operationCode = tokens[0];
+    const isRegister = (operationCode === 'OP_PUSHNUM_2' || operationCode === 'OP_2') && asm.includes('OP_2DROP OP_2DROP');
+    const isRenew = (operationCode === 'OP_PUSHNUM_3' || operationCode === 'OP_3') && asm.includes('OP_2DROP OP_DROP');
+    const isPreregister = (operationCode === 'OP_PUSHNUM_1' || operationCode === 'OP_1') && asm.includes('OP_2DROP');
+
+    if (!isRegister && !isRenew && !isPreregister) {
+      return null;
+    }
+
+    const metadata: NameOperationMetadata = {
+      type: isRegister ? 'register' : (isRenew ? 'renew' : 'preregister'),
+      blockHeight,
+    };
+
+    if (isRegister || isRenew) {
+      const nameHex = this.extractFirstPushData(tokens);
+      const normalizedName = this.normalizeNameFromHex(nameHex);
+      if (normalizedName) {
+        metadata.name = normalizedName;
+        metadata.displayName = normalizedName.startsWith('d/') ? `${normalizedName.slice(2)}.bit` : normalizedName;
+      }
+    }
+
+    return metadata;
+  }
+
+  private extractFirstPushData(tokens: string[]): string | null {
+    for (let i = 1; i < tokens.length - 1; i++) {
+      const token = tokens[i];
+      if (!token) {
+        continue;
+      }
+
+      if (/^OP_PUSHBYTES_[0-9]+$/.test(token) || /^OP_PUSHDATA[124]$/.test(token)) {
+        const value = tokens[i + 1];
+        if (value && HEX_TOKEN_REGEX.test(value)) {
+          return value;
+        }
+      }
+    }
+    return null;
+  }
+
+  private normalizeNameFromHex(nameHex: string | null): string | null {
+    if (!nameHex || !HEX_TOKEN_REGEX.test(nameHex) || (nameHex.length % 2 !== 0)) {
+      return null;
+    }
+
+    try {
+      const decoded = Buffer.from(nameHex, 'hex').toString('utf8').replace(/\0/g, '');
+      return this.normalizeNameIdentifier(decoded);
+    } catch {
+      return null;
+    }
+  }
+
+  private normalizeNameIdentifier(rawName: string): string | null {
+    const decodedName = rawName.trim().toLowerCase();
+    if (!decodedName || decodedName.length > NAME_IDENTIFIER_MAX_LENGTH) {
+      return null;
+    }
+
+    if (decodedName.endsWith('.bit')) {
+      const label = decodedName.slice(0, -4);
+      if (!NAME_LABEL_REGEX.test(label)) {
+        return null;
+      }
+      return `d/${label}`;
+    }
+
+    if (decodedName.includes('/')) {
+      const parts = decodedName.split('/');
+      if (parts.length !== 2) {
+        return null;
+      }
+      const [namespace, key] = parts;
+      if (!NAME_NAMESPACE_REGEX.test(namespace)) {
+        return null;
+      }
+      if (key.length > 0 && !NAME_LABEL_REGEX.test(key)) {
+        return null;
+      }
+      return `${namespace}/${key}`;
+    }
+
+    if (!NAME_LABEL_REGEX.test(decodedName)) {
+      return null;
+    }
+
+    return `d/${decodedName}`;
   }
 
   private convertLiquidFees(block: INamecoinApi.VerboseBlock): INamecoinApi.VerboseBlock {
@@ -1000,6 +1200,8 @@ class Blocks {
       const cpfpSummary: CpfpSummary = calculateGoodBlockCpfp(block.height, transactions, accelerations.map(a => ({ txid: a.txid, max_bid: a.feeDelta })));
       const blockExtended: BlockExtended = await this.$getBlockExtended(block, cpfpSummary.transactions);
       const blockSummary: BlockSummary = this.summarizeBlockTransactions(block.id, block.height, cpfpSummary.transactions);
+      blockSummary.transactions = await this.enrichTransactionsWithNameOperations(blockSummary.transactions, cpfpSummary.transactions, block.height);
+      blockSummary.version = NAME_OPERATION_SUMMARY_VERSION;
       this.updateTimerProgress(timer, `got block data for ${this.currentBlockHeight}`);
 
       if (Common.indexingEnabled()) {
@@ -1296,7 +1498,7 @@ class Blocks {
     if (skipMemoryCache === false) {
       // Check the memory cache
       const cachedSummary = this.getBlockSummaries().find((b) => b.id === hash);
-      if (cachedSummary?.transactions?.length) {
+      if (cachedSummary?.transactions?.length && (cachedSummary.version || 0) >= NAME_OPERATION_SUMMARY_VERSION) {
         return cachedSummary.transactions;
       }
     }
@@ -1304,15 +1506,32 @@ class Blocks {
     // Check if it's indexed in db
     if (skipDBLookup === false && Common.blocksSummariesIndexingEnabled() === true) {
       const indexedSummary = await BlocksSummariesRepository.$getByBlockId(hash);
-      if (indexedSummary !== undefined && indexedSummary?.transactions?.length) {
+      if (
+        indexedSummary !== undefined &&
+        indexedSummary?.transactions?.length &&
+        (indexedSummary.version || 0) >= NAME_OPERATION_SUMMARY_VERSION
+      ) {
         return indexedSummary.transactions;
       }
     }
 
     let height = blockHeight;
+    if (height == null) {
+      // If the block is orphaned, use the height from the chaintips cache
+      const orphanedBlock = chainTips.getOrphanedBlock(hash);
+      if (orphanedBlock) {
+        height = orphanedBlock.height;
+      } else {
+        const block = await namecoinApi.$getBlock(hash);
+        height = block.height;
+      }
+    }
+
     let summary: BlockSummary;
     let summaryVersion = 0;
+    let sourceTransactions: TransactionExtended[] = [];
     if (cpfpSummary && !Common.isLiquid()) {
+      sourceTransactions = cpfpSummary.transactions;
       summary = {
         id: hash,
         transactions: cpfpSummary.transactions.map(tx => {
@@ -1335,24 +1554,23 @@ class Blocks {
       };
       summaryVersion = cpfpSummary.version;
     } else {
-      const txs = (await namecoinApi.$getTxsForBlock(hash, true)).map(tx => transactionUtils.extendTransaction(tx));
-      summary = this.summarizeBlockTransactions(hash, height || 0, txs);
+      sourceTransactions = (await namecoinApi.$getTxsForBlock(hash, true)).map(tx => transactionUtils.extendTransaction(tx));
+      summary = this.summarizeBlockTransactions(hash, height || 0, sourceTransactions);
       summaryVersion = 1;
     }
-    if (height == null) {
-      // If the block is orphaned, use the height from the chaintips cache
-      const orphanedBlock = chainTips.getOrphanedBlock(hash);
-      if (orphanedBlock) {
-        height = orphanedBlock.height;
-      } else {
-        const block = await namecoinApi.$getBlock(hash);
-        height = block.height;
-      }
-    }
+
+    summary.transactions = await this.enrichTransactionsWithNameOperations(summary.transactions, sourceTransactions, height || 0);
+    summaryVersion = Math.max(summaryVersion, NAME_OPERATION_SUMMARY_VERSION);
 
     // Index the response if needed
     if (Common.blocksSummariesIndexingEnabled() === true) {
       await BlocksSummariesRepository.$saveTransactions(height, hash, summary.transactions, summaryVersion);
+    }
+
+    const cachedSummary = this.blockSummaries.find((b) => b.id === hash);
+    if (cachedSummary) {
+      cachedSummary.transactions = summary.transactions;
+      cachedSummary.version = summaryVersion;
     }
 
     return summary.transactions;

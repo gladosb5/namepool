@@ -132,6 +132,7 @@ export interface TransactionExtended extends IEsploraApi.Transaction {
   replacement?: boolean;
   uid?: number;
   flags?: number;
+  nameOp?: NameOperationMetadata;
 }
 
 export interface MempoolTransactionExtended extends TransactionExtended {
@@ -229,6 +230,16 @@ export interface CpfpInfo {
   fee?: number;
 }
 
+export interface NameOperationMetadata {
+  type: 'register' | 'renew' | 'preregister';
+  name?: string | null;
+  displayName?: string | null;
+  address?: string | null;
+  registeredHeight?: number | null;
+  expiresAt?: number | null;
+  blockHeight?: number | null;
+}
+
 export interface TransactionStripped {
   txid: string;
   fee: number;
@@ -237,14 +248,15 @@ export interface TransactionStripped {
   acc?: boolean;
   rate?: number; // effective fee rate
   time?: number;
+  nameOp?: NameOperationMetadata;
 }
 
 export interface TransactionClassified extends TransactionStripped {
   flags: number;
 }
 
-// [txid, fee, vsize, value, rate, flags, acceleration?]
-export type TransactionCompressed = [string, number, number, number, number, number, number, 1?];
+// [txid, fee, vsize, value, rate, flags, firstSeen, acceleration, nameOp?]
+export type TransactionCompressed = [string, number, number, number, number, number, number, (1|0), NameOperationMetadata?];
 // [txid, rate, flags, acceleration?]
 export type MempoolDeltaChange = [string, number, number, (1|0)];
 
@@ -275,6 +287,7 @@ export const TransactionFlags = {
   inscription:                      0b00000100_00000000_00000000_00000000n,
   fake_scripthash:                  0b00001000_00000000_00000000_00000000n,
   annex:                            0b00010000_00000000_00000000_00000000n,
+  name_op:                          0b00100000_00000000_00000000_00000000n,
   // heuristics
   coinjoin:                0b00000001_00000000_00000000_00000000_00000000n,
   consolidation:           0b00000010_00000000_00000000_00000000_00000000n,

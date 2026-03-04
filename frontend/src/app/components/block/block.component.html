@@ -441,9 +441,14 @@
   </ng-template>
 <ng-template [ngIf]="error">
   <app-http-error [error]="error">
-    <ng-container *ngIf="blockHash === '-1'; else defaultBlockError">
+    <ng-container *ngIf="blockHash === '-1'; else maybeFutureBlockError">
       <span>-1 Unknown error: hmm i wonder if you can time travel to the block heights</span>
     </ng-container>
+    <ng-template #maybeFutureBlockError>
+      <ng-container *ngIf="isFutureBlockRequest(); else defaultBlockError">
+        <span>hmm i wonder if you can also time travel to other blocks that arent made, maybe in another blockchain</span>
+      </ng-container>
+    </ng-template>
     <ng-template #defaultBlockError>
       <span i18n="block.error.loading-block-data">Error loading block data.</span>
     </ng-template>

@@ -3,11 +3,12 @@ import { FastVertexArray } from '@components/block-overview-graph/fast-vertex-ar
 import { SpriteUpdateParams, Square, Color, ViewUpdateParams } from '@components/block-overview-graph/sprite-types';
 import { hexToColor } from '@components/block-overview-graph/utils';
 import BlockScene from '@components/block-overview-graph/block-scene';
-import { TransactionStripped } from '@interfaces/node-api.interface';
+import { NameOperationMetadata, TransactionStripped } from '@interfaces/node-api.interface';
 import { TransactionFlags } from '@app/shared/filters.utils';
 
 const hoverTransitionTime = 300;
 const defaultHoverColor = hexToColor('1bd8f4');
+const nameOpHoverColor = hexToColor('4f9cff');
 const defaultHighlightColor = hexToColor('800080');
 
 // convert from this class's update format to TxSprite's update format
@@ -30,6 +31,7 @@ export default class TxView implements TransactionStripped {
   feerate: number;
   acc?: boolean;
   rate?: number;
+  nameOp?: NameOperationMetadata;
   flags: number;
   bigintFlags?: bigint | null = 0b00000100_00000000_00000000_00000000n;
   time?: number;
@@ -61,6 +63,7 @@ export default class TxView implements TransactionStripped {
     this.feerate = tx.rate || (tx.fee / tx.vsize); // sort by effective fee rate where available
     this.acc = tx.acc;
     this.rate = tx.rate;
+    this.nameOp = tx.nameOp;
     this.status = tx.status;
     this.flags = tx.flags || 0;
     this.bigintFlags = tx.flags ? (BigInt(tx.flags) | (this.acc ? TransactionFlags.acceleration : 0n)): 0n;
@@ -138,10 +141,11 @@ export default class TxView implements TransactionStripped {
 
   // Temporarily override the tx color
   // returns minimum transition end time
-  setHover(hoverOn: boolean, color: Color | void = defaultHoverColor): number {
+  setHover(hoverOn: boolean, color: Color | void = undefined): number {
+    const activeHoverColor = color || (this.nameOp ? nameOpHoverColor : defaultHoverColor);
     if (hoverOn) {
       this.hover = true;
-      this.hoverColor = color;
+      this.hoverColor = activeHoverColor;
 
       this.sprite.update({
         ...this.hoverColor,

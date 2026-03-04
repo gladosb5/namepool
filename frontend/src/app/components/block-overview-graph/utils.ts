@@ -1,6 +1,7 @@
 import { feeLevels, defaultMempoolFeeColors, contrastMempoolFeeColors } from '@app/app.constants';
 import { Color } from '@components/block-overview-graph/sprite-types';
 import TxView from '@components/block-overview-graph/tx-view';
+import { TransactionFlags } from '@app/shared/filters.utils';
 
 export function hexToColor(hex: string): Color {
   return {
@@ -82,6 +83,8 @@ for (const key in defaultColors) {
 
 export { defaultColors as defaultColors };
 
+const nameOperationColor = hexToColor('2f80ff');
+
 export const defaultAuditColors = {
   censored: hexToColor('f344df'),
   missing: darken(desaturate(hexToColor('f344df'), 0.3), 0.7),
@@ -131,6 +134,11 @@ export function defaultColorFunction(
   const rate = tx.fee / tx.vsize; // color by simple single-tx fee rate
   const levelIndex = colors.baseLevel(tx, rate, relativeTime || (Date.now() / 1000));
   const levelColor = colors.base[levelIndex] || colors.base[defaultMempoolFeeColors.length - 1];
+
+  if (tx.nameOp || ((tx.bigintFlags || 0n) & TransactionFlags.name_op) > 0n) {
+    return nameOperationColor;
+  }
+
   // Normal mode
   if (!tx.scene?.highlightingEnabled) {
     if (tx.acc) {
