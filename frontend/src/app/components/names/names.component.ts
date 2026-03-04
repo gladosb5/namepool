@@ -22,7 +22,7 @@ export class NamesComponent implements OnInit, OnDestroy {
   readonly domainLabelRegex = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
 
   names: NameRecord[] = [];
-  totalDomainNames: number | null = null;
+  totalRegisteredNames: number | null = null;
   nameAliveStatus: { [name: string]: NameAliveStatus | undefined } = {};
   query = '';
   currentQuery = '';
@@ -56,7 +56,7 @@ export class NamesComponent implements OnInit, OnDestroy {
           this.query = query;
           this.isLoading = true;
           this.error = null;
-          this.totalDomainNames = null;
+          this.totalRegisteredNames = null;
           this.nameAliveStatus = {};
           this.cd.markForCheck();
         }),
@@ -77,7 +77,7 @@ export class NamesComponent implements OnInit, OnDestroy {
               prefix: 'd/',
               start: 'd/',
               count: this.maxRows,
-              totalDomainNames: null,
+              totalRegisteredNames: null,
               items: [],
             } as NamesResponse);
           })
@@ -85,8 +85,8 @@ export class NamesComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe((response) => {
-        this.totalDomainNames = response?.totalDomainNames ?? null;
-        this.names = response?.items || [];
+        this.totalRegisteredNames = response?.totalRegisteredNames ?? response?.totalDomainNames ?? null;
+        this.names = (response?.items || []).filter((item) => item?.name !== 'd/');
         this.isLoading = false;
         this.loadNameAliveStatuses(this.names);
         this.cd.markForCheck();
@@ -226,6 +226,9 @@ export class NamesComponent implements OnInit, OnDestroy {
 
   private getDisplayDomain(item: NameRecord): string | null {
     const display = (item.displayName || '').trim().toLowerCase();
+    if (display === '.bit') {
+      return '.bit';
+    }
     if (display.endsWith('.bit')) {
       const label = display.slice(0, -4);
       if (this.domainLabelRegex.test(label)) {
@@ -238,6 +241,9 @@ export class NamesComponent implements OnInit, OnDestroy {
     }
 
     const label = item.name.slice(2).trim().toLowerCase();
+    if (label.length === 0) {
+      return '.bit';
+    }
     if (!this.domainLabelRegex.test(label)) {
       return null;
     }

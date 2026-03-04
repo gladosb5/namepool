@@ -3,7 +3,10 @@
     <div>
       <h1 class="mb-1" i18n="names.heading">Namecoin Domain Names</h1>
       <p class="text-muted mb-0" i18n="names.subheading">Registration and expiration data for Namecoin names</p>
-      <p class="text-muted mb-0" *ngIf="totalDomainNames !== null">Total domains: {{ totalDomainNames | number }}</p>
+      <p class="text-muted mb-0" *ngIf="totalRegisteredNames !== null">Total registered names: {{ totalRegisteredNames | number }}</p>
+      <p class="text-muted mb-0" *ngIf="!isLoading && !error">
+        Showing {{ names.length | number }} name(s)<span *ngIf="totalRegisteredNames !== null"> of {{ totalRegisteredNames | number }} total</span>.
+      </p>
     </div>
     <form class="form-inline" (submit)="$event.preventDefault(); submitSearch(searchInput.value)">
       <input #searchInput class="form-control mr-2" type="text" [value]="query" placeholder="Search name (example.bit or d/example)" i18n-placeholder="names.search-placeholder" maxlength="255">

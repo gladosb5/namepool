@@ -1,0 +1,72 @@
+name: Deploy Namepool
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-namepool-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect backend changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - 'rust/**'
+              - 'production/**'
+              - 'docker/backend/**'
+
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Deploy to server
+        env:
+          DEPLOY_PASS: ${{ secrets.DEPLOY_PASS }}
+          BACKEND_CHANGED: ${{ steps.changes.outputs.backend }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes sshpass
+
+          export SSHPASS="${DEPLOY_PASS}"
+          sshpass -e ssh \
+            -o StrictHostKeyChecking=accept-new \
+            -p 22 \
+            gladosb5@namepool \
+            "BACKEND_CHANGED='${BACKEND_CHANGED}' bash -s" <<'EOF'
+          set -euo pipefail
+          cd ~/namepool
+          git fetch origin main
+          git checkout main
+          git pull --ff-only origin main
+
+          if [ "${BACKEND_CHANGED}" = "true" ]; then
+            echo "Backend changes detected. Rebuilding and restarting backend."
+            cd backend
+            npm ci --omit=dev --omit=optional
+            npm run build
+            pkill -f "node --max-old-space-size=2048 dist/index.js" || true
+            nohup npm run start > ../backend-start.log 2>&1 < /dev/null &
+          else
+            echo "Frontend-only or non-backend change. Backend restart skipped."
+          fi
+          EOF

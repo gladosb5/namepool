@@ -83,7 +83,7 @@ interface CachedNameAliveResponse {
 }
 
 const nameAliveCache = new Map<string, CachedNameAliveResponse>();
-let domainNamesTotalCache: { value: number; expiresAt: number } | null = null;
+let registeredNamesTotalCache: { value: number; expiresAt: number } | null = null;
 
 function normalizeNameIdentifier(rawName: string): string | null {
   let decodedName: string;
@@ -133,6 +133,9 @@ function mapNameEntry(entry: NamecoinRpcNameEntry, tipHeight: number): NamecoinN
   }
 
   const normalizedName = entry.name.toLowerCase();
+  if (normalizedName === 'd/') {
+    return null;
+  }
   const displayName = normalizedName.startsWith('d/') ? `${normalizedName.slice(2)}.bit` : normalizedName;
   const expiresIn = typeof entry.expires_in === 'number' ? entry.expires_in : null;
   const expiresAt = expiresIn !== null ? tipHeight + expiresIn : null;
@@ -198,6 +201,9 @@ function getDisplayDomainFromName(normalizedName: string): string | null {
     return null;
   }
   const label = normalizedName.slice(2);
+  if (label.length === 0) {
+    return '.bit';
+  }
   if (!NAME_LABEL_REGEX.test(label)) {
     return null;
   }
@@ -305,16 +311,15 @@ async function checkDomainAlive(normalizedName: string): Promise<NameAliveRespon
   return bestResult;
 }
 
-async function countNamesByPrefix(prefix: string): Promise<number> {
-  const normalizedPrefix = prefix.toLowerCase();
+async function countAllRegisteredNames(): Promise<number> {
   let total = 0;
-  let start = normalizedPrefix;
+  let start = '';
   let previousStart: string | null = null;
 
   while (true) {
     const batch = await (namecoinClient.cmd('name_scan', start, NAME_SCAN_COUNT_TOTAL_BATCH) as Promise<NamecoinRpcNameEntry[]>)
       .catch((error) => {
-        logger.debug(`name_scan failed while counting names for prefix "${normalizedPrefix}": ${(error instanceof Error) ? error.message : error}`);
+        logger.debug(`name_scan failed while counting registered names: ${(error instanceof Error) ? error.message : error}`);
         return [] as NamecoinRpcNameEntry[];
       });
 
@@ -322,7 +327,8 @@ async function countNamesByPrefix(prefix: string): Promise<number> {
       break;
     }
 
-    const firstIndex = previousStart && batch[0]?.name === previousStart ? 1 : 0;
+    const firstName = typeof batch[0]?.name === 'string' ? batch[0].name.toLowerCase() : null;
+    const firstIndex = previousStart && firstName === previousStart ? 1 : 0;
     const visibleBatch = batch.slice(firstIndex);
     if (!visibleBatch.length) {
       break;
@@ -330,7 +336,7 @@ async function countNamesByPrefix(prefix: string): Promise<number> {
 
     for (const entry of visibleBatch) {
       const name = typeof entry?.name === 'string' ? entry.name.toLowerCase() : '';
-      if (name.startsWith(normalizedPrefix)) {
+      if (name && name !== 'd/') {
         total++;
       }
     }
@@ -338,27 +344,27 @@ async function countNamesByPrefix(prefix: string): Promise<number> {
     const lastName = visibleBatch[visibleBatch.length - 1]?.name;
     const lastNameLower = typeof lastName === 'string' ? lastName.toLowerCase() : '';
 
-    if (!lastName || !lastNameLower.startsWith(normalizedPrefix) || visibleBatch.length < NAME_SCAN_COUNT_TOTAL_BATCH) {
+    if (!lastName || visibleBatch.length < NAME_SCAN_COUNT_TOTAL_BATCH) {
       break;
     }
 
-    if (lastName === previousStart) {
+    if (lastNameLower === previousStart) {
       break;
     }
-    previousStart = lastName;
-    start = lastName;
+    previousStart = lastNameLower;
+    start = lastNameLower;
   }
 
   return total;
 }
 
-async function getCachedTotalDomainNames(): Promise<number> {
-  if (domainNamesTotalCache && domainNamesTotalCache.expiresAt > Date.now()) {
-    return domainNamesTotalCache.value;
+async function getCachedTotalRegisteredNames(): Promise<number> {
+  if (registeredNamesTotalCache && registeredNamesTotalCache.expiresAt > Date.now()) {
+    return registeredNamesTotalCache.value;
   }
 
-  const total = await countNamesByPrefix('d/');
-  domainNamesTotalCache = {
+  const total = await countAllRegisteredNames();
+  registeredNamesTotalCache = {
     value: total,
     expiresAt: Date.now() + NAME_TOTAL_CACHE_TTL_MS,
   };
@@ -1404,12 +1410,12 @@ class NamecoinRoutes {
           return [] as NamecoinRpcNameEntry[];
         });
 
-      const [nameResults, tipHeight, exactNameResult, totalDomainNames] = await Promise.all([
+      const [nameResults, tipHeight, exactNameResult, totalRegisteredNames] = await Promise.all([
         scanPromise,
         namecoinApi.$getBlockHeightTip(),
         exactNamePromise,
-        getCachedTotalDomainNames().catch((error) => {
-          logger.debug(`Failed to get cached total domain names: ${(error instanceof Error) ? error.message : error}`);
+        getCachedTotalRegisteredNames().catch((error) => {
+          logger.debug(`Failed to get cached total registered names: ${(error instanceof Error) ? error.message : error}`);
           return 0;
         }),
       ]);
@@ -1431,7 +1437,7 @@ class NamecoinRoutes {
         prefix: normalizedPrefix,
         start: normalizedStart,
         count,
-        totalDomainNames,
+        totalRegisteredNames,
         items: mappedEntries.slice(0, count),
       });
     } catch (e) {

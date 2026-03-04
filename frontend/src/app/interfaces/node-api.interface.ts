@@ -103,6 +103,8 @@ export interface NamesResponse {
   prefix: string;
   start: string;
   count: number;
+  totalRegisteredNames?: number;
+  // Backward compatibility with older backend response.
   totalDomainNames?: number;
   items: NameRecord[];
 }
