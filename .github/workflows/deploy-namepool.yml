@@ -54,7 +54,7 @@ jobs:
             gladosb5@namepool \
             "BACKEND_CHANGED='${BACKEND_CHANGED}' bash -s" <<'EOF'
           set -euo pipefail
-          cd ~/namepool
+          cd /root/namepool/mempool
           git fetch origin main
           git checkout main
           git pull --ff-only origin main
