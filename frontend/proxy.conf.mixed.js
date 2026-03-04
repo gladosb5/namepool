@@ -16,7 +16,7 @@ try {
     if (e.code !== 'ENOENT') {
       throw new Error(e);
   } else {
-      console.log(`${FRONTEND_CONFIG_FILE_NAME} file not found, using default config`);
+      console.log(`${FRONTEND_CONFIG_FILE_NAME} file not found, using default config.`);
       configContent = {};
   }
 }
