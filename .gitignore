@@ -21,3 +21,21 @@ docker/backend/start_ci.sh
 *.jks
 *.p8
 frontend/certs/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Compiled binaries and libraries
+ncprop279
+ncdumpzone
+encaya
+libncp11.so
+encayagen
+generate_nmc_cert
+coredns-keygen
+
+# Backup files
+*.old
+*.bak
+*.tmp
