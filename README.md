@@ -1,4 +1,4 @@
-# The Namepool Open Source Project® [![namepool](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/ry4br7/master&style=flat-square)](https://dashboard.cypress.io/projects/ry4br7/runs)
+# The Namepool Open Source Project® [![namepool](https://github.com/user-attachments/assets/50bf231d-529c-4f7e-9c94-9b10a21d17cc)]
 
 https://user-images.githubusercontent.com/93150691/226236121-375ea64f-b4a1-4cc0-8fad-a6fb33226840.mp4
 
