@@ -10,6 +10,7 @@ import { RelativeUrlPipe } from '@app/shared/pipes/relative-url/relative-url.pip
 import { ApiService } from '@app/services/api.service';
 import { SearchResultsComponent } from '@components/search-form/search-results/search-results.component';
 import { Network, getRegex, getTargetUrl, needBaseModuleChange } from '@app/shared/regex.utils';
+import { NameRecord } from '@interfaces/node-api.interface';
 
 @Component({
   selector: 'app-search-form',
@@ -45,6 +46,7 @@ export class SearchFormComponent implements OnInit {
   regexBlockheight = getRegex('blockheight');
   regexDate = getRegex('date');
   regexUnixTimestamp = getRegex('timestamp');
+  regexName = /^(?:[a-z0-9-]+\.bit|[a-z0-9]+\/[a-z0-9-]*|[a-z0-9-]+)$/i;
 
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
@@ -121,7 +123,8 @@ export class SearchFormComponent implements OnInit {
           return of([
             [],
             { nodes: [], channels: [] },
-            this.pools
+            this.pools,
+            []
           ]);
         }
         this.isTypeaheading$.next(true);
@@ -129,7 +132,8 @@ export class SearchFormComponent implements OnInit {
           return zip(
             this.electrsApiService.getAddressesByPrefix$(text).pipe(catchError(() => of([]))),
             [{ nodes: [], channels: [] }],
-            this.getMiningPools()
+            this.getMiningPools(),
+            this.getNamesForTypeahead(text)
           );
         }
         return zip(
@@ -138,7 +142,8 @@ export class SearchFormComponent implements OnInit {
             nodes: [],
             channels: [],
           }))),
-          this.getMiningPools()
+          this.getMiningPools(),
+          this.getNamesForTypeahead(text)
         );
       }),
       map((result: any[]) => {
@@ -159,7 +164,8 @@ export class SearchFormComponent implements OnInit {
             nodes: [],
             channels: [],
           },
-          this.pools
+          this.pools,
+          []
         ]))
       ]
       ).pipe(
@@ -174,8 +180,10 @@ export class SearchFormComponent implements OnInit {
               blockHeight: false,
               txId: false,
               address: false,
+              name: false,
               otherNetworks: [],
               addresses: [],
+              names: [],
               nodes: [],
               channels: [],
               liquidAsset: [],
@@ -186,9 +194,10 @@ export class SearchFormComponent implements OnInit {
           const result = latestData[1];
           const addressPrefixSearchResults = result[0];
           const lightningResults = result[1];
+          const nameResults = result[3] || [];
 
           // Do not show date and timestamp results for liquid
-          const isNetworkNamecoin = this.network === '' || this.network === 'testnet' || this.network === 'testnet4' || this.network === 'signet';
+          const isNetworkNamecoin = this.isNamecoinNetwork();
 
           const matchesBlockHeight = this.regexBlockheight.test(searchText) && parseInt(searchText) <= this.stateService.latestBlockHeight;
           const matchesDateTime = this.regexDate.test(searchText) && new Date(searchText).toString() !== 'Invalid Date' && new Date(searchText).getTime() <= Date.now() && isNetworkNamecoin;
@@ -196,6 +205,8 @@ export class SearchFormComponent implements OnInit {
           const matchesTxId = this.regexTransaction.test(searchText) && !this.regexBlockhash.test(searchText);
           const matchesBlockHash = this.regexBlockhash.test(searchText);
           const matchesAddress = !matchesTxId && this.regexAddress.test(searchText);
+          const normalizedName = this.normalizeNameIdentifier(searchText);
+          const matchesName = !!normalizedName;
           const publicKey = matchesAddress && searchText.startsWith('0');
           // Namepool: only allow Namecoin address formats; do not suggest cross-network matches.
           const otherNetworks: any[] = [];
@@ -213,15 +224,17 @@ export class SearchFormComponent implements OnInit {
 
           return {
             searchText: searchText,
-            hashQuickMatch: +(matchesBlockHeight || matchesBlockHash || matchesTxId || matchesAddress || matchesUnixTimestamp || matchesDateTime),
+            hashQuickMatch: +(matchesBlockHeight || matchesBlockHash || matchesTxId || matchesAddress || matchesUnixTimestamp || matchesDateTime || matchesName),
             blockHeight: matchesBlockHeight,
             dateTime: matchesDateTime,
             unixTimestamp: matchesUnixTimestamp,
             txId: matchesTxId,
             blockHash: matchesBlockHash,
             address: matchesAddress,
+            name: matchesName,
             publicKey: publicKey,
             addresses: matchesAddress && filteredAddressPrefixSearchResults.length === 1 && searchText === filteredAddressPrefixSearchResults[0] ? [] : filteredAddressPrefixSearchResults, // If there is only one address and it matches the search text, don't show it in the dropdown
+            names: nameResults,
             otherNetworks: otherNetworks,
             nodes: lightningResults.nodes,
             channels: lightningResults.channels,
@@ -245,6 +258,8 @@ export class SearchFormComponent implements OnInit {
       this.search(result);
     } else if (typeof result === 'number' && result <= this.stateService.latestBlockHeight) {
       this.navigate('/block/', result.toString());
+    } else if (result.name && result.displayName) {
+      this.navigateToNames(result.name);
     } else if (result.alias) {
       this.navigate('/lightning/node/', result.public_key);
     } else if (result.short_id) {
@@ -265,6 +280,7 @@ export class SearchFormComponent implements OnInit {
 
   search(result?: string): void {
     const searchText = result || this.searchForm.value.searchText.trim();
+    const normalizedName = this.normalizeNameIdentifier(searchText);
     if (searchText) {
       this.isSearching = true;
 
@@ -293,6 +309,8 @@ export class SearchFormComponent implements OnInit {
         } else {
           this.navigate('/tx/', matches[0]);
         }
+      } else if (normalizedName) {
+        this.navigateToNames(normalizedName);
       } else if (this.regexDate.test(searchText) || this.regexUnixTimestamp.test(searchText)) {
         let timestamp: number;
         this.regexDate.test(searchText) ? timestamp = Math.floor(new Date(searchText).getTime() / 1000) : timestamp = searchText;
@@ -309,6 +327,71 @@ export class SearchFormComponent implements OnInit {
         this.isSearching = false;
       }
     }
+  }
+
+  private isNamecoinNetwork(): boolean {
+    return this.network === '' || this.network === 'testnet' || this.network === 'testnet4' || this.network === 'signet';
+  }
+
+  private normalizeNameIdentifier(searchText: string): string | null {
+    const normalized = (searchText || '').trim().toLowerCase();
+    if (!normalized.length || !this.regexName.test(normalized) || /^[0-9]+$/.test(normalized)) {
+      return null;
+    }
+
+    if (normalized.endsWith('.bit')) {
+      const label = normalized.slice(0, -4);
+      if (!/^[a-z0-9][a-z0-9-]{0,253}$/.test(label)) {
+        return null;
+      }
+      return `d/${label}`;
+    }
+
+    if (normalized.includes('/')) {
+      const parts = normalized.split('/');
+      if (parts.length !== 2) {
+        return null;
+      }
+      const [namespace, key] = parts;
+      if (!/^[a-z0-9][a-z0-9-]{0,62}$/.test(namespace)) {
+        return null;
+      }
+      if (key.length > 0 && !/^[a-z0-9-]{1,254}$/.test(key)) {
+        return null;
+      }
+      return `${namespace}/${key}`;
+    }
+
+    if (!/^[a-z0-9][a-z0-9-]{0,253}$/.test(normalized)) {
+      return null;
+    }
+    return `d/${normalized}`;
+  }
+
+  private getNamesForTypeahead(searchText: string): Observable<NameRecord[]> {
+    if (!this.isNamecoinNetwork()) {
+      return of([]);
+    }
+
+    const normalizedName = this.normalizeNameIdentifier(searchText);
+    if (!normalizedName) {
+      return of([]);
+    }
+
+    return this.apiService.searchNames$(normalizedName, 10).pipe(
+      catchError(() => of([]))
+    );
+  }
+
+  private navigateToNames(searchText: string): void {
+    this.router.navigate([this.relativeUrlPipe.transform('/names')], {
+      queryParams: { q: searchText },
+    });
+    this.searchTriggered.emit();
+    this.searchForm.setValue({
+      searchText: '',
+    });
+    this.isSearching = false;
   }
 
 

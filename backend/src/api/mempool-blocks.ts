@@ -650,28 +650,20 @@ class MempoolBlocks {
   }
 
   public compressTx(tx: TransactionClassified): TransactionCompressed {
-    if (tx.acc) {
-      return [
-        tx.txid,
-        tx.fee,
-        tx.vsize,
-        tx.value,
-        Math.round((tx.rate || (tx.fee / tx.vsize)) * 100) / 100,
-        tx.flags,
-        tx.time || 0,
-        1,
-      ];
-    } else {
-      return [
-        tx.txid,
-        tx.fee,
-        tx.vsize,
-        tx.value,
-        Math.round((tx.rate || (tx.fee / tx.vsize)) * 100) / 100,
-        tx.flags,
-        tx.time || 0,
-      ];
+    const compressed: TransactionCompressed = [
+      tx.txid,
+      tx.fee,
+      tx.vsize,
+      tx.value,
+      Math.round((tx.rate || (tx.fee / tx.vsize)) * 100) / 100,
+      tx.flags,
+      tx.time || 0,
+      tx.acc ? 1 : 0,
+    ];
+    if (tx.nameOp) {
+      compressed.push(tx.nameOp);
     }
+    return compressed;
   }
 
   public compressDeltaChange(tx: TransactionClassified): MempoolDeltaChange {

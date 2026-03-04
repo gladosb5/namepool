@@ -235,6 +235,7 @@ td.amount.large {
 
 .tx-page-container {
 	display: flex;
+	flex-wrap: wrap;
 	flex-direction: row;
 	align-items: baseline;
 	white-space: nowrap;
@@ -242,6 +243,34 @@ td.amount.large {
 	margin-bottom: 10px;
 	margin-top: 10px;
 }
+
+.name-op-summary {
+  width: 100%;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .badge {
+    top: 0;
+    font-size: 11px;
+  }
+
+  a {
+    color: var(--primary);
+  }
+
+  .domain-muted {
+    color: var(--transparent-fg);
+    font-size: 12px;
+  }
+}
+
+.header-bg.box.name-domain-tx {
+	border: 2px solid #2f80ff;
+	box-shadow: 0 0 0 1px rgba(47, 128, 255, 0.25);
+}
+
 .assetBox {
 	background: color-mix(in srgb, var(--tertiary) 56%, transparent);
 

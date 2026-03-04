@@ -1,7 +1,7 @@
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { ILoadingIndicators } from '@app/services/state.service';
 import { Transaction } from '@interfaces/electrs.interface';
-import { Acceleration, BlockExtended, DifficultyAdjustment, RbfTree, TransactionStripped } from '@interfaces/node-api.interface';
+import { Acceleration, BlockExtended, DifficultyAdjustment, NameOperationMetadata, RbfTree, TransactionStripped } from '@interfaces/node-api.interface';
 
 export interface WebsocketResponse {
   backend?: 'esplora' | 'electrum' | 'none';
@@ -115,8 +115,8 @@ export interface MempoolInfo {
   minrelaytxfee: number;           //  (numeric) Current minimum relay fee for transactions
 }
 
-// [txid, fee, vsize, value, rate, flags, acceleration?]
-export type TransactionCompressed = [string, number, number, number, number, number, number, 1?];
+// [txid, fee, vsize, value, rate, flags, firstSeen, acceleration, nameOp?]
+export type TransactionCompressed = [string, number, number, number, number, number, number, (1|0), NameOperationMetadata?];
 // [txid, rate, flags, acceleration?]
 export type MempoolDeltaChange = [string, number, number, (1|0)];
 

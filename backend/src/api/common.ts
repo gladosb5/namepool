@@ -1,6 +1,6 @@
 import * as namecoinjs from 'namecoinjs-lib';
 import { Request } from 'express';
-import { EffectiveFeeStats, MempoolBlockWithTransactions, TransactionExtended, MempoolTransactionExtended, TransactionStripped, WorkingEffectiveFeeStats, TransactionClassified, TransactionFlags } from '../mempool.interfaces';
+import { EffectiveFeeStats, MempoolBlockWithTransactions, TransactionExtended, MempoolTransactionExtended, TransactionStripped, WorkingEffectiveFeeStats, TransactionClassified, TransactionFlags, NameOperationMetadata } from '../mempool.interfaces';
 import config from '../config';
 import { NodeSocket } from '../repositories/NodesSocketsRepository';
 import { isIP } from 'net';
@@ -25,6 +25,10 @@ const DUST_RELAY_TX_FEE = 3;
 const MAX_OP_RETURN_RELAY = 83;
 const DEFAULT_PERMIT_BAREMULTISIG = true;
 const MAX_TX_LEGACY_SIGOPS = 2_500 * 4; // witness-adjusted sigops
+const NAME_IDENTIFIER_MAX_LENGTH = 255;
+const NAME_NAMESPACE_REGEX = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const NAME_LABEL_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
+const HEX_TOKEN_REGEX = /^[a-f0-9]+$/i;
 
 export class Common {
   static nativeAssetId = config.MEMPOOL.NETWORK === 'liquidtestnet' ?
@@ -602,8 +606,124 @@ export class Common {
     return isTaproot || !isNotTaproot;
   }
 
+  static detectNameOperation(tx: TransactionExtended, blockHeight: number | null = null): NameOperationMetadata | null {
+    for (const vout of tx.vout || []) {
+      const operation = this.detectNameOperationFromAsm(vout?.scriptpubkey_asm || '', blockHeight);
+      if (!operation?.displayName) {
+        continue;
+      }
+      return operation;
+    }
+    return null;
+  }
+
+  private static detectNameOperationFromAsm(scriptAsm: string, blockHeight: number | null): NameOperationMetadata | null {
+    const asm = (scriptAsm || '').trim();
+    if (!asm) {
+      return null;
+    }
+
+    const tokens = asm.split(/\s+/);
+    const operationCode = tokens[0];
+    const isRegister = (operationCode === 'OP_PUSHNUM_2' || operationCode === 'OP_2') && asm.includes('OP_2DROP OP_2DROP');
+    const isRenew = (operationCode === 'OP_PUSHNUM_3' || operationCode === 'OP_3') && asm.includes('OP_2DROP OP_DROP');
+    if (!isRegister && !isRenew) {
+      return null;
+    }
+
+    const nameHex = this.extractFirstPushData(tokens);
+    const normalizedName = this.normalizeNameFromHex(nameHex);
+    if (!normalizedName) {
+      return null;
+    }
+
+    return {
+      type: isRegister ? 'register' : 'renew',
+      name: normalizedName,
+      displayName: normalizedName.startsWith('d/') ? `${normalizedName.slice(2)}.bit` : normalizedName,
+      blockHeight,
+    };
+  }
+
+  private static extractFirstPushData(tokens: string[]): string | null {
+    for (let i = 1; i < tokens.length - 1; i++) {
+      const token = tokens[i];
+      if (!token) {
+        continue;
+      }
+
+      if (/^OP_PUSHBYTES_[0-9]+$/.test(token) || /^OP_PUSHDATA[124]$/.test(token)) {
+        const value = tokens[i + 1];
+        if (value && HEX_TOKEN_REGEX.test(value)) {
+          return value;
+        }
+      }
+    }
+    return null;
+  }
+
+  private static normalizeNameFromHex(nameHex: string | null): string | null {
+    if (!nameHex || !HEX_TOKEN_REGEX.test(nameHex) || (nameHex.length % 2 !== 0)) {
+      return null;
+    }
+
+    try {
+      const decoded = Buffer.from(nameHex, 'hex').toString('utf8').replace(/\0/g, '');
+      return this.normalizeNameIdentifier(decoded);
+    } catch {
+      return null;
+    }
+  }
+
+  private static normalizeNameIdentifier(rawName: string): string | null {
+    const decodedName = (rawName || '').trim().toLowerCase();
+    if (!decodedName || decodedName.length > NAME_IDENTIFIER_MAX_LENGTH) {
+      return null;
+    }
+
+    if (decodedName.endsWith('.bit')) {
+      const label = decodedName.slice(0, -4);
+      if (!NAME_LABEL_REGEX.test(label)) {
+        return null;
+      }
+      return `d/${label}`;
+    }
+
+    if (decodedName.includes('/')) {
+      const parts = decodedName.split('/');
+      if (parts.length !== 2) {
+        return null;
+      }
+      const [namespace, key] = parts;
+      if (!NAME_NAMESPACE_REGEX.test(namespace)) {
+        return null;
+      }
+      if (key.length > 0 && !NAME_LABEL_REGEX.test(key)) {
+        return null;
+      }
+      return `${namespace}/${key}`;
+    }
+
+    if (!NAME_LABEL_REGEX.test(decodedName)) {
+      return null;
+    }
+
+    return `d/${decodedName}`;
+  }
+
   static getTransactionFlags(tx: TransactionExtended, height?: number): number {
     let flags = tx.flags ? BigInt(tx.flags) : 0n;
+    const blockHeight = height ?? tx.status?.block_height ?? null;
+    const detectedNameOp = tx.nameOp || this.detectNameOperation(tx, blockHeight);
+    if (detectedNameOp?.displayName) {
+      tx.nameOp = detectedNameOp;
+      flags |= TransactionFlags.name_op;
+    } else {
+      flags &= ~TransactionFlags.name_op;
+      if (!tx.nameOp?.displayName) {
+        tx.nameOp = undefined;
+      }
+    }
 
     // Update variable flags (CPFP, RBF)
     flags &= ~TransactionFlags.cpfp_child;
@@ -790,6 +910,7 @@ export class Common {
       acc: tx.acceleration || undefined,
       rate: tx.effectiveFeePerVsize,
       time: tx.firstSeen || undefined,
+      nameOp: tx.nameOp || undefined,
     };
   }
 

@@ -17,6 +17,7 @@ import { ServerStatusComponent } from '@components/server-health/server-status.c
 import { FaucetComponent } from '@components/faucet/faucet.component';
 import { SimpleProofWidgetComponent } from '@components/simpleproof-widget/simpleproof-widget.component';
 import { SimpleProofCuboWidgetComponent } from '@components/simpleproof-widget/simpleproof-cubo-widget.component';
+import { NamesComponent } from '@components/names/names.component';
 
 const browserWindow = window || {};
 // @ts-ignore
@@ -115,6 +116,10 @@ const routes: Routes = [
       {
         path: 'tools/calculator',
         component: CalculatorComponent
+      },
+      {
+        path: 'names',
+        component: NamesComponent,
       },
     ],
   }

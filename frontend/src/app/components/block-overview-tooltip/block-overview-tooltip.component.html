@@ -14,6 +14,30 @@
           <a [routerLink]="['/tx/' | relativeUrl, txid]">{{ txid | shortenString : 16}}</a>
         </td>
       </tr>
+      <tr *ngIf="nameOpType">
+        <td class="label">Name op</td>
+        <td class="value">{{ nameOpType }}</td>
+      </tr>
+      <tr *ngIf="nameOpName">
+        <td class="label">Domain</td>
+        <td class="value">{{ nameOpName }}</td>
+      </tr>
+      <tr *ngIf="nameOpBlockHeight !== null">
+        <td class="label">When</td>
+        <td class="value">Block #{{ nameOpBlockHeight }}</td>
+      </tr>
+      <tr *ngIf="nameOpRegisteredHeight !== null">
+        <td class="label">Registered</td>
+        <td class="value">Block #{{ nameOpRegisteredHeight }}</td>
+      </tr>
+      <tr *ngIf="nameOpExpiresAt !== null">
+        <td class="label">Expires at</td>
+        <td class="value">Block #{{ nameOpExpiresAt }}</td>
+      </tr>
+      <tr *ngIf="nameOpAddress">
+        <td class="label">Owner</td>
+        <td class="value">{{ nameOpAddress }}</td>
+      </tr>
       <tr *ngIf="time">
         <ng-container [ngSwitch]="timeMode">
           <ng-container *ngSwitchCase="'namepool'">

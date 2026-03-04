@@ -74,7 +74,7 @@ export class MasterPageComponent implements OnInit, OnDestroy {
       this.enterpriseInfo = info;
     });
     
-    this.servicesEnabled = this.officialMempoolSpace && this.stateService.env.ACCELERATOR === true && this.stateService.network === '';
+    this.servicesEnabled = false;
     this.refreshAuth();
 
     const isServicesPage = this.router.url.includes('/services/');

@@ -11,9 +11,26 @@
         <i><app-time kind="since" [time]="tx.firstSeen" [fastRender]="true" [showTooltip]="true"></app-time></i>
       </ng-template>
     </div>
+    <div *ngIf="tx['_nameOpType']" class="name-op-summary">
+      <span class="badge badge-primary">{{ tx['_nameOpAction'] }}</span>
+      <ng-container *ngIf="tx['_nameOpDisplayName']; else hiddenDomain">
+        <a
+          [routerLink]="['/names' | relativeUrl]"
+          [queryParams]="{ q: tx['_nameOpDisplayName'] }"
+        >
+          {{ tx['_nameOpDisplayName'] }}
+        </a>
+      </ng-container>
+      <ng-template #hiddenDomain>
+        <span class="domain-muted">Domain hidden until firstupdate</span>
+      </ng-template>
+    </div>
   </div>
 
-  <div class="header-bg box" [attr.data-cy]="'tx-' + i">
+  <div class="header-bg box"
+       [attr.data-cy]="'tx-' + i"
+       [ngClass]="{'name-domain-tx': tx['_nameOpType']}"
+       [attr.title]="tx['_nameOpTooltip'] || null">
 
     <div *ngIf="errorUnblinded" class="error-unblinded">{{ errorUnblinded }}</div>
     @if (similarityMatches.get(tx.txid)?.size) {

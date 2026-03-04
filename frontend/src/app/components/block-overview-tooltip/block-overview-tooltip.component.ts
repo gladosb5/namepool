@@ -33,6 +33,12 @@ export class BlockOverviewTooltipComponent implements OnChanges {
   timeMode: 'mempool' | 'mined' | 'missed' | 'after' = 'mempool';
   filters: Filter[] = [];
   activeFilters: { [key: string]: boolean } = {};
+  nameOpType: string | null = null;
+  nameOpName: string | null = null;
+  nameOpAddress: string | null = null;
+  nameOpRegisteredHeight: number | null = null;
+  nameOpExpiresAt: number | null = null;
+  nameOpBlockHeight: number | null = null;
 
   tooltipPosition: Position = { x: 0, y: 0 };
 
@@ -78,6 +84,12 @@ export class BlockOverviewTooltipComponent implements OnChanges {
           this.activeFilters[filter.key] = true;
         }
       }
+      this.nameOpType = this.formatNameOperationType(this.tx.nameOp?.type || null);
+      this.nameOpName = this.tx.nameOp?.displayName || this.tx.nameOp?.name || null;
+      this.nameOpAddress = this.tx.nameOp?.address || null;
+      this.nameOpRegisteredHeight = this.tx.nameOp?.registeredHeight ?? null;
+      this.nameOpExpiresAt = this.tx.nameOp?.expiresAt ?? null;
+      this.nameOpBlockHeight = this.tx.nameOp?.blockHeight ?? null;
 
       if (!this.relativeTime) {
         this.timeMode = 'mempool';
@@ -100,5 +112,18 @@ export class BlockOverviewTooltipComponent implements OnChanges {
 
   getTooltipLeftPosition(): string {
     return window.innerWidth < 392 ? '-50px' : this.tooltipPosition.x + 'px';
+  }
+
+  private formatNameOperationType(operation: 'register' | 'renew' | 'preregister' | null): string | null {
+    if (operation === 'register') {
+      return 'Registration';
+    }
+    if (operation === 'renew') {
+      return 'Renewal / update';
+    }
+    if (operation === 'preregister') {
+      return 'Pre-registration';
+    }
+    return null;
   }
 }

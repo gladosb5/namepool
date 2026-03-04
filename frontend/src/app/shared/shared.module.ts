@@ -129,6 +129,7 @@ import { SimpleProofCuboWidgetComponent } from '@components/simpleproof-widget/s
 import { FaucetComponent } from '@components/faucet/faucet.component';
 import { TwitterLogin } from '@components/twitter-login/twitter-login.component';
 import { NamecoinInvoiceComponent } from '@components/namecoin-invoice/namecoin-invoice.component';
+import { NamesComponent } from '@components/names/names.component';
 
 import { OnlyVsizeDirective, OnlyWeightDirective } from '@app/shared/components/weight-directives/weight-directives';
 import { GithubLogin } from '@components/github-login.component/github-login.component';
@@ -256,6 +257,7 @@ import { GithubLogin } from '@components/github-login.component/github-login.com
     TwitterLogin,
     GithubLogin,
     NamecoinInvoiceComponent,
+    NamesComponent,
   ],
   imports: [
     CommonModule,
@@ -396,6 +398,7 @@ import { GithubLogin } from '@components/github-login.component/github-login.com
     TwitterLogin,
     GithubLogin,
     NamecoinInvoiceComponent,
+    NamesComponent,
     NamecoinsatoshisPipe,
 
     MempoolBlockOverviewComponent,

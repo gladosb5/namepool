@@ -11,6 +11,7 @@
   text-align: left;
   min-width: 340px;
   max-width: 400px;
+  width: min(400px, calc(100vw - 20px));
   pointer-events: none;
   z-index: 11;
 
@@ -19,17 +20,36 @@
   }
 }
 
+.table-fixed {
+  width: 100%;
+  table-layout: fixed;
+}
+
 th, td {
+  vertical-align: top;
+
   &.label {
     width: 30%;
   }
   &.value {
     width: 70%;
     text-align: end;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    max-width: 0;
   }
   &.oobFees {
     color: #905cf4;
   }
+}
+
+td.value a,
+td.value span,
+td.value i {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .badge.badge-accelerated {

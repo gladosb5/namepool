@@ -1,5 +1,6 @@
 import { Application, Request, Response } from 'express';
 import axios from 'axios';
+import * as https from 'https';
 import * as namecoinjs from 'namecoinjs-lib';
 import config from '../../config';
 import websocketHandler from '../websocket-handler';
@@ -28,6 +29,341 @@ const TXID_REGEX = /^[a-f0-9]{64}$/i;
 const BLOCK_HASH_REGEX = /^[a-f0-9]{64}$/i;
 const ADDRESS_REGEX = /^[a-z0-9]{2,120}$/i;
 const SCRIPT_HASH_REGEX = /^([a-f0-9]{2})+$/i;
+const NAME_SCAN_COUNT_DEFAULT = 25;
+const NAME_SCAN_COUNT_MAX = 100;
+const NAME_SCAN_COUNT_TOTAL_BATCH = 1000;
+const NAME_IDENTIFIER_MAX_LENGTH = 255;
+const NAME_NAMESPACE_REGEX = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const NAME_LABEL_REGEX = /^[a-z0-9](?:[a-z0-9-]{0,253}[a-z0-9])?$/;
+const NAME_ALIVE_TIMEOUT_MS = 4000;
+const NAME_ALIVE_CACHE_TTL_MS = 60_000;
+const NAME_TOTAL_CACHE_TTL_MS = 300_000;
+
+const insecureHttpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
+interface NamecoinRpcNameEntry {
+  name: string;
+  value?: string;
+  txid?: string;
+  vout?: number;
+  address?: string;
+  height?: number;
+  expires_in?: number;
+  expired?: boolean;
+}
+
+interface NamecoinNameEntry {
+  name: string;
+  displayName: string;
+  value: string | null;
+  txid: string | null;
+  vout: number | null;
+  address: string | null;
+  registeredHeight: number | null;
+  expiresIn: number | null;
+  expiresAt: number | null;
+  expired: boolean;
+}
+
+interface NameAliveResponse {
+  name: string;
+  displayName: string;
+  url: string | null;
+  alive: boolean;
+  checkedAt: number;
+  statusCode: number | null;
+  error: string | null;
+}
+
+interface CachedNameAliveResponse {
+  value: NameAliveResponse;
+  expiresAt: number;
+}
+
+const nameAliveCache = new Map<string, CachedNameAliveResponse>();
+let domainNamesTotalCache: { value: number; expiresAt: number } | null = null;
+
+function normalizeNameIdentifier(rawName: string): string | null {
+  let decodedName: string;
+  try {
+    decodedName = decodeURIComponent(rawName).trim().toLowerCase();
+  } catch {
+    return null;
+  }
+
+  if (!decodedName || decodedName.length > NAME_IDENTIFIER_MAX_LENGTH) {
+    return null;
+  }
+
+  if (decodedName.endsWith('.bit')) {
+    const label = decodedName.slice(0, -4);
+    if (!NAME_LABEL_REGEX.test(label)) {
+      return null;
+    }
+    return `d/${label}`;
+  }
+
+  if (decodedName.includes('/')) {
+    const parts = decodedName.split('/');
+    if (parts.length !== 2) {
+      return null;
+    }
+    const [namespace, key] = parts;
+    if (!NAME_NAMESPACE_REGEX.test(namespace)) {
+      return null;
+    }
+    if (key.length > 0 && !NAME_LABEL_REGEX.test(key)) {
+      return null;
+    }
+    return `${namespace}/${key}`;
+  }
+
+  if (!NAME_LABEL_REGEX.test(decodedName)) {
+    return null;
+  }
+
+  return `d/${decodedName}`;
+}
+
+function mapNameEntry(entry: NamecoinRpcNameEntry, tipHeight: number): NamecoinNameEntry | null {
+  if (!entry || typeof entry.name !== 'string') {
+    return null;
+  }
+
+  const normalizedName = entry.name.toLowerCase();
+  const displayName = normalizedName.startsWith('d/') ? `${normalizedName.slice(2)}.bit` : normalizedName;
+  const expiresIn = typeof entry.expires_in === 'number' ? entry.expires_in : null;
+  const expiresAt = expiresIn !== null ? tipHeight + expiresIn : null;
+
+  return {
+    name: normalizedName,
+    displayName,
+    value: typeof entry.value === 'string' ? entry.value : null,
+    txid: typeof entry.txid === 'string' ? entry.txid : null,
+    vout: typeof entry.vout === 'number' ? entry.vout : null,
+    address: typeof entry.address === 'string' ? entry.address : null,
+    registeredHeight: typeof entry.height === 'number' ? entry.height : null,
+    expiresIn,
+    expiresAt,
+    expired: entry.expired === true || (expiresIn !== null && expiresIn <= 0),
+  };
+}
+
+function parseScanCount(rawCount: unknown): number | null {
+  if (rawCount === undefined) {
+    return NAME_SCAN_COUNT_DEFAULT;
+  }
+
+  if (typeof rawCount !== 'string') {
+    return null;
+  }
+
+  const parsed = parseInt(rawCount, 10);
+  if (Number.isNaN(parsed) || parsed < 1) {
+    return null;
+  }
+
+  return Math.min(parsed, NAME_SCAN_COUNT_MAX);
+}
+
+function isNameNotFoundError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+  const message = error.message.toLowerCase();
+  return message.includes('name not found') || message.includes('name does not exist');
+}
+
+function formatErrorDetails(error: unknown): string {
+  if (error instanceof Error) {
+    const code = (error as { code?: number | string }).code;
+    return code !== undefined
+      ? `${error.message} (code: ${code})`
+      : error.message;
+  }
+  if (typeof error === 'string') {
+    return error;
+  }
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+}
+
+function getDisplayDomainFromName(normalizedName: string): string | null {
+  if (!normalizedName.startsWith('d/')) {
+    return null;
+  }
+  const label = normalizedName.slice(2);
+  if (!NAME_LABEL_REGEX.test(label)) {
+    return null;
+  }
+  return `${label}.bit`;
+}
+
+async function probeDomainUrl(url: string): Promise<{ alive: boolean; statusCode: number | null; error: string | null }> {
+  try {
+    const headResponse = await axios.head(url, {
+      timeout: NAME_ALIVE_TIMEOUT_MS,
+      maxRedirects: 3,
+      validateStatus: () => true,
+      httpsAgent: url.startsWith('https://') ? insecureHttpsAgent : undefined,
+    });
+
+    // Some hosts reject HEAD but are still alive; retry with GET.
+    if (headResponse.status === 405 || headResponse.status === 501) {
+      const getResponse = await axios.get(url, {
+        timeout: NAME_ALIVE_TIMEOUT_MS,
+        maxRedirects: 3,
+        validateStatus: () => true,
+        responseType: 'text',
+        httpsAgent: url.startsWith('https://') ? insecureHttpsAgent : undefined,
+      });
+      return {
+        alive: true,
+        statusCode: getResponse.status || null,
+        error: null,
+      };
+    }
+
+    return {
+      alive: true,
+      statusCode: headResponse.status || null,
+      error: null,
+    };
+  } catch (error) {
+    return {
+      alive: false,
+      statusCode: null,
+      error: formatErrorDetails(error),
+    };
+  }
+}
+
+async function checkDomainAlive(normalizedName: string): Promise<NameAliveResponse> {
+  const displayDomain = getDisplayDomainFromName(normalizedName);
+  const checkedAt = Math.floor(Date.now() / 1000);
+
+  if (!displayDomain) {
+    return {
+      name: normalizedName,
+      displayName: normalizedName,
+      url: null,
+      alive: false,
+      checkedAt,
+      statusCode: null,
+      error: 'Only d/ namespace names support direct .bit host liveness checks.',
+    };
+  }
+
+  const cached = nameAliveCache.get(normalizedName);
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.value;
+  }
+
+  const urls = [`https://${displayDomain}`, `http://${displayDomain}`];
+  let bestResult: NameAliveResponse | null = null;
+
+  for (const url of urls) {
+    const probe = await probeDomainUrl(url);
+    const currentResult: NameAliveResponse = {
+      name: normalizedName,
+      displayName: displayDomain,
+      url,
+      alive: probe.alive,
+      checkedAt,
+      statusCode: probe.statusCode,
+      error: probe.error,
+    };
+
+    bestResult = currentResult;
+    if (probe.alive) {
+      break;
+    }
+  }
+
+  if (!bestResult) {
+    bestResult = {
+      name: normalizedName,
+      displayName: displayDomain,
+      url: `https://${displayDomain}`,
+      alive: false,
+      checkedAt,
+      statusCode: null,
+      error: 'No response',
+    };
+  }
+
+  nameAliveCache.set(normalizedName, {
+    value: bestResult,
+    expiresAt: Date.now() + NAME_ALIVE_CACHE_TTL_MS,
+  });
+
+  return bestResult;
+}
+
+async function countNamesByPrefix(prefix: string): Promise<number> {
+  const normalizedPrefix = prefix.toLowerCase();
+  let total = 0;
+  let start = normalizedPrefix;
+  let previousStart: string | null = null;
+
+  while (true) {
+    const batch = await (namecoinClient.cmd('name_scan', start, NAME_SCAN_COUNT_TOTAL_BATCH) as Promise<NamecoinRpcNameEntry[]>)
+      .catch((error) => {
+        logger.debug(`name_scan failed while counting names for prefix "${normalizedPrefix}": ${(error instanceof Error) ? error.message : error}`);
+        return [] as NamecoinRpcNameEntry[];
+      });
+
+    if (!batch.length) {
+      break;
+    }
+
+    const firstIndex = previousStart && batch[0]?.name === previousStart ? 1 : 0;
+    const visibleBatch = batch.slice(firstIndex);
+    if (!visibleBatch.length) {
+      break;
+    }
+
+    for (const entry of visibleBatch) {
+      const name = typeof entry?.name === 'string' ? entry.name.toLowerCase() : '';
+      if (name.startsWith(normalizedPrefix)) {
+        total++;
+      }
+    }
+
+    const lastName = visibleBatch[visibleBatch.length - 1]?.name;
+    const lastNameLower = typeof lastName === 'string' ? lastName.toLowerCase() : '';
+
+    if (!lastName || !lastNameLower.startsWith(normalizedPrefix) || visibleBatch.length < NAME_SCAN_COUNT_TOTAL_BATCH) {
+      break;
+    }
+
+    if (lastName === previousStart) {
+      break;
+    }
+    previousStart = lastName;
+    start = lastName;
+  }
+
+  return total;
+}
+
+async function getCachedTotalDomainNames(): Promise<number> {
+  if (domainNamesTotalCache && domainNamesTotalCache.expiresAt > Date.now()) {
+    return domainNamesTotalCache.value;
+  }
+
+  const total = await countNamesByPrefix('d/');
+  domainNamesTotalCache = {
+    value: total,
+    expiresAt: Date.now() + NAME_TOTAL_CACHE_TTL_MS,
+  };
+  return total;
+}
 
 class NamecoinRoutes {
   public initRoutes(app: Application) {
@@ -41,6 +377,9 @@ class NamecoinRoutes {
       .get(config.MEMPOOL.API_URL_PREFIX + 'backend-info', this.getBackendInfo)
       .get(config.MEMPOOL.API_URL_PREFIX + 'init-data', this.getInitData)
       .get(config.MEMPOOL.API_URL_PREFIX + 'validate-address/:address', this.validateAddress)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'name', this.getName)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'name/alive', this.getNameAlive)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'names', this.getNames)
       .get(config.MEMPOOL.API_URL_PREFIX + 'tx/:txId/rbf', this.getRbfHistory)
       .get(config.MEMPOOL.API_URL_PREFIX + 'tx/:txId/cached', this.getCachedTx)
       .get(config.MEMPOOL.API_URL_PREFIX + 'replacements', this.getRbfReplacements)
@@ -956,6 +1295,149 @@ class NamecoinRoutes {
       res.json(result);
     } catch (e) {
       handleError(req, res, 500, 'Failed to validate address');
+    }
+  }
+
+  private async getName(req: Request, res: Response): Promise<void> {
+    if (typeof req.query.name !== 'string') {
+      handleError(req, res, 400, 'Name query parameter is required');
+      return;
+    }
+
+    const normalizedName = normalizeNameIdentifier(req.query.name);
+    if (!normalizedName) {
+      handleError(req, res, 400, 'Invalid name format');
+      return;
+    }
+
+    try {
+      const [nameResult, tipHeight] = await Promise.all([
+        namecoinClient.cmd('name_show', normalizedName) as Promise<NamecoinRpcNameEntry>,
+        namecoinApi.$getBlockHeightTip(),
+      ]);
+
+      const mappedEntry = mapNameEntry(nameResult, tipHeight);
+      if (!mappedEntry) {
+        handleError(req, res, 404, 'Name not found');
+        return;
+      }
+
+      res.json(mappedEntry);
+    } catch (e) {
+      if (isNameNotFoundError(e)) {
+        handleError(req, res, 404, 'Name not found');
+        return;
+      }
+      const details = formatErrorDetails(e);
+      logger.err(`getName failed for ${normalizedName}: ${details}`, 'NamecoinRoutes');
+      handleError(req, res, 500, `Failed to get name. Details: ${details}`);
+    }
+  }
+
+  private async getNameAlive(req: Request, res: Response): Promise<void> {
+    if (typeof req.query.name !== 'string') {
+      handleError(req, res, 400, 'Name query parameter is required');
+      return;
+    }
+
+    const normalizedName = normalizeNameIdentifier(req.query.name);
+    if (!normalizedName) {
+      handleError(req, res, 400, 'Invalid name format');
+      return;
+    }
+
+    try {
+      const aliveStatus = await checkDomainAlive(normalizedName);
+      res.json(aliveStatus);
+    } catch (e) {
+      const details = formatErrorDetails(e);
+      logger.err(`getNameAlive failed for ${normalizedName}: ${details}`, 'NamecoinRoutes');
+      handleError(req, res, 500, `Failed to check name availability. Details: ${details}`);
+    }
+  }
+
+  private async getNames(req: Request, res: Response): Promise<void> {
+    const count = parseScanCount(req.query.count);
+    if (!count) {
+      handleError(req, res, 400, 'Invalid count parameter');
+      return;
+    }
+
+    let queryName: string | null = null;
+    if (typeof req.query.query === 'string' && req.query.query.trim().length > 0) {
+      queryName = normalizeNameIdentifier(req.query.query);
+      if (!queryName) {
+        handleError(req, res, 400, 'Invalid query parameter');
+        return;
+      }
+    }
+
+    const prefixInput = queryName ?? (typeof req.query.prefix === 'string' ? req.query.prefix : 'd/');
+    const normalizedPrefix = normalizeNameIdentifier(prefixInput);
+    if (!normalizedPrefix) {
+      handleError(req, res, 400, 'Invalid prefix parameter');
+      return;
+    }
+
+    const startInput = typeof req.query.start === 'string' ? req.query.start : normalizedPrefix;
+    const normalizedStart = normalizeNameIdentifier(startInput);
+    if (!normalizedStart) {
+      handleError(req, res, 400, 'Invalid start parameter');
+      return;
+    }
+
+    try {
+      const exactNamePromise: Promise<NamecoinRpcNameEntry | null> = queryName
+        ? (namecoinClient.cmd('name_show', queryName)
+            .then((entry) => entry as NamecoinRpcNameEntry)
+            .catch((error) => {
+              if (!isNameNotFoundError(error)) {
+                logger.debug(`name_show fallback failed in getNames: ${(error instanceof Error) ? error.message : error}`);
+              }
+              return null;
+            }))
+        : Promise.resolve(null);
+
+      const scanPromise = (namecoinClient.cmd('name_scan', normalizedStart, count) as Promise<NamecoinRpcNameEntry[]>)
+        .catch((error) => {
+          logger.debug(`name_scan failed in getNames: ${(error instanceof Error) ? error.message : error}`);
+          return [] as NamecoinRpcNameEntry[];
+        });
+
+      const [nameResults, tipHeight, exactNameResult, totalDomainNames] = await Promise.all([
+        scanPromise,
+        namecoinApi.$getBlockHeightTip(),
+        exactNamePromise,
+        getCachedTotalDomainNames().catch((error) => {
+          logger.debug(`Failed to get cached total domain names: ${(error instanceof Error) ? error.message : error}`);
+          return 0;
+        }),
+      ]);
+
+      const mappedEntries = (Array.isArray(nameResults) ? nameResults : [])
+        .filter((entry) => typeof entry?.name === 'string' && entry.name.toLowerCase().startsWith(normalizedPrefix))
+        .map((entry) => mapNameEntry(entry, tipHeight))
+        .filter((entry): entry is NamecoinNameEntry => entry !== null);
+
+      if (exactNameResult) {
+        const exactEntry = mapNameEntry(exactNameResult, tipHeight);
+        if (exactEntry && !mappedEntries.some((entry) => entry.name === exactEntry.name)) {
+          mappedEntries.unshift(exactEntry);
+        }
+      }
+
+      res.json({
+        query: queryName,
+        prefix: normalizedPrefix,
+        start: normalizedStart,
+        count,
+        totalDomainNames,
+        items: mappedEntries.slice(0, count),
+      });
+    } catch (e) {
+      const details = formatErrorDetails(e);
+      logger.err(`getNames failed (query=${queryName ?? 'null'}, prefix=${normalizedPrefix}, start=${normalizedStart}, count=${count}): ${details}`, 'NamecoinRoutes');
+      handleError(req, res, 500, `Failed to list names. Details: ${details}`);
     }
   }
 
