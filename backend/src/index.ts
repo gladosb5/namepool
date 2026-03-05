@@ -52,6 +52,15 @@ import mempoolBlocks from './api/mempool-blocks';
 import walletApi from './api/services/wallets';
 import stratumApi from './api/services/stratum';
 
+function isHeadersSentError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+  const code = (error as NodeJS.ErrnoException).code;
+  return code === 'ERR_HTTP_HEADERS_SENT'
+    || error.message.includes('Cannot set headers after they are sent');
+}
+
 class Server {
   private wss: WebSocket.Server | undefined;
   private wssUnixSocket: WebSocket.Server | undefined;
@@ -110,10 +119,19 @@ class Server {
       this.exitCleanup();
     });
     process.on('uncaughtException', (error) => {
+      if (isHeadersSentError(error)) {
+        logger.warn(`Ignoring uncaught non-fatal response error: ${error.message}`, 'Server');
+        return;
+      }
       console.error(`uncaughtException:`, error);
       this.forceExit('uncaughtException', 1);
     });
     process.on('unhandledRejection', (reason, promise) => {
+      if (isHeadersSentError(reason)) {
+        const message = reason instanceof Error ? reason.message : String(reason);
+        logger.warn(`Ignoring unhandled non-fatal response error: ${message}`, 'Server');
+        return;
+      }
       console.error(`unhandledRejection:`, reason, promise);
       this.forceExit('unhandledRejection', 1);
     });
