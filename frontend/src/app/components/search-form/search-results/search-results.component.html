@@ -50,7 +50,7 @@
     </ng-template>
   </ng-template>
   <ng-template [ngIf]="results.names.length">
-    <div class="card-title" i18n="search.namecoin-domains">Namecoin Domains</div>
+    <div class="card-title" i18n="search.namecoin-domains">Namecoin Names</div>
     <ng-template ngFor [ngForOf]="results.names" let-name let-i="index">
       <button (click)="clickItem(results.hashQuickMatch + results.addresses.length + i)" [class.active]="results.hashQuickMatch + results.addresses.length + i === activeIdx" type="button" role="option" class="dropdown-item">
         <ngb-highlight [result]="name.displayName" [term]="results.searchText"></ngb-highlight> &nbsp;<span class="symbol">{{ name.name }}</span>

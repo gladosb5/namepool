@@ -43,7 +43,7 @@ export class NamesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.seoService.setTitle($localize`:@@names.page-title:Namecoin Domains`);
+    this.seoService.setTitle($localize`:@@names.page-title:Namecoin Names`);
     this.seoService.setDescription($localize`:@@names.page-description:Browse Namecoin domain names and see registration height, expiration height, and current address ownership.`);
     this.ogService.setManualOgImage('recent-blocks.jpg');
 
@@ -95,13 +95,20 @@ export class NamesComponent implements OnInit, OnDestroy {
 
   submitSearch(rawQuery: string): void {
     const query = (rawQuery || '').trim();
+
+    if (!query) {
+      return;
+    }
+
     this.router.navigate([this.relativeUrlPipe.transform('/names')], {
-      queryParams: query ? { q: query } : {},
+      queryParams: { q: query },
     });
   }
 
   clearSearch(): void {
-    this.submitSearch('');
+    this.router.navigate([this.relativeUrlPipe.transform('/names')], {
+      queryParams: {},
+    });
   }
 
   private loadNameAliveStatuses(items: NameRecord[]): void {
