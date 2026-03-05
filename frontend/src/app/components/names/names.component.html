@@ -15,8 +15,11 @@
     </form>
   </div>
 
-  <div class="alert alert-info" *ngIf="!isLoading && !error && names.length === 0" i18n="names.no-results">
-    No names found for this query.
+  <div class="alert alert-info" *ngIf="!isLoading && !error && names.length === 0">
+    <span *ngIf="currentQuery; else noNamesDefault" i18n="names.no-results-query">No names found for this query.</span>
+    <ng-template #noNamesDefault>
+      <span i18n="names.no-results-default">No names found.</span>
+    </ng-template>
   </div>
 
   <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
@@ -59,7 +62,10 @@
         </tr>
       </tbody>
     </table>
-    <p class="text-muted" i18n="names.results-limit">Showing up to the first 100 matching names.</p>
+    <p class="text-muted" i18n="names.results-limit">Showing names as you scroll.</p>
+    <div class="text-muted" *ngIf="isLoadingMore" i18n="names.loading-more">Loading more names...</div>
+    <div class="text-muted" *ngIf="!isLoadingMore && !hasMore" i18n="names.no-more-results">You've reached the end of the current result set.</div>
+    <div #scrollSentinel class="names-scroll-sentinel" *ngIf="hasMore"></div>
   </div>
 
   <div *ngIf="isLoading" class="text-muted" i18n="names.loading">Loading names...</div>
