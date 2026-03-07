@@ -1,4 +1,4 @@
-# The namepool here
+# The Namepool Project
 
 [https://user-images.githubusercontent.com/93150691/226236121-375ea64f-b4a1-4cc0-8fad-a6fb33226840.mp4](https://github.com/user-attachments/assets/50bf231d-529c-4f7e-9c94-9b10a21d17cc)
 
