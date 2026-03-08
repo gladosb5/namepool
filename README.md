@@ -1,37 +1,73 @@
-# The Namepool Project
+# Namepool
 
-[https://user-images.githubusercontent.com/93150691/226236121-375ea64f-b4a1-4cc0-8fad-a6fb33226840.mp4](https://github.com/user-attachments/assets/50bf231d-529c-4f7e-9c94-9b10a21d17cc)
+**Namepool** is a mempool visualizer, explorer, and API service for the [Namecoin](https://namecoin.org) community, running at [namepool.bit](https://namepool.bit).
 
-<br>
+This project is an open-source fork of [mempool.space](https://github.com/mempool/mempool), adapted for the Namecoin blockchain. It is built and operated for the benefit of the Namecoin community.
 
-Namepool is the fully-featured mempool visualizer, explorer, and API service running at `namepool.bit`.
+## What It Does
 
-It is an open-source project developed and operated for the benefit of the Namecoin community.
+- Real-time mempool visualization and transaction tracking for Namecoin
+- Block explorer with fee estimates and mining dashboards
+- NMC/USD historical price charts
+- Full REST API and WebSocket interface
+- Name operation tracking (Namecoin `.bit` domain registrations and updates)
 
-# Installation Methods
+## Tech Stack
 
-Namepool can be self-hosted on a wide variety of your own hardware, ranging from a simple one-click installation on a Raspberry Pi full-node distro all the way to a robust production instance on a powerful FreeBSD server. 
+| Layer | Technology |
+|-------|-----------|
+| Backend | Node.js, TypeScript, Express |
+| Frontend | Angular SPA (40+ languages, SSR) |
+| Database | MariaDB 10.5+ |
+| Cache | Redis |
+| Blockchain | Namecoin Core (RPC) |
+| Performance | Rust/WASM block template computation |
+| Deployment | Docker or bare-metal (Linux/FreeBSD + Nginx) |
 
-Most people should use a <a href="#one-click-installation">one-click install method</a>.
+## Installation Methods
 
-Other install methods are meant for developers and others with experience managing servers. If you want support for your own production instance of Namepool, or if you'd like to have your own instance of Namepool run by the namepool.bit team on their own global ISP infrastructure—check out <a href="https://namepool.bit/enterprise" target="_blank">Namepool Enterprise®</a>.
+Choose the method that suits your setup:
 
-<a id="one-click-installation"></a>
-## One-Click Installation
+### One-Click Install (Recommended for Home Users)
 
-Namepool can be conveniently installed on the following full-node distros: 
-- [Umbrel](https://github.com/getumbrel/umbrel)
-- [RaspiBlitz](https://github.com/rootzoll/raspiblitz)
-- [RoninDojo](https://code.samourai.io/ronindojo/RoninDojo)
-- [myNode](https://github.com/mynodebtc/mynode)
-- [StartOS](https://github.com/Start9Labs/start-os)
+Namepool is available as a one-click install on popular full-node platforms:
 
-**We highly recommend you deploy your own Namepool instance this way.** No matter which option you pick, you'll be able to get your own fully-sovereign instance of Namepool up quickly without needing to fiddle with any settings.
+- [Umbrel](https://umbrel.com)
+- [RaspiBlitz](https://raspiblitz.org)
+- [myNode](https://mynodebtc.com)
+- [StartOS](https://start9.com)
 
-## Advanced Installation Methods
+### Docker
 
-Namepool can be installed in other ways too, but we only recommend doing so if you're a developer, have experience managing servers, or otherwise know what you're doing.
+The fastest way to self-host Namepool. See [docker/README.md](docker/README.md) for instructions.
 
-- See the [`docker/`](./docker/) directory for instructions on deploying Namepool with Docker.
-- See the [`backend/`](./backend/) and [`frontend/`](./frontend/) directories for manual install instructions oriented for developers.
-- See the [`production/`](./production/) directory for guidance on setting up a more serious Namepool instance designed for high performance at scale.
+> **Note:** Docker images must be built locally — they are not available from a public registry.
+
+### Bare-Metal (Advanced)
+
+For developers or custom deployments. See:
+- [backend/README.md](backend/README.md) — backend setup
+- [frontend/README.md](frontend/README.md) — frontend setup
+
+### Enterprise / Production
+
+For high-availability production instances. See [production/README.md](production/README.md).
+
+You can also have the namepool.bit team run a highly-available instance on their global ISP infrastructure. See [Namepool Enterprise](https://namepool.bit/enterprise) for details.
+
+## Prerequisites
+
+- [Namecoin Core](https://namecoin.org) (fully synced)
+- MariaDB 10.5+
+- Redis
+- Node.js 20.x / npm 9.x+
+- Rust (for backend build)
+- (Optional) An Electrum Server for address lookups ([romanz/electrs](https://github.com/romanz/electrs), [cculianu/Fulcrum](https://github.com/cculianu/Fulcrum), or [Blockstream/electrs](https://github.com/Blockstream/electrs))
+
+## Contributing
+
+Pull requests are welcome. Please open an issue first to discuss major changes.
+
+## License
+
+[MIT](LICENSE)
