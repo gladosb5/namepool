@@ -2,35 +2,32 @@
 
 Disclaimer: this frontend is an independent Namecoin community fork and is not affiliated with or endorsed by any third-party explorer operator.
 
-You can build and run the Namepool frontend and proxy to the production Namepool backend (for easier frontend development), or you can connect it to your own backend for a full Namepool development instance, custom deployment, etc.
+You can build and run the Namepool frontend and proxy to the production Namepool backend (for easier frontend development), or connect it to your own self-hosted backend for a full development instance or custom deployment.
 
 Jump to a section in this doc:
 - [Quick Setup for Frontend Development](#quick-setup-for-frontend-development)
 - [Manual Frontend Setup](#manual-setup)
-- [Translations](#translations-transifex-project)
+- [Translations](#translations)
 
 ## Quick Setup for Frontend Development
 
-If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend—you can simply run the Namepool frontend locally and proxy to the namepool.bit backend.
+If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend — you can run the Namepool frontend locally and proxy API requests to your own local backend or a self-hosted instance.
 
 ### 1. Clone Namepool Repository
 
 Get the latest Namepool code:
 
 ```
-git clone https://github.com/namepool/namepool
+git clone https://github.com/gladosb5/namepool
 cd namepool/frontend
 ```
 
 ### 2. Specify Website
 
-The same frontend codebase is used for https://namepool.bit and https://liquid.network.
-
-Configure the frontend for the site you want by running the corresponding command:
+The same frontend codebase supports multiple network configurations. Configure it for the site you want:
 
 ```
 $ npm run config:defaults:namepool
-$ npm run config:defaults:liquid
 ```
 
 ### 3. Run the Frontend
@@ -44,11 +41,11 @@ $ npm install
 $ npm run serve:local-prod
 ```
 
-The frontend will be available at http://localhost:4200/ and all API requests will be proxied to the production server at https://namepool.bit.
+The frontend will be available at http://localhost:4200/. API requests will be proxied to your local backend by default.
 
 ### 4. Test
 
-After making your changes, you can run our end-to-end automation suite and check for possible regressions.
+After making your changes, run the end-to-end test suite to check for regressions.
 
 Headless:
 
@@ -62,19 +59,17 @@ Interactive:
 $ npm run config:defaults:namepool && npm run cypress:open
 ```
 
-This will open the Cypress test runner, where you can select any of the test files to run.
+This will open the Cypress test runner where you can select test files to run.
 
-If all tests are green, submit your PR, and it will be reviewed by someone on the team as soon as possible.
+If all tests pass, submit your PR and it will be reviewed by the team as soon as possible.
 
 ## Manual Setup
 
-Set up the [Namepool backend](../backend/) first, if you haven't already.
+Set up the [Namepool backend](../backend/README.md) first, if you haven't already.
 
 ### 1. Build the Frontend
 
 _Make sure to use Node.js 20.x and npm 9.x or newer._
-
-Build the frontend:
 
 ```
 cd frontend
@@ -94,45 +89,10 @@ npm run serve
 
 #### Production
 
-The `npm run build` command from step 1 above should have generated a `dist` directory. Put the contents of `dist/` onto your web server.
+The `npm run build` command generates a `dist/` directory. Place the contents of `dist/` on your web server.
 
-You will probably want to set up a reverse proxy, TLS, etc. There are sample nginx configuration files in the top level of the repository for reference, but note that support for such tasks is outside the scope of this project.
+You will likely want to configure a reverse proxy, TLS, etc. Sample nginx configuration files are available at the top level of the repository for reference.
 
-## Translations: Transifex Project
+## Translations
 
-The Namepool frontend strings are localized into 20+ locales:
-https://www.transifex.com/namepool/namepool/dashboard/
-
-### Translators
-
-* Arabic @baro0k
-* Czech @pixelmade2
-* Danish @pierrevendelboe
-* German @Emzy
-* English (default)
-* Spanish @maxhodler @bisqes
-* Persian @techmix
-* French @Bayernatoor
-* Korean @kcalvinalvinn @sogoagain
-* Italian @HodlBits
-* Lithuanian @eimze21
-* Hebrew @rapidlab309
-* Georgian @wyd_idk
-* Hungarian @btcdragonlord
-* Dutch @m__btc
-* Japanese @wiz @japananon
-* Norwegian @T82771355
-* Polish @maciejsoltysiak
-* Portugese @jgcastro1985
-* Slovenian @thepkbadger
-* Finnish
-* Swedish @softsimon_
-* Thai @Gusb3ll
-* Turkish @stackmore
-* Ukrainian @volbil
-* Vietnamese
-* Chinese @wdljt
-* Russian @TonyCrusoe @Bitconan
-* Romanian @mirceavesa
-* Macedonian @SkechBoy
-* Nepalese @kebinm
+The Namepool frontend strings are available for community translation. If you'd like to contribute translations, please open an issue or pull request in this repository.
