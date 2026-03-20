@@ -22,38 +22,15 @@ This project is an open-source fork of [mempool.space](https://github.com/mempoo
 | Cache | Redis |
 | Blockchain | Namecoin Core (RPC) |
 | Performance | Rust/WASM block template computation |
-| Deployment | Docker or bare-metal (Linux/FreeBSD + Nginx) |
+| Deployment | Self-hosted (Linux/FreeBSD + Nginx) |
 
-## Installation Methods
+## Installation
 
-Choose the method that suits your setup:
+For setup instructions, see:
 
-### One-Click Install (Recommended for Home Users)
-
-Namepool is available as a one-click install on popular full-node platforms:
-
-- [Umbrel](https://umbrel.com)
-- [RaspiBlitz](https://raspiblitz.org)
-- [myNode](https://mynodebtc.com)
-- [StartOS](https://start9.com)
-
-### Docker
-
-The fastest way to self-host Namepool. See [docker/README.md](docker/README.md) for instructions.
-
-> **Note:** Docker images must be built locally — they are not available from a public registry.
-
-### Bare-Metal (Advanced)
-
-For developers or custom deployments. See:
 - [backend/README.md](backend/README.md) — backend setup
 - [frontend/README.md](frontend/README.md) — frontend setup
-
-### Enterprise / Production
-
-For high-availability production instances. See [production/README.md](production/README.md).
-
-You can also have the namepool.bit team run a highly-available instance on their global ISP infrastructure. See [Namepool Enterprise](https://namepool.bit/enterprise) for details.
+- [production/README.md](production/README.md) — advanced production deployment
 
 ## Prerequisites
 

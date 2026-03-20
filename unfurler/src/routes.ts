@@ -166,7 +166,7 @@ const routes = {
     }
   },
   enterprise: {
-    title: "Namepool Enterprise",
+    title: "API Plans",
     fallbackImg: '/resources/previews/enterprise.jpg',
   },
   lightning: {

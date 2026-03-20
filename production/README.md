@@ -1,10 +1,8 @@
-# Deploying an Enterprise Production Instance
+# Deploying a Production Instance
 
 These instructions are for setting up a serious production Namepool instance for Namecoin (mainnet, testnet, signet).
 
-> **Warning:** This setup is not for home users. Home users should use [one of the simpler installation methods](../README.md#installation-methods). Support for custom production setups is only provided to project sponsors through [Namepool Enterprise®](https://namepool.bit/enterprise).
-
-You can also have the namepool.bit team run a highly-performant and highly-available instance of Namepool for you on their own global ISP infrastructure. See [Namepool Enterprise®](https://namepool.bit/enterprise) for details.
+> **Warning:** This setup is not for home users. It is intended for advanced, custom production environments.
 
 ## Server Hardware
 
