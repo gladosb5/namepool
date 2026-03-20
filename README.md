@@ -12,7 +12,7 @@ This project is an open-source fork of [mempool.space](https://github.com/mempoo
 - Full REST API and WebSocket interface
 - Name operation tracking (Namecoin `.bit` domain registrations and updates)
 
-## Tech Stack
+## Stack
 
 | Layer | Technology |
 |-------|-----------|
