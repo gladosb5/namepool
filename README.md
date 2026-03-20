@@ -32,7 +32,7 @@ For setup instructions, see:
 - [frontend/README.md](frontend/README.md) — frontend setup
 - [production/README.md](production/README.md) — advanced production deployment
 
-## Prerequisites
+## Prerequisites 
 
 - [Namecoin Core](https://namecoin.org) (fully synced)
 - MariaDB 10.5+
