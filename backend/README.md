@@ -2,9 +2,9 @@
 
 These instructions are mostly intended for developers.
 
-If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, and use case. Namepool only provides support for custom setups to project sponsors through [Namepool Enterprise®](https://namepool.bit/enterprise).
+If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, and use case.
 
-See other ways to set up Namepool in the [main README](../README.md#installation-methods).
+See other ways to set up Namepool in the [main README](../README.md#installation).
 
 Jump to a section in this doc:
 - [Set Up the Backend](#setup)
