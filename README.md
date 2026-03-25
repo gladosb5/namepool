@@ -2,6 +2,8 @@
 
 **Namepool** is a mempool visualizer, explorer, and API service for the [Namecoin](https://namecoin.org) community, running at [namepool.bit](https://namepool.bit).
 
+You can view the project here: https://namepool.bit or http://98.88.238.107/ if you dont have access to the electrum-nmc
+
 This project is an open-source fork of [mempool.space](https://github.com/mempool/mempool), adapted for the Namecoin blockchain. It is built and operated for the benefit of the Namecoin community.
 
 ## What It Does
