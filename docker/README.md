@@ -8,6 +8,7 @@ If you are looking to use Docker to deploy your own instance of Namepool, note t
 
 Jump to a section in this doc:
 - [Build Images Locally](#build-images-locally)
+- [Create a Docker Network](#create-a-docker-network)
 - [Configure with Namecoin Core Only](#configure-with-namecoin-core-only)
 - [Configure with Namecoin Core + Electrum Server](#configure-with-namecoin-core--electrum-server)
 - [Further Configuration](#further-configuration)
@@ -24,6 +25,14 @@ docker build -t namepool/frontend:latest -f frontend/Dockerfile ..
 ```
 
 These commands already produce the correct Namepool images (`namepool/backend:latest` and `namepool/frontend:latest`), so no image replacement step is required.
+
+## Create a Docker Network
+
+Create a user-defined Docker network so the frontend container can reach the backend container by name:
+
+```bash
+docker network create namepool-net
+```
 
 ## Configure with Namecoin Core Only
 
@@ -43,6 +52,7 @@ If you want to use different credentials, pass them as environment variables whe
 ```bash
 docker run -d --name namepool-backend \
   --restart unless-stopped \
+  --network namepool-net \
   -p 8999:8999 \
   -e MEMPOOL_BACKEND=none \
   -e CORE_RPC_HOST=172.27.0.1 \
@@ -62,10 +72,10 @@ Then start the frontend container and point it at the backend container:
 ```bash
 docker run -d --name namepool-frontend \
   --restart unless-stopped \
+  --network namepool-net \
   -p 80:8080 \
   -e BACKEND_MAINNET_HTTP_HOST=namepool-backend \
   -e BACKEND_MAINNET_HTTP_PORT=8999 \
-  --link namepool-backend \
   namepool/frontend:latest
 ```
 
@@ -78,10 +88,19 @@ First, configure `namecoind` as specified above, and make sure your Electrum Ser
 When starting `namepool/backend:latest`, set the following variables so Namepool can connect to your Electrum Server:
 
 ```bash
--e MEMPOOL_BACKEND=electrum \
--e ELECTRUM_HOST=172.27.0.1 \
--e ELECTRUM_PORT=50002 \
--e ELECTRUM_TLS_ENABLED=false
+docker run -d --name namepool-backend \
+  --restart unless-stopped \
+  --network namepool-net \
+  -p 8999:8999 \
+  -e MEMPOOL_BACKEND=electrum \
+  -e CORE_RPC_HOST=172.27.0.1 \
+  -e CORE_RPC_PORT=8332 \
+  -e CORE_RPC_USERNAME=mempool \
+  -e CORE_RPC_PASSWORD=mempool \
+  -e ELECTRUM_HOST=172.27.0.1 \
+  -e ELECTRUM_PORT=50002 \
+  -e ELECTRUM_TLS_ENABLED=false \
+  namepool/backend:latest
 ```
 
 Eligible values for `MEMPOOL_BACKEND`:
