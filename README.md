@@ -58,12 +58,7 @@ Instead, report vulnerabilities privately by emailing:
 
 - **namepool+gladosb5iscool@protonmail.com**
 
-Include the following details when possible:
-
-- A clear description of the issue and impacted component(s)
-- Reproduction steps or proof-of-concept
-- Potential impact (confidentiality, integrity, availability)
-- Any suggested mitigations
+Then just put in your issue, as long as I can understand it and some common sense then you can format it in anyway you like.
 
 ## Disclosure Process
 
