@@ -47,4 +47,6 @@ Pull requests are welcome. Please open an issue first to discuss major changes.
 
 ## License
 
-[MIT](LICENSE)
+This project is licensed under the **GNU Affero General Public License v3.0** (AGPL v3.0). See [LICENSE](LICENSE).
+
+The license also includes a trademark notice: use of project/contributor trademarks, service marks, logos, and trade names is **not** granted by the copyright license.
