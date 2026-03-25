@@ -19,7 +19,10 @@ Get the latest Namepool code:
 
 ```
 git clone https://github.com/gladosb5/namepool
-cd namepool/frontend
+cd namepool
+latestrelease=$(curl -s https://api.github.com/repos/gladosb5/namepool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+git checkout $latestrelease
+cd frontend
 ```
 
 ### 2. Specify Website

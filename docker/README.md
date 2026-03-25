@@ -19,7 +19,10 @@ Build the Namecoin-specific images from source:
 
 ```bash
 git clone https://github.com/gladosb5/namepool
-cd namepool/docker
+cd namepool
+latestrelease=$(curl -s https://api.github.com/repos/gladosb5/namepool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+git checkout $latestrelease
+cd docker
 docker build -t namepool/backend:latest -f backend/Dockerfile ..
 docker build -t namepool/frontend:latest -f frontend/Dockerfile ..
 ```
