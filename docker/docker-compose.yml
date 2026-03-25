@@ -1,20 +1,18 @@
-version: "3.7"
-
-# NOTE: The `mempool/frontend` and `mempool/backend` image references below are from
-# the upstream mempool.space project and are NOT compatible with Namecoin out of the box.
-# You MUST build Namecoin-specific images locally before running this compose file.
-# See docker/README.md for build instructions.
-#
-# After building, update the image fields below to:
-#   image: namepool/frontend:latest
-#   image: namepool/backend:latest
+# Local-only compose setup.
+# The application images below are built from this repository and are not published on Docker Hub.
 
 services:
   web:
+    build:
+      context: ..
+      dockerfile: docker/frontend/Dockerfile
+      args:
+        commitHash: ${NAMEPOOL_COMMIT_HASH:-local}
     environment:
       FRONTEND_HTTP_PORT: "8080"
       BACKEND_MAINNET_HTTP_HOST: "api"
-    image: namepool/frontend:latest
+    image: namepool/frontend:local
+    pull_policy: never
     user: "1000:1000"
     restart: on-failure
     stop_grace_period: 1m
@@ -22,6 +20,11 @@ services:
     ports:
       - 80:8080
   api:
+    build:
+      context: ..
+      dockerfile: docker/backend/Dockerfile
+      args:
+        commitHash: ${NAMEPOOL_COMMIT_HASH:-local}
     environment:
       # Optional: used for fetching Namecoin (NMC) fiat prices from CoinMarketCap.
       COINMARKETCAP_API_KEY: "${COINMARKETCAP_API_KEY:-}"
@@ -36,7 +39,8 @@ services:
       DATABASE_USERNAME: "mempool"
       DATABASE_PASSWORD: "mempool"
       STATISTICS_ENABLED: "true"
-    image: namepool/backend:latest
+    image: namepool/backend:local
+    pull_policy: never
     user: "1000:1000"
     restart: on-failure
     stop_grace_period: 1m

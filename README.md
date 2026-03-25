@@ -30,6 +30,7 @@ For setup instructions, see:
 
 - [backend/README.md](backend/README.md) — backend setup
 - [frontend/README.md](frontend/README.md) — frontend setup
+- [docker/README.md](docker/README.md) — local Docker setup
 - [production/README.md](production/README.md) — advanced production deployment
 
 ## Prerequisites 

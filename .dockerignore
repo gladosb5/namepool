@@ -1,0 +1,17 @@
+.git
+.github
+**/node_modules
+**/dist
+**/coverage
+**/.angular
+**/.DS_Store
+backend/cache
+backend/GeoIP
+backend/package
+backend/rust-gbt
+frontend/.tx
+frontend/cypress/screenshots
+frontend/cypress/videos
+docker/data
+docker/mysql/data
+rust/gbt/target
