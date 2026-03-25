@@ -112,12 +112,34 @@ npm run build
 
 Sample nginx configuration files are available at the root of the repository. Adjust them for your environment and install them in your web server config directory.
 
-### 6. Start Everything
+### 6. Start Services (actual units/scripts in this repository)
+
+Linux (systemd unit files are in `production/linux/`):
 
 ```
-service namecoind start
-service electrs start
+systemctl daemon-reload
+systemctl enable --now namecoin.service
+systemctl enable --now namecoin-minfee.service
+systemctl enable --now namecoin-testnet.service
+systemctl enable --now namecoin-testnet4.service
+systemctl enable --now namecoin-signet.service
+systemctl enable --now elements-liquid.service
+systemctl enable --now elements-liquidtestnet.service
+systemctl enable --now nginx
+```
+
+FreeBSD (rc scripts in `production/freebsd/rc.d/`):
+
+```
+service namecoin start
+service namecoin_testnet start
 service mysql-server start
-service namepool-backend start
 service nginx start
 ```
+
+Electrs and periodic maintenance jobs are started from user crontabs (not via a dedicated `electrs` service unit in this repository).
+`service namecoin_testnet start` applies only when testnet was enabled during install.
+
+## Known Limitations
+
+- **No CLN service definition is installed by `production/install` yet.** The script includes a disabled historical cron-based launcher block for `lightningd`, but it is intentionally left disabled because it is unreliable across environments.
