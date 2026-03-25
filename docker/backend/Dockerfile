@@ -1,28 +1,29 @@
 FROM rust:1.84-bookworm AS builder
 
-ARG commitHash
+ARG commitHash=local
 ENV MEMPOOL_COMMIT_HASH=${commitHash}
 
-WORKDIR /build
-
 RUN apt-get update && \
-    apt-get install -y curl ca-certificates && \
+    apt-get install -y curl ca-certificates build-essential python3 pkg-config && \
     curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && \
-    apt-get install -y nodejs=22.14.0-1nodesource1 build-essential python3 pkg-config && \
+    apt-get install -y nodejs=22.14.0-1nodesource1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY . .
+WORKDIR /build/backend
+
+COPY backend/ ./
+COPY rust/ /build/rust/
+COPY docker/backend/mempool-config.json docker/backend/start.sh docker/backend/wait-for-it.sh ./
+
+RUN mkdir -p GeoIP && \
+    curl -fsSL https://raw.githubusercontent.com/mempool/geoip-data/master/GeoLite2-City.mmdb -o GeoIP/GeoLite2-City.mmdb && \
+    curl -fsSL https://raw.githubusercontent.com/mempool/geoip-data/master/GeoLite2-ASN.mmdb -o GeoIP/GeoLite2-ASN.mmdb
 
 ENV PATH="/usr/local/cargo/bin:$PATH"
 
-COPY --from=backend . .
-COPY --from=rustgbt . ../rust/
-ENV FD=/build/rust-gbt
-RUN npm install --omit=dev --omit=optional
-
-WORKDIR /build
-RUN npm run package
+RUN npm install --omit=dev --omit=optional && \
+    npm run package
 
 FROM rust:1.84-bookworm AS runtime
 
@@ -36,9 +37,9 @@ RUN apt-get update && \
 WORKDIR /backend
 
 RUN chown 1000:1000 ./
-COPY --from=builder --chown=1000:1000 /build/package ./package/
-COPY --from=builder --chown=1000:1000 /build/GeoIP ./GeoIP/
-COPY --from=builder --chown=1000:1000 /build/mempool-config.json /build/start.sh /build/wait-for-it.sh ./
+COPY --from=builder --chown=1000:1000 /build/backend/package ./package/
+COPY --from=builder --chown=1000:1000 /build/backend/GeoIP ./GeoIP/
+COPY --from=builder --chown=1000:1000 /build/backend/mempool-config.json /build/backend/start.sh /build/backend/wait-for-it.sh ./
 
 USER 1000
 

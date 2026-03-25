@@ -5,7 +5,7 @@ __MEMPOOL_FRONTEND_HTTP_PORT__=${FRONTEND_HTTP_PORT:=8080}
 
 __PROXIED_SERVICES__=${PROXIED_SERVICES:=false}
 __PROXIED_SERVICES_HOST__=${PROXIED_SERVICES_HOST:=https://namepool.bit}
-NGINX_NAMEPOOL_CONF=/etc/nginx/nginx-namepool.conf
+NGINX_NAMEPOOL_CONF=/etc/nginx/conf.d/nginx-namepool.conf
 
 if [ "${__PROXIED_SERVICES__}" = "true" ]; then
   sed -i "s|proxy_pass https://namepool.bit;|proxy_pass ${__PROXIED_SERVICES_HOST__};|g" ${NGINX_NAMEPOOL_CONF}
