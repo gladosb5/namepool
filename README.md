@@ -46,6 +46,34 @@ For setup instructions, see:
 
 Pull requests are welcome. Please open an issue first to discuss major changes.
 
+## Supported Versions
+
+Namepool does not currently maintain multiple release branches. Security fixes are applied to the default branch and included in the next deployment/release.
+
+## Reporting a Vulnerability
+
+Please **do not** open a public issue for **suspected** vulnerabilities.
+
+Instead, report vulnerabilities privately by emailing:
+
+- **namepool+gladosb5iscool@protonmail.com**
+
+Include the following details when possible:
+
+- A clear description of the issue and impacted component(s)
+- Reproduction steps or proof-of-concept
+- Potential impact (confidentiality, integrity, availability)
+- Any suggested mitigations
+
+## Disclosure Process
+
+1. We acknowledge receipt as quickly as possible.
+2. We validate and triage the report.
+3. We coordinate a fix and deployment.
+4. We publicly disclose details after remediation when appropriate.
+
+We appreciate responsible disclosure and will credit researchers with 0.5 NMC (if desired and if it's available) after a fix is available.
+
 ## License
 
 This project is licensed under the **GNU Affero General Public License v3.0** (AGPL v3.0). See [LICENSE](LICENSE).
