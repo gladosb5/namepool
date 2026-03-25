@@ -56,9 +56,9 @@ Please **do not** open a public issue for **suspected** vulnerabilities.
 
 Instead, report vulnerabilities privately by emailing:
 
-- **namepool+gladosb5iscool@protonmail.com**
+- **gladosb5iscool@protonmail.com**
 
-Then just put in your issue, as long as I can understand it and some common sense then you can format it in anyway you like.
+Then just put in your issue, as long as I can understand it and the subject has NAMEPOOL in the title and some common sense then you can format it in anyway you like.
 
 ## Disclosure Process
 
