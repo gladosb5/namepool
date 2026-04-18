@@ -4,11 +4,12 @@ import config from '../config';
 
 function readFile(filePath: string, bufferSize?: number): string[] {
   const fileSize = fs.statSync(filePath).size;
-  const chunkSize = bufferSize || fileSize;
+  const chunkSize = Math.min(bufferSize || fileSize, fileSize);
+  const startPosition = Math.max(fileSize - chunkSize, 0);
   const fileDescriptor = fs.openSync(filePath, 'r');
   const buffer = Buffer.alloc(chunkSize);
 
-  fs.readSync(fileDescriptor, buffer, 0, chunkSize, fileSize - chunkSize);
+  fs.readSync(fileDescriptor, buffer, 0, chunkSize, startPosition);
   fs.closeSync(fileDescriptor);
 
   const lines = buffer.toString('utf8', 0, chunkSize).split('\n');
